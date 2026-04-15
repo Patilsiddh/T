@@ -1,0 +1,89 @@
+
+
+    <div class="land">
+        <div class="container">
+
+            <div class="play">
+                <h1>PL<span>></span>Y</h1>
+            </div>
+
+            <div class="services-wrapper">
+
+                <!-- ===== DTH ===== -->
+                <div class="service-box dth-box">
+
+                    <div class="flash-offer">
+
+    <div class="offer-marquee">
+        <span>🔥 OFFER • OFFER • OFFER • OFFER • OFFER •</span>
+    </div>
+
+    {% if dth_offer %}
+
+        {% if dth_offer.image_url %}
+            <img src="{{ url_for('static', filename='uploads/' ~ dth_offer.image_url) }}"
+                 style="width:100%;border-radius:8px;">
+        {% endif %}
+
+        <div>{{ dth_offer.amount_text }}</div>
+
+    {% else %}
+        <div>No active offer</div>
+    {% endif %}
+
+</div>
+
+                    <h2>📡 DTH Connection</h2>
+                    <p>Available all over Pune – Anytime, Anywhere</p>
+
+                    <a href="https://wa.me/919922562197?text=Hello%20I%20want%20a%20New%20DTH%20Connection.">
+                        <button class="subtn">Get New DTH</button>
+                    </a>
+                </div>
+
+                <!-- ===== BROADBAND ===== -->
+                <div class="service-box broadband-box">
+
+                    <div class="flash-offer">
+                        <div class="offer-marquee">
+                            <span>🔥 OFFER • OFFER • OFFER • OFFER • OFFER •</span>
+                        </div>
+
+                        {% if broadband_offer %}
+                            {% if broadband_offer.image_url %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ broadband_offer.image_url) }}"
+                                     style="width:100%;border-radius:8px;">
+                            {% endif %}
+                            {{ broadband_offer.amount_text }}
+                        {% else %}
+                            ₹3600 OFF on New Broadband Connection
+                        {% endif %}
+                    </div>
+
+                    <h2>🌐 Broadband Services</h2>
+                    <p>Available in All Over Areas of Pune And Pimpri-Chinchwad.</p>
+
+<!--
+<div class="service-area">
+    <span class="area-chip">Lohegaon</span>
+    <span class="area-chip">Wagholi</span>
+    <span class="area-chip">Viman Nagar</span>
+    <span class="area-chip">Dhanori</span>
+    <span class="area-chip">Hadapsar</span>
+    <span class="area-chip">Charoli</span>
+    <span class="area-chip">Moshi</span>
+    <span class="area-chip">Hinjewadi</span>
+    <span class="area-chip">Kharadi</span>
+</div>
+-->
+                    <a href="{{ url_for('services') }}">
+                        <button class="subtn">Check Plans</button>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  

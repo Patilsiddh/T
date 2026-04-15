@@ -1,0 +1,417 @@
+<div class="contact-wrapper">
+
+    <!-- LEFT -->
+    <div class="left-stack">
+
+        <div class="card">
+            <h3>📞 Contact Info</h3>
+
+            <div class="contact-box">
+                <div class="name">Amol Shingare</div>
+
+<div class="info">📱 +91 9922562197</div>
+<div class="info">📧 sales@tatafibers.in</div>
+<div class="info">⏰ 24x7 Support Available</div>
+<div class="info">📍 Pune, Maharashtra, India</div>
+            </div>
+        </div>
+<style>.contact-box{
+    display:flex;
+    flex-direction:column;
+    gap:5px;              /* spacing between lines */
+}
+
+.contact-box .name{
+    margin-top:6px;       /* space from "Contact Info" heading */
+    margin-bottom:4px;    /* space before first number */
+    line-height:1.2;
+}
+
+.contact-box .info{
+    margin:0;
+    line-height:1.25;
+}
+
+/* space between heading and box */
+.card h3{
+    margin-bottom:10px;
+}</style>
+        <div class="card">
+            <h3>👨‍💼 Experience</h3>
+            <p>
+                We are a <span class="highlight">10+ years experienced team</span> in broadband,
+                WiFi, and DTH installation services across Pune.<br><br>
+                ✔ Fast installation (24–48 hours)<br>
+✔ Trusted  service provider<br>
+✔ Affordable pricing with quality assurance<br>
+✔ 24/7 customer support available
+            </p>
+        </div>
+
+    </div>
+
+    <!-- MIDDLE IMAGE -->
+    <div class="card image-center">
+        <img src="{{ url_for('static', filename='uploads/IMG-20260405-WA0006.jpg') }}" alt="Support">
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-stack">
+
+        <div class="card form-card">
+            <h3>📩 Send Message</h3>
+
+            <form method="POST">
+
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="tel" name="mobile" placeholder="Mobile Number" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <textarea name="message" rows="4" placeholder="Your Requirement"></textarea>
+
+                <div class="form-actions">
+                    <button type="submit">Send</button>
+                    <a href="https://wa.me/919922562197" target="_blank">WhatsApp</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<style>/* ===== BACKGROUND ===== */
+
+
+/* ===== GLOBAL SMOOTH ANIMATION ===== */
+* {
+    transition: all 0.25s ease-in-out;
+}
+
+/* ===== CARD ENTRY ANIMATION ===== */
+.card {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+}
+
+/* stagger effect */
+.left-stack .card:nth-child(1) { animation-delay: 0.1s; }
+.left-stack .card:nth-child(2) { animation-delay: 0.25s; }
+.image-center { animation: fadeUp 0.6s ease forwards 0.2s; }
+.form-card { animation: fadeUp 0.6s ease forwards 0.35s; }
+
+/* keyframes */
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== HOVER LIFT EFFECT ===== */
+.card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+}
+
+/* ===== INPUT FOCUS ANIMATION ===== */
+.form-card input:focus,
+.form-card textarea:focus {
+    transform: scale(1.02);
+}
+
+/* ===== BUTTON ANIMATION ===== */
+.form-actions button,
+.form-actions a {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ripple hover effect */
+.form-actions button::after,
+.form-actions a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    background: rgba(255,255,255,0.2);
+    transition: 0.4s;
+}
+
+.form-actions button:hover::after,
+.form-actions a:hover::after {
+    left: 0;
+}
+
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#53109a; /* full purple */
+}
+/* ===== WRAPPER (BALANCED GRID) ===== */
+.contact-wrapper{
+    display:grid;
+    grid-template-columns: 1fr 1.2fr 1fr; /* 👈 middle image slightly bigger */
+    gap:22px;
+
+    padding:60px 20px;
+    max-width:1200px;
+    margin:auto;
+
+    align-items:stretch;
+    background:#53109a;
+}
+
+/* Right stack container */
+.right-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card styling */
+.form-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Heading spacing */
+.form-card h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+/* Form layout */
+.form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 👈 THIS adds space between fields */
+}
+
+/* Inputs & textarea */
+.form-card input,
+.form-card textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+/* Focus effect */
+.form-card input:focus,
+.form-card textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
+}
+
+/* Button + WhatsApp alignment */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* Send button */
+.form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #4a90e2;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* WhatsApp link button */
+.form-actions a {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Hover effects */
+.form-actions button:hover {
+    background: #357bd8;
+}
+
+.form-actions a:hover {
+    background: #1ebe5d;
+}
+
+/* ===== CARD (UNIFIED HEIGHT) ===== */
+.card{
+    background: rgba(255,255,255,0.12);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:16px;
+
+    padding:20px;
+    color:#fff;
+
+    backdrop-filter: blur(12px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+    display:flex;
+    flex-direction:column;
+
+    height:100%;   /* 🔥 equal height fix */
+}
+
+/* ===== LEFT STACK GAP FIX ===== */
+.left-stack{
+    display:flex;
+    flex-direction:column;
+    gap:18px;   /* clean spacing between cards */
+}
+
+/* ===== RIGHT STACK GAP FIX ===== */
+.right-stack{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+/* ===== IMAGE (MATCH CARD HEIGHT) ===== */
+.image-center{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.image-center img{
+    width:100%;
+    height:100%;          /* 🔥 MATCH FULL HEIGHT */
+    max-height:100%;
+    object-fit:cover;
+
+    border-radius:16px;
+}
+
+/* ===== FORM BIGGER (MATCH IMAGE FEEL) ===== */
+.form-card{
+    min-height:100%;     /* 🔥 expands like image */
+}
+
+/* inputs bigger */
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+
+    border:none;
+    border-radius:10px;
+    outline:none;
+
+    font-size:14px;
+}
+
+/* textarea bigger */
+textarea{
+    min-height:120px;
+}
+
+/* buttons stronger */
+.form-actions{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+
+.form-actions button,
+.form-actions a{
+    flex:1;
+    padding:12px;
+    border-radius:10px;
+    font-weight:600;
+}
+
+/* ================= CLEAN RESPONSIVE FIX ================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .image-center {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+
+    .contact-wrapper {
+        grid-template-columns: 1fr;   /* 🔥 FORCE SINGLE COLUMN */
+        padding: 25px 12px;
+    }
+
+    /* ensure all sections stack properly */
+    .left-stack,
+    .image-center,
+    .right-stack {
+        width: 100%;
+    }
+
+    .card {
+        width: 100%;
+        height: auto;   /* remove forced equal height */
+    }
+
+    /* image full width */
+    .image-center {
+        height: 240px;
+    }
+
+    .image-center img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    /* form buttons stack */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button,
+    .form-actions a {
+        width: 100%;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+
+    .contact-wrapper {
+        padding: 18px 10px;
+        gap: 15px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .image-center {
+        height: 200px;
+    }
+
+    input, textarea {
+        font-size: 13px;
+    }
+}</style>

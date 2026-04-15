@@ -1,0 +1,178 @@
+
+<style>
+
+
+.footer {
+   background: linear-gradient(135deg,#121721,#181f28);
+    color: #ffffff;
+    padding: 40px 20px 20px;
+    font-family: Arial, sans-serif;
+  
+}
+
+.footer h3 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffffff;
+
+    display: inline-block;
+    position: relative;
+
+    margin-bottom: 12px;
+}
+.footer h3::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+
+    width: 60%;
+    height: 3px;
+
+    background: linear-gradient(90deg,#E10092,#6c63ff);
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px rgba(225,0,146,0.4);
+}
+
+.footer h3 {
+    text-shadow: 0 2px 10px rgba(108,99,255,0.25);
+}
+.footer p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #cbd5e1;
+}
+
+.footer-links {
+    margin: 15px 0;
+}
+
+.footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 15px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #38bdf8;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.footer-box {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-box h4 {
+    margin-bottom: 10px;
+    color: #facc15;
+    font-size: 16px;
+}
+
+.footer-box ul {
+    padding-left: 18px;
+    margin: 0;
+}
+
+.footer-box ul li {
+    font-size: 13px;
+    color: #e2e8f0;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #94a3b8;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 10px;
+}
+</style>
+</div>
+
+<div class="footer">
+    <h3>Tata Play Fiber Pune</h3>
+
+    <p>⚡ Fast Internet | HD Entertainment | Reliable Service</p>
+    <p>📡 Broadband & DTH Services Across Pune</p>
+    <p>🕒 24x7 Installation Support Available</p>
+
+    <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="{{ url_for('services') }}">Plans</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <!-- TERMS & CONDITIONS -->
+    <div class="footer-container">
+
+        <div class="footer-box">
+            <h4>Terms & Conditions</h4>
+            <ul>
+                <li>Month is considered as 30 days billing cycle.</li>
+                <li>Unlimited plans reduce speed to 3 Mbps after 3300 GB usage.</li>
+              
+                <li>1 Gbps plan delivers up to 900 Mbps via LAN & 450 Mbps via WiFi.</li>
+                <li>Service availability depends on technical feasibility in your area.</li>
+            </ul>
+        </div>
+
+        <div class="footer-box">
+            <h4>Charges & Policies</h4>
+            <ul>
+                <li>₹500 installation charges applicable on monthly plans.</li>
+                <li>₹1500 refundable security deposit for 1-month plans.</li>
+                <li>₹1000 refundable deposit for quarterly 50 Mbps plans.</li>
+                
+                <li>All discounts are already included in plan pricing.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 Tata Play Fiber Pune | All Rights Reserved
+    </div>
+</div>
+</div><script>document.addEventListener("DOMContentLoaded", function () {
+
+    const popup = document.getElementById("offerPopup");
+    if (!popup) return;
+
+    const closeBtn = document.getElementById("closePopupBtn");
+
+    function closePopup() {
+        popup.style.display = "none";
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closePopup);
+    }
+
+    popup.addEventListener("click", function (e) {
+        if (e.target === popup) {
+            closePopup();
+        }
+    });
+
+    // ✅ SHOW AFTER 3 SECONDS
+    setTimeout(() => {
+        popup.style.display = "flex";
+    }, 3000);
+
+});
+</script>

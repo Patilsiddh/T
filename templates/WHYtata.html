@@ -1,0 +1,118 @@
+<!-- ===== WHY TATA PLAY FIBER ===== -->
+<div class="tata-why reveal-section">
+    <h2>Why Tata Play Fiber?</h2>
+
+    <div class="tata-grid">
+
+        <div class="tata-card">
+            ⚡ Blazing Fast Speed
+            <p>Enjoy up to 1 Gbps speed for streaming, gaming & office work without lag.</p>
+        </div>
+
+        <div class="tata-card">
+            📡 Stable Connectivity
+            <p>Fiber network ensures minimal downtime and consistent performance.</p>
+        </div>
+
+        <div class="tata-card">
+            🎬 OTT Benefits
+            <p>Get access to Netflix, Prime Video & more with selected plans.</p>
+        </div>
+
+        <div class="tata-card">
+            🛠 Quick Installation
+            <p>Same-day or next-day installation available in most Pune areas.</p>
+        </div>
+
+        <div class="tata-card">
+            💰 Value for Money
+            <p>Affordable plans with maximum benefits and high reliability.</p>
+        </div>
+
+    </div>
+</div>
+
+<style>
+
+/* ===== SECTION BACKGROUND ===== */
+.tata-why{
+    padding:80px 20px;
+    text-align:center;
+    background: #53109a;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* TITLE */
+.tata-why h2{
+    font-size:36px;
+    font-weight:800;
+    margin-bottom:50px;
+}
+
+/* GRID */
+.tata-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+    gap:22px;
+}
+
+/* CARD */
+.tata-card{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+
+    opacity:0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+}
+
+/* CARD HOVER */
+.tata-card:hover{
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.15);
+}
+
+/* TEXT INSIDE CARD */
+.tata-card p{
+    margin-top:10px;
+    font-size:14px;
+    opacity:0.9;
+    line-height:1.5;
+}
+
+/* ===== ANIMATION ACTIVE STATE ===== */
+.tata-card.show{
+    opacity:1;
+    transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:768px){
+    .tata-why h2{
+        font-size:26px;
+    }
+}
+</style>
+
+<script>
+// ===== SCROLL REVEAL ANIMATION =====
+const cards = document.querySelectorAll(".tata-card");
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, index) => {
+        if(entry.isIntersecting){
+            setTimeout(() => {
+                entry.target.classList.add("show");
+            }, index * 150); // stagger effect
+        }
+    });
+}, { threshold: 0.2 });
+
+cards.forEach(card => {
+    observer.observe(card);
+});
+</script>

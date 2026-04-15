@@ -1,0 +1,196 @@
+<style>
+.carousel {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+}
+
+/* SLIDES */
+.slide {
+    display: none;
+    position: relative;
+    width: 100%;
+}
+
+.slide.active {
+    display: block;
+}
+
+/* IMAGE */
+.slide img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* ================= TEXT BOX ================= */
+.slide-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    width: 50%;
+    max-width: 50%;
+
+    padding: 20px 25px;
+    color: #fff;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* H1 */
+.slide-content h1 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+
+    margin: 0 0 12px 0;
+    padding: 0 10px;
+    letter-spacing: 0.3px;
+}
+
+/* H2 */
+.slide-content h2 {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.6;
+
+    margin: 0;
+    padding: 0 10px;
+    opacity: 0.95;
+}
+
+/* OPTIONAL EXTRA TEXT (desktop only feel better) */
+.slide-content p {
+    font-size: 13px;
+    margin-top: 10px;
+    padding: 0 10px;
+    opacity: 0.85;
+    line-height: 1.5;
+}
+
+/* ================= NAV BUTTONS ================= */
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.prev { left: 15px; }
+.next { right: 15px; }
+
+/* ================= RESPONSIVE ================= */
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .slide-content {
+        width: 55%;
+        max-width: 55%;
+        padding: 16px;
+    }
+
+    .slide-content h1 { font-size: 18px; }
+    .slide-content h2 { font-size: 13px; }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .slide-content {
+        width: 60%;
+        max-width: 60%;
+        padding: 12px;
+    }
+
+    .slide-content h1 { font-size: 16px; }
+    .slide-content h2 { font-size: 12px; }
+
+    /* REMOVE EXTRA TEXT ON MOBILE */
+    .slide-content p {
+        display: none;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+    .slide-content {
+        width: 65%;
+        max-width: 65%;
+        padding: 10px;
+    }
+
+    .slide-content h1 { font-size: 14px; }
+    .slide-content h2 { font-size: 11px; }
+}
+</style>
+
+<div class="carousel">
+
+    <!-- SLIDE 1 -->
+    <div class="slide active">
+        <img src="{{ url_for('static', filename='uploads/1GBPS banner copy_0 (1) (1).webp') }}">
+        <div class="slide-content">
+            <h1>Tata Play Fiber High Speed Internet</h1>
+            <h2>Fast and stable broadband connection for home and office use in Pune region.</h2>
+            <p>Experience ultra-fast fiber internet with seamless streaming, gaming, and work performance.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2 -->
+    <div class="slide">
+        <img src="{{ url_for('static', filename='uploads/BB+Router WB BG_0.webp') }}">
+        <div class="slide-content">
+            <h1>Advanced Fiber Router Technology</h1>
+            <h2>Enjoy seamless WiFi coverage with stable speed across all devices.</h2>
+            <p>Next-generation router ensures strong connectivity in every corner of your home.</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 3 -->
+    <div class="slide">
+        <img src="{{ url_for('static', filename='uploads/IMG_3649.webp') }}">
+        <div class="slide-content">
+            <h1>Trusted Tata Play Fiber Service Pune</h1>
+            <h2>Quick installation, reliable support, and affordable internet plans.</h2>
+            <p>Serving Pune with high-speed fiber broadband and 24/7 customer support.</p>
+        </div>
+    </div>
+
+    <!-- BUTTONS -->
+    <button class="prev" onclick="move(-1)">❮</button>
+    <button class="next" onclick="move(1)">❯</button>
+
+</div>
+
+<script>
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+
+function show(i){
+    slides.forEach(s => s.classList.remove("active"));
+    slides[i].classList.add("active");
+}
+
+function move(step){
+    index += step;
+
+    if(index >= slides.length) index = 0;
+    if(index < 0) index = slides.length - 1;
+
+    show(index);
+}
+
+setInterval(() => move(1), 4000);
+</script>

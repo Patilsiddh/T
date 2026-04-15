@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- Basic SEO -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Login to your account to access dashboard, manage plans, and explore features.">
+<meta name="keywords" content="login, user login, dashboard access">
+<meta name="author" content="Your Company Name">
+
+<!-- Open Graph (for social sharing) -->
+<meta property="og:title" content="Login | Your App Name">
+<meta property="og:description" content="Secure login to access your account.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.url }}">
+<meta property="og:image" content="/static/images/preview.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Login | Your App Name">
+<meta name="twitter:description" content="Secure login to your account">
+<meta name="twitter:image" content="/static/images/preview.png">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Wrapper */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Card */
+.card {
+    width: 100%;
+    max-width: 380px;
+    padding: 25px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+/* Hover effect (desktop only) */
+@media (hover: hover) {
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+}
+
+/* Heading */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: clamp(20px, 2.5vw, 26px);
+}
+
+/* Inputs */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #6B00DC;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(107, 0, 220, 0.1);
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #E10091, #6B00DC);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+    .card {
+        padding: 30px;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .card {
+        max-width: 420px;
+        padding: 35px;
+    }
+}
+</style>
+
+<div class="wrapper">
+    <div class="card">
+        <h2>Login</h2>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username">
+            <input type="password" name="password" placeholder="Password">
+            <button>Login</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

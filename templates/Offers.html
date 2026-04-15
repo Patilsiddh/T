@@ -1,0 +1,512 @@
+{% set broadband_offer = broadband_offer if broadband_offer is defined else None %}
+{% set dth_offer = dth_offer if dth_offer is defined else None %}
+{% set popup_offer = popup_offer if popup_offer is defined else None %}
+
+{% if popup_offer %}
+
+<div id="offerPopup" class="offer-popup">
+
+    <div class="popup-box">
+
+        <span class="close-btn" id="closePopupBtn">×</span>
+
+        <div class="popup-header">
+            🎉 {{ popup_offer.title }} 🎉
+        </div>
+
+        <div class="popup-text">
+            {{ popup_offer.amount_text }}
+        </div>
+
+        <div class="popup-subtext">
+            {{ popup_offer.subtitle }}
+        </div>
+<a href="https://api.whatsapp.com/send?phone=919922562197&text={{
+'Hello %0A%0A'
+~ 'I am interested in Offer plan.%0A%0A'
+~ 'Discount: ' ~ popup_offer.amount_text ~ '%0A%0A'
+~ 'Please share more details about plans and new connection.' 
+| urlencode }}"
+target="_blank"
+class="popup-btn">
+Connect on WhatsApp
+</a>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+</div>
+<style>/* ===== FULL SCREEN BLAST ===== */
+
+
+.popup-offer-img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+    margin:12px 0;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3);
+}
+
+.celebration-blast{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.85);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:99999;
+    overflow:hidden;
+}
+
+/* TEXT */
+.blast-text{
+    font-size:32px;
+    color:#ffcc00;
+    font-weight:800;
+    animation:pulse 0.8s infinite;
+    text-align:center;
+}
+
+/* FIREWORK PARTICLES */
+.fireworks span{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#ff004c;
+    border-radius:50%;
+    animation:explode 1.5s infinite ease-in-out;
+}
+
+/* RANDOM POSITION EFFECT */
+.fireworks span:nth-child(1){top:20%;left:30%;background:#ff004c;}
+.fireworks span:nth-child(2){top:40%;left:70%;background:#00ffcc;}
+.fireworks span:nth-child(3){top:60%;left:50%;background:#ffcc00;}
+.fireworks span:nth-child(4){top:30%;left:80%;background:#ff6600;}
+.fireworks span:nth-child(5){top:70%;left:20%;background:#ff00ff;}
+.fireworks span:nth-child(6){top:50%;left:10%;background:#00ff00;}
+.fireworks span:nth-child(7){top:10%;left:60%;background:#ff004c;}
+.fireworks span:nth-child(8){top:80%;left:80%;background:#00ccff;}
+.fireworks span:nth-child(9){top:25%;left:45%;background:#ffffff;}
+
+/* EXPLOSION ANIMATION */
+@keyframes explode{
+    0%{transform:scale(0);opacity:1;}
+    50%{transform:scale(3);opacity:0.8;}
+    100%{transform:scale(5);opacity:0;}
+}
+
+/* PULSE */
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+}</style>
+
+
+
+<style>
+
+/* ===== POPUP BACKDROP ===== */
+.offer-popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.75);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+/* ===== POPUP BOX ===== */
+.popup-box{
+    width:90%;
+    max-width:420px;
+
+    background: linear-gradient(90deg,rgba(106,90,205,0.75),rgba(123,104,238,0.75),rgba(108,99,255,0.75));
+    /* 👆 transparent premium purple */
+
+    color:#fff;
+    padding:25px;
+    border-radius:16px;
+    text-align:center;
+    position:relative;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    animation:popIn 0.5s ease;
+}
+
+/* ANIMATION */
+@keyframes popIn{
+    from{transform:scale(0.6); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+    position:absolute;
+    top:10px;
+    right:12px;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* TEXT */
+.popup-header{
+    font-size:18px;
+    font-weight:700;
+}
+
+.popup-text{
+    margin-top:10px;
+    font-size:16px;
+}
+
+.popup-subtext{
+    font-size:13px;
+    margin-top:5px;
+    opacity:0.9;
+}
+
+/* BUTTON */
+.popup-btn{
+    display:inline-block;
+    margin-top:15px;
+    padding:10px 18px;
+
+    background: rgba(255,255,255,0.15);
+    color:#ffffff;
+
+    font-weight:600;
+    border-radius:10px;
+    text-decoration:none;
+
+    border:1px solid rgba(255, 255, 255, 0.25);
+
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+
+    transition:0.3s ease;
+}
+
+/* CRACKER ANIMATION */
+.cracker{
+    margin-top:15px;
+    font-size:20px;
+    animation:shake 0.6s infinite;
+}
+
+@keyframes shake{
+    0%{transform:rotate(0deg);}
+    25%{transform:rotate(5deg);}
+    50%{transform:rotate(-5deg);}
+    75%{transform:rotate(5deg);}
+    100%{transform:rotate(0deg);}
+}
+/* ===== RESET ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html, body{
+    width:100%;
+    overflow-x:hidden;
+    font-family:'Poppins',sans-serif;
+}
+
+/* ✅ FIX: REMOVE EXTRA SPACE AFTER FOOTER */
+body{
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
+
+/* ===== MAIN WRAPPER ===== */
+.page-wrapper{
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+/* ===== HERO SECTION ===== */
+.land{
+    background:#53109a;
+    padding:40px 0;
+    text-align:center;
+
+    /* ❌ REMOVED flex:1 (this was causing blue space) */
+}
+
+/* ===== CONTAINER ===== */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:0 20px;
+}
+
+/* ===== TITLE ===== */
+.play h1{
+    font-size:70px;
+    color:#fff;
+}
+.play span{ color:#E10092; }
+
+/* ===== BUTTON ===== */
+.land-btn{
+    margin-top:10px;
+    width:250px;
+    height:45px;
+    background:#E10092;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+/* ===== SERVICES ===== */
+.services-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+    gap:30px;
+    margin-top:50px;
+    flex-wrap:wrap;
+}
+
+/* ===== CARD ===== */
+.service-box{
+    flex:1;
+    min-width:320px;
+    max-width:480px;
+    background:#fff;
+    padding:30px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 12px 30px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.service-box:hover{
+    transform:translateY(-6px);
+}
+
+/* ===== CARD COLORS ===== */
+
+/* ===== TEXT ===== */
+.service-box p{
+    color:#555;
+    margin:10px 0;
+}
+
+/* ===== BUTTON ===== */
+.subtn{
+    margin-top:10px;
+    padding:10px 18px;
+    background:#E10092;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+
+.services-wrapper{
+    gap:20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.flash-offer{
+    width:calc(100% + 30px);
+    margin-left:-15px;
+
+    background: #53109a;
+    color:#fff;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:12px;
+    position:relative;
+    overflow:hidden;
+
+    box-shadow:0 8px 20px rgba(95,91,167,0.25);
+}
+
+.main-content{
+    padding:0px;
+}
+
+/* SCROLL TEXT */
+.offer-marquee{
+    white-space:nowrap;
+    overflow:hidden;
+    margin-bottom:5px;
+}
+
+.offer-marquee span{
+    display:inline-block;
+    padding-left:100%;
+    animation:scroll 8s linear infinite;
+    font-size:13px;
+    font-weight:700;
+    color:#fff;
+}
+
+@keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+}
+
+/* SHINE EFFECT */
+.flash-offer::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.4),transparent);
+    animation:shine 3s infinite;
+}
+
+@keyframes shine{
+    0%{left:-100%;}
+    100%{left:100%;}
+}
+
+/* ===== AREA ===== */
+.service-area{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+}
+
+.area-chip{
+    padding:7px 14px;
+    background:#fff;
+    color:#333;
+    border-radius:20px;
+    font-size:13px;
+    border:1px solid #e5e7eb;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.area-chip:hover{
+    background:#53109a;
+    color:#fff;
+    transform:translateY(-2px);
+}
+
+/* ===== IMAGE ===== */
+.pic{
+    margin:0;
+    padding:0;
+    line-height:0;
+    background:#53109a;   /* same purple */
+    display:flex;
+    justify-content:center;
+}
+
+.pic img{
+    display:block;
+    width:100%;
+    max-width:400px;
+    height:auto;
+    margin:0 auto;
+   
+}
+
+/* ===== FOOTER ===== */
+
+
+.popup-img{
+    width:100%;
+    max-height:150px;
+    object-fit:contain;
+    border-radius:10px;
+    margin-top:10px;
+}
+.footer p{
+    color:#ccc;
+    font-size:14px;
+    margin:5px 0;
+}
+
+.footer-links{
+    margin-top:15px;
+}
+
+.footer-links a{
+    color:#fff;
+    margin:0 10px;
+    text-decoration:none;
+}
+
+.footer-links a:hover{
+    color:#E10092;
+}
+
+.popup-offer-img{
+    width:100%;
+    max-height:120px;
+    object-fit:cover;
+    border-radius:10px;
+    margin:10px 0;
+}
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+
+    .services-wrapper{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .service-box{
+        max-width:90%;
+    }
+
+
+
+    .play h1{
+        font-size:45px;
+    }
+}
+
+
+
+
+</style>
+

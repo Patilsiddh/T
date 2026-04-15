@@ -1,0 +1,31 @@
+<!-- ===== AD STRIP ===== -->
+<div class="ad-strip">
+    <div class="ad-track">
+        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner1.jpg">
+        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner2.jpg">
+        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner3.jpg">
+        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner1.jpg">
+    </div>
+
+    <style>.ad-strip{
+    overflow:hidden;
+    background:#000;
+    padding:10px 0;
+}
+
+.ad-track{
+    display:flex;
+    gap:20px;
+    animation:scrollAds 15s linear infinite;
+}
+
+.ad-track img{
+    height:120px;
+    border-radius:10px;
+}
+
+@keyframes scrollAds{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}</style>
+</div>

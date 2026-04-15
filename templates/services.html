@@ -1,0 +1,657 @@
+{% extends "base.html" %}
+
+{% block title %}Tata Play Fiber | Pune{% endblock %}
+
+{% block content %}
+
+<style>
+/* ================= GLOBAL ================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+/* ================= CATEGORY COLLAPSE FIX ================= */
+.category-content{
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transform: translateY(-10px);
+    transition: all 0.5s ease;
+}
+
+/* OPEN STATE */
+.category-content.active{
+    max-height:5000px;
+    opacity:1;
+    transform: translateY(0);
+}
+
+/* ACTIVE CATEGORY HEADER EFFECT */
+.category-title{
+    cursor:pointer;
+    user-select:none;
+    transition:0.3s;
+}
+
+.category-title:hover{
+    color:#00c6ff;
+    transform: scale(1.02);
+}
+
+/* ROTATE ICON */
+.category-title::after{
+    content:"⌄";
+    margin-left:10px;
+    display:inline-block;
+    transition:0.3s;
+}
+
+.category-title.active::after{
+    transform: rotate(180deg);
+}
+
+body{
+    min-height:100vh;
+    color:#e5e7eb;
+    background:#2f1664;
+    overflow-x:hidden;
+}
+
+
+
+
+/* ================= GLOW ================= */
+body::before,
+body::after{
+    content:"";
+    position:fixed;
+    border-radius:50%;
+    filter: blur(100px);
+    opacity:0.45;
+    z-index:-1;
+}
+
+body::before{
+    width:450px;height:450px;
+    background:#910dde;
+    top:-160px;left:-160px;
+}
+
+body::after{
+    width:550px;height:550px;
+    background:#8c2090;
+    bottom:-200px;right:-200px;
+}
+
+/* ================= CATEGORY BAR ================= */
+.category-bar{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:15px;
+    justify-content:center;
+}
+
+.cat-btn{
+    padding:10px 16px;
+    border-radius:25px;
+    border:none;
+    cursor:pointer;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    transition:0.3s;
+    white-space:nowrap;
+}
+
+.cat-btn.active{
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+}
+
+/* ================= STATIC INFO ================= */
+.static-info{
+    text-align:center;
+    padding:40px 20px;
+}
+
+/* ================= CATEGORY PANELS ================= */
+.category-panel{
+    display:none;
+    max-width:1200px;
+    margin:40px auto;
+    padding:20px;
+}
+
+.category-panel.active{
+    display:block;
+    animation:fadeUp 0.4s ease;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* ================= PLAN UI ================= */
+.plans-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:25px;
+}
+
+.plan-card{
+    background:rgba(255,255,255,0.06);
+    border-radius:20px;
+    padding:22px;
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+.plan-title{
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.plan-description{
+    font-size:13px;
+    color:#b8c2ff;
+    margin-bottom:10px;
+}
+
+.plan-images img{
+    width:70px;height:70px;
+    border-radius:10px;
+    margin-right:8px;
+}
+
+.duration-item{
+    margin-top:10px;
+    padding:10px;
+    background:rgba(255,255,255,0.05);
+    border-radius:12px;
+}
+
+.speed-item{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+}
+
+.price-box{
+    display:flex;
+    gap:6px;
+}
+
+.original-price{
+    text-decoration:line-through;
+    color:#ff6b6b;
+}
+
+.discount-price{
+    color:#00ffcc;
+}
+
+/* ================= BUTTON ================= */
+.btn-buy{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+    padding:12px;
+    border-radius:12px;
+    text-decoration:none;
+    color:white;
+    background:linear-gradient(90deg,#00c6ff,#0072ff);
+}
+</style>
+<!-- ================= FILTER BAR ================= -->
+<div class="filter-bar">
+
+    
+
+    <select id="durationFilter">
+        <option value="all">All Duration</option>
+        <option value="1">1 Month</option>
+        <option value="3">3 Month</option>
+        <option value="6">6 Month</option>
+        <option value="12">12 Month</option>
+    </select>
+
+    <select id="priceFilter">
+        <option value="all">All Prices</option>
+        <option value="low">Below ₹500</option>
+        <option value="mid">₹500 - ₹1000</option>
+        <option value="high">Above ₹1000</option>
+    </select>
+
+    <!-- ✅ CLEAR BUTTON -->
+    <button id="clearFilters">Clear</button>
+
+</div>
+
+<style>
+
+    .save-badge{
+    margin-top:5px;
+    font-size:12px;
+    color:#00ffcc;
+    background:rgba(0,255,204,0.1);
+    padding:4px 8px;
+    border-radius:6px;
+    display:inline-block;
+    font-weight:600;
+}
+.filter-bar{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:20px 0;
+}
+
+.filter-bar select,
+#clearFilters{
+    padding:10px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+    font-size:14px;
+    color:#000;          /* ✅ selected text color */
+    background:#fff;     /* optional but recommended */
+}
+
+/* ✅ dropdown options text color */
+.filter-bar select option{
+    color:#000;
+    background:#fff;
+}
+#clearFilters{
+    background:#ff4d4d;
+    color:white;
+    cursor:pointer;
+}
+</style>
+
+
+<!-- ================= CATEGORY BAR ================= -->
+<div class="category-bar">
+    {% for category in categories %}
+    <button class="cat-btn {% if loop.first %}active{% endif %}"
+            data-cat="cat-{{ loop.index }}">
+        {{ category['name'] }}
+    </button>
+    {% endfor %}
+</div>
+
+
+<!-- ================= STATIC INFO ================= -->
+<div id="static-info" class="static-info">
+    <h2>🚀 Welcome to Tata Play Fiber Plans</h2>
+    <p>Select a category above to explore plans.</p>
+</div>
+
+
+<!-- ================= CATEGORY PANELS ================= -->
+{% for category in categories %}
+
+<div class="category-panel {% if loop.first %}active{% endif %}"
+     id="cat-{{ loop.index }}">
+
+    <h2>{{ category['name'] }}</h2>
+
+    <div class="plans-container">
+
+        {% for plan_item in category['plans'] %}
+        <div class="plan-card"
+             data-category="{{ category['name'] | lower }}">
+
+            <h3 class="plan-title">
+                {{ plan_item['plan']['name'] }}
+            </h3>
+
+            <p class="plan-description">
+                {{ plan_item['plan']['description'] }}
+            </p>
+
+            {% if plan_item['images'] %}
+            <div class="plan-images">
+                {% for img in plan_item['images'] %}
+                <img src="{{ url_for('static', filename='uploads/' ~ img.filename) }}">
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% for dur in plan_item['durations'] %}
+            <div class="duration-item"
+                 data-duration="{{ dur['duration'] }}"
+                 data-price="{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else 0 }}">
+
+                <div>{{ dur['duration'] }} Month Plan</div>
+
+                {% for spd in dur['speeds'] %}
+                <div class="speed-item">
+
+                    {% if spd['speed'] and spd['speed'] != 'None' %}
+                        <span>{{ spd['speed'] }} Mbps</span>
+                    {% else %}
+                        <span></span>
+                    {% endif %}
+
+                    {% if spd['price'] or spd['discounted_price'] %}
+                    <div class="price-box">
+
+                        {% if spd['price'] %}
+                            <span class="original-price">₹{{ spd['price'] }}</span>
+                        {% endif %}
+
+                        {% if spd['discounted_price'] %}
+                            <span class="discount-price">₹{{ spd['discounted_price'] }}</span>
+                        {% endif %}
+
+                    </div>
+                    {% endif %}
+
+                </div>
+
+<!-- ✅ SAVE BADGE -->
+{% if spd['price'] and spd['discounted_price'] %}
+    {% set saving = spd['price'] - spd['discounted_price'] %}
+    {% if saving > 0 %}
+        <div class="save-badge">
+            You Save ₹{{ saving }}
+        </div>
+    {% endif %}
+{% endif %}
+                {% endfor %}
+
+{% set msg %}
+Hello, I am interested in {{ category['name'] }} plan {{ plan_item['type'] if plan_item['type'] else '' }}
+
+Name: {{ plan_item['plan']['name'] }}
+Duration: {{ dur['duration'] }} months
+Price: ₹{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else '' }}
+
+{% if dur['speeds'] and dur['speeds'][0]['speed'] %}
+Speed: {{ dur['speeds'][0]['speed'] }} Mbps
+{% endif %}
+
+Please share more details.
+{% endset %}
+
+<a class="btn-buy"
+   target="_blank"
+   href="https://api.whatsapp.com/send?phone=919922562197&text={{ msg | urlencode }}">
+   Buy Now
+</a>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endfor %}
+
+
+<!-- ================= JS ================= -->
+<script>
+
+// ================= CATEGORY SWITCH =================
+const buttons = document.querySelectorAll(".cat-btn");
+const panels = document.querySelectorAll(".category-panel");
+const staticInfo = document.getElementById("static-info");
+
+let activeCategory = null;
+
+buttons.forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        const target = btn.dataset.cat;
+
+        buttons.forEach(b => b.classList.remove("active"));
+        panels.forEach(p => p.classList.remove("active"));
+
+        btn.classList.add("active");
+        const activePanel = document.getElementById(target);
+        activePanel.classList.add("active");
+
+        staticInfo.style.display = "none";
+
+        // 🔥 SET ACTIVE CATEGORY FROM PANEL TITLE
+        activeCategory = activePanel.querySelector("h2").innerText.toLowerCase();
+
+        applyFilters(); // re-run filter
+    });
+});
+
+
+// ================= FILTER LOGIC =================
+const durationFilter = document.getElementById("durationFilter");
+const priceFilter = document.getElementById("priceFilter");
+const clearBtn = document.getElementById("clearFilters");
+
+function applyFilters() {
+    const dur = durationFilter.value;
+    const price = priceFilter.value;
+
+    document.querySelectorAll(".plan-card").forEach(plan => {
+
+        let categoryMatch = true;
+        if (activeCategory) {
+            categoryMatch = plan.dataset.category === activeCategory;
+        }
+
+        let hasVisibleDuration = false;
+
+        plan.querySelectorAll(".duration-item").forEach(d => {
+
+            let dVal = d.dataset.duration;
+            let pVal = parseFloat(d.dataset.price || 0);
+
+            let durMatch = (dur === "all" || dVal === dur);
+
+            let priceMatch = true;
+
+            if (price === "low") priceMatch = pVal < 500;
+            else if (price === "mid") priceMatch = pVal >= 500 && pVal <= 1000;
+            else if (price === "high") priceMatch = pVal > 1000;
+
+            if (durMatch && priceMatch) {
+                d.classList.remove("hide");
+                hasVisibleDuration = true;
+            } else {
+                d.classList.add("hide");
+            }
+
+        });
+
+        if (categoryMatch && hasVisibleDuration) {
+            plan.classList.remove("hide");
+            plan.classList.add("show");
+        } else {
+            plan.classList.add("hide");
+            plan.classList.remove("show");
+        }
+
+    });
+
+    // 🔥 ADD FEEDBACK ANIMATION
+    const container = document.querySelector(".plans-container");
+    container.classList.add("filter-active");
+
+    setTimeout(() => {
+        container.classList.remove("filter-active");
+    }, 400);
+}
+
+
+// ================= EVENTS =================
+durationFilter.addEventListener("change", applyFilters);
+priceFilter.addEventListener("change", applyFilters);
+
+
+// ================= CLEAR =================
+clearBtn.addEventListener("click", () => {
+    durationFilter.value = "all";
+    priceFilter.value = "all";
+
+    document.querySelectorAll(".plan-card").forEach(p => p.style.display = "block");
+    document.querySelectorAll(".duration-item").forEach(d => d.style.display = "block");
+});
+
+
+// ================= INIT FIRST CATEGORY =================
+window.onload = () => {
+    const firstPanel = document.querySelector(".category-panel.active");
+    if (firstPanel) {
+        activeCategory = firstPanel.querySelector("h2").innerText.toLowerCase();
+    }
+};
+
+</script>
+
+
+<style>/* ================= SLIM NAVBAR ATTACHED FILTER ================= */
+.filter-bar{
+    position:sticky;
+    top:0;
+    z-index:50;
+
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+
+    padding:10px 15px;
+    margin:0;
+
+    background:rgba(20,10,50,0.85);
+    backdrop-filter:blur(10px);
+
+    border-bottom:2px solid rgba(255,255,255,0.1);
+
+    /* 🔥 SHAPE LIKE \_/ */
+    clip-path: polygon(
+        0% 0%,
+        100% 0%,
+        100% 85%,
+        85% 100%,
+        15% 100%,
+        0% 85%
+    );
+
+    box-shadow:0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ================= SELECT ================= */
+.filter-bar select{
+    padding:8px 12px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.15);
+
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:13px;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* HOVER */
+.filter-bar select:hover{
+    background:rgba(255,255,255,0.15);
+    transform:translateY(-1px);
+}
+
+/* FOCUS */
+.filter-bar select:focus{
+    border-color:#00c6ff;
+    box-shadow:0 0 8px rgba(0,198,255,0.4);
+}
+
+/* ================= CLEAR BUTTON ================= */
+#clearFilters{
+    padding:8px 14px;
+    border-radius:8px;
+    border:none;
+
+    background:linear-gradient(90deg,#ff4d4d,#ff0000);
+    color:white;
+    font-size:13px;
+
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* HOVER */
+#clearFilters:hover{
+    transform:translateY(-1px);
+    box-shadow:0 5px 15px rgba(255,0,0,0.4);
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:600px){
+    .filter-bar{
+        gap:8px;
+        padding:8px;
+    }
+
+    .filter-bar select,
+    #clearFilters{
+        font-size:12px;
+        padding:6px 10px;
+    }
+}
+
+/* ================= CLEAN FILTER ANIMATION ================= */
+
+/* smooth plan transition */
+.plan-card{
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* hidden state */
+.plan-card.hide{
+    opacity:0;
+    transform:translateY(6px);
+    pointer-events:none;
+    position:absolute; /* prevents layout jump */
+}
+
+/* visible */
+.plan-card.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* duration smooth hide */
+.duration-item{
+    transition: opacity 0.2s ease;
+}
+
+.duration-item.hide{
+    opacity:0;
+    display:none;
+}
+@keyframes filterPulse{
+    0%{
+        transform:scale(1);
+        box-shadow:0 0 0 rgba(0,198,255,0);
+    }
+    50%{
+        transform:scale(1.02);
+        box-shadow:0 0 20px rgba(0,198,255,0.5);
+    }
+    100%{
+        transform:scale(1);
+        box-shadow:0 0 0 rgba(0,198,255,0);
+    }
+}
+
+</style>
+
+{% endblock %}

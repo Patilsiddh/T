@@ -1,0 +1,47 @@
+
+<div class="page-wrapper">
+
+
+
+
+<!-- ===== OFFER POPUP ===== -->
+{% if popup_offer %}
+
+{% if popup_offer %}
+
+<div id="offerPopup" class="offer-popup">
+
+    <div class="popup-box">
+
+        <span class="close-btn" id="closePopupBtn">×</span>
+
+        <div class="popup-header">
+            🎉 {{ popup_offer.title }} 🎉
+        </div>
+
+
+
+<img src="{{ url_for('static', filename='uploads/OIP_2.jpg') }}">
+
+        <div class="popup-text">
+            {{ popup_offer.amount_text }}
+        </div>
+
+        <a href="https://api.whatsapp.com/send?phone=919922562197&text={{ popup_offer.amount_text | urlencode }}"
+           target="_blank"
+           class="popup-btn">
+           Connect on WhatsApp
+        </a>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+    </div>
+
+</div>
+
+{% endif %}
+

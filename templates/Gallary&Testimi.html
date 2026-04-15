@@ -1,0 +1,340 @@
+<!-- ===== GALLERY ===== -->
+<!-- ===== GALLERY ===== -->
+
+    <!-- ===== THRILL GALLERY ===== -->
+<div class="thrill-gallery">
+    <h2>🔥 Extra Experience Gallery</h2>
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0032.jpg') }}">
+            <div class="overlay">🔥 Extra Thrill Gaming Setup</div>
+        </div>
+
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0037.jpg') }}">
+            <div class="overlay">📶 Extra Long HD Video Calls</div>
+        </div>
+
+        <div class="gallery-item">
+             <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0036.jpg') }}">
+            <div class="overlay">⚡ Extra Entertainment Options</div>
+        </div>
+
+        <div class="gallery-item">
+           <img src="{{ url_for('static', filename='uploads/FB_IMG_1774802296243.jpg') }}">
+            <div class="overlay">🚀 Next-Gen Fiber Performance for Every Home</div>
+        </div>
+
+    </div>
+</div><div class="testimonials">
+    <h2>What Customers Say</h2>
+
+    <div class="review-marquee">
+        <div class="review-track">
+
+            <!-- DUPLICATE CARDS FOR LOOP EFFECT -->
+
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Super fast internet! Installation done in 1 day.</p>
+                <strong>Rahul</strong>
+            </div>
+
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Best service in Wagholi. Very stable connection.</p>
+                <strong>Sneha</strong>
+            </div>
+
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Perfect for gaming. No lag at all.</p>
+                <strong>Amit</strong>
+            </div>
+
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Great support team. Quick installation.</p>
+                <strong>Priya</strong>
+            </div>
+
+            <!-- DUPLICATE AGAIN FOR CONTINUOUS LOOP -->
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Super fast internet! Installation done in 1 day.</p>
+                <strong>Rahul</strong>
+            </div>
+
+            <div class="testimonial-card">
+                ⭐⭐⭐⭐⭐
+                <p>Best service in Wagholi. Very stable connection.</p>
+                <strong>Sneha</strong>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+/* ===== GALLERY SECTION ===== */
+.gallery{
+    padding:70px 20px;
+    text-align:center;
+    background:#f8f9ff;
+}
+
+
+.gallery h2{
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:30px;
+    color:#111;
+}
+
+/* GRID */
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:22px;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* CARD */
+.gallery-item{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.12);
+
+    display:inline-block;   /* ✅ key fix */
+    width:100%;
+}
+
+/* SHOW ANIMATION */
+/* ===== IMAGE FIX (SMALL + CLEAN FIT) ===== */
+/* ===== FIXED GALLERY IMAGE (NO CROP, CLEAN FIT) ===== */
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:contain;   /* ✅ shows full image */
+    object-position:center;
+    display:block;
+}
+/* SMALLER NICE LOOK */
+
+/* SOFT POP ANIMATION */
+.gallery-item.show{
+    animation: popSoft 0.6s ease forwards;
+}
+
+@keyframes popSoft{
+    0%{
+        transform: translateY(40px) scale(0.92);
+        opacity:0;
+    }
+    100%{
+        transform: translateY(0) scale(1);
+        opacity:1;
+    }
+}
+
+/* ZOOM EFFECT */
+.gallery-item:hover img{
+    transform:scale(1.08);
+}
+
+/* OVERLAY TEXT */
+.gallery-item .overlay{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:16px;
+
+    background:linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    color:#fff;
+
+    font-size:15px;
+    font-weight:600;
+
+    opacity:0;
+    transition:0.3s ease;
+}
+
+.gallery-item:hover .overlay{
+    opacity:1;
+}
+/* ===== REVIEWS SECTION ===== */
+
+
+/* ===== REVIEWS SECTION ===== */
+.testimonials{
+    padding:70px 20px;
+    background:#53109a;
+    overflow:hidden;
+    color:white;
+    text-align:center;
+}
+
+.testimonials h2{
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:40px;
+    color:#fff;
+}
+
+/* OUTER VIEWPORT */
+.review-marquee{
+    overflow:hidden;
+    width:100%;
+}
+
+/* MOVING TRACK */
+.review-track{
+    display:flex;
+    gap:30px;              /* ✅ GAP BETWEEN CARDS */
+    width:max-content;
+    animation: scrollLoop 28s linear infinite;
+}
+
+/* CARD */
+.testimonial-card{
+    min-width:280px;
+    max-width:280px;
+
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:16px;
+
+    padding:20px;
+    color:#fff;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* TEXT */
+.testimonial-card p{
+    font-size:14px;
+    opacity:0.9;
+    line-height:1.5;
+    margin:10px 0;
+}
+
+/* ⭐ SMOOTH LOOP (NO JUMP) */
+@keyframes scrollLoop{
+    0%{
+        transform:translateX(0);
+    }
+    100%{
+        transform:translateX(-50%);
+    }
+}
+
+/* PAUSE ON HOVER */
+.review-marquee:hover .review-track{
+    animation-play-state:paused;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .testimonial-card{
+        min-width:240px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== THRILL GALLERY SECTION FIX ===== */
+.thrill-gallery{
+    background:#53109a;
+  
+   
+}
+
+/* TITLE INSIDE THRILL */
+.thrill-gallery h2{
+    color:white;
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:30px;
+}
+
+/* KEEP SAME GRID BUT IMPROVED */
+.thrill-gallery .gallery-grid{
+    max-width:1200px;
+}
+
+/* CARD IMPROVEMENT */
+.thrill-gallery .gallery-item{
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 20px 40px rgba(0,0,0,0.25);
+}
+
+/* IMAGE SMOOTHER LOOK */
+.thrill-gallery .gallery-item img{
+    filter:contrast(1.05) saturate(1.1);
+}
+
+/* POP ANIMATION STRONGER */
+.gallery-item.show{
+    animation: popIn 0.6s ease forwards;
+}
+
+@keyframes popIn{
+    0%{
+        transform: translateY(60px) scale(0.85);
+        opacity:0;
+    }
+    60%{
+        transform: translateY(-10px) scale(1.03);
+        opacity:1;
+    }
+    100%{
+        transform: translateY(0) scale(1);
+        opacity:1;
+    }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const elements = document.querySelectorAll(".gallery-item, .testimonial-card");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+
+            if (entry.isIntersecting) {
+
+                setTimeout(() => {
+                    entry.target.classList.add("show");
+                }, index * 120); // smooth stagger animation
+            }
+
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    elements.forEach(el => observer.observe(el));
+});
+</script>

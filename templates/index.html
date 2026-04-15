@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Tata Play Fiber | Pune{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+{% endwith %}
+
+
+
+{% include "TopBarOffer.html" %}
+{% include "OfferPopup.html" %}
+  {% include 'Carosal.html' %}
+{% include "Offers.html" %}
+
+{% include "Sections.html" %}
+
+
+
+<!-- ===== OTHER SECTIONS ===== -->
+
+
+
+  
+
+{% include "WHYUS.html" %}
+
+{% include "Gallary&Testimi.html" %}
+
+{% include "Offersection.html" %}
+{% include "WHYtata.html" %}
+{% include "FAQ.html" %}
+{% include "Support.html" %}
+{% include "footer.html" %}
+
+{% endblock %}

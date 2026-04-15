@@ -1,0 +1,164 @@
+<!-- ===== WHY CHOOSE US ===== -->
+<div class="why-us">
+    <h2>Why Choose Tata Play Fiber?</h2>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+           <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0025.jpg') }}">
+            <h3>Ultra Fast 1 Gbps Speed</h3>
+            <p>Game on with zero lag. Stream, download & work smoothly without interruptions.</p>
+        </div>
+
+        <div class="why-card">
+            <img src="{{ url_for('static', filename='uploads/FB_IMG_1774801957707.jpg') }}" alt="Network">
+            <h3>Reliable Network</h3>
+            <p>Stable fiber connection with minimal downtime across Pune for seamless usage.</p>
+        </div>
+
+        <div class="why-card">
+            <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0034.jpg') }}" alt="OTT">
+            <h3>Work From Home Ready</h3>
+<p>Seamless video calls, smooth uploads & downloads with ultra-stable fiber connection for remote work.</p>
+        </div>
+
+        <div class="why-card">
+            <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0026.jpg') }}" alt="Support">
+            <h3>24×7 Support</h3>
+            <p>Instant installation & quick support. Internet at your doorstep anytime you need.</p>
+        </div>
+
+    </div>
+</div>
+
+<style>/* ===== WHY CHOOSE US - IMAGE BOX FIX ===== */
+/* ===== WHY CHOOSE US SECTION ===== */
+.why-us{
+    padding:80px 20px;
+    background:#53109a;
+    text-align:center;
+    color:#fff;
+}
+
+/* TITLE */
+.why-us h2{
+    font-size:34px;
+    font-weight:800;
+    margin-bottom:50px;
+}
+
+/* GRID */
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:25px;
+    max-width:1100px;
+    margin:auto;
+}
+
+/* CARD (GLASS + POPUP BASE) */
+.why-card{
+    background: rgba(255,255,255,0.10);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:18px;
+
+    padding:25px 20px;
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+    /* POPUP INITIAL STATE */
+    opacity:0;
+    transform: translateY(60px) scale(0.95);
+    transition: all 0.7s ease;
+
+    overflow:hidden;
+}
+
+/* SHOW ANIMATION */
+.why-card.show{
+    opacity:1;
+    transform: translateY(0) scale(1);
+}
+
+/* IMAGE BIGGER + FLOAT LOOK */
+.why-card img{
+    width:100%;
+    max-width:160px;     /* BIGGER IMAGE */
+    height:160px;
+
+    object-fit:cover;    /* full clean fit */
+
+    border-radius:16px;
+
+    background: rgba(255,255,255,0.12);
+
+    padding:8px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+
+    transition:0.4s ease;
+}
+
+/* IMAGE POPUP HOVER */
+.why-card:hover img{
+    transform: scale(1.12) translateY(-5px);
+}
+
+/* CARD HOVER GLOW */
+.why-card:hover{
+    transform: translateY(-10px) scale(1.03);
+    background: rgba(255,255,255,0.16);
+}
+
+/* TITLE */
+.why-card h3{
+    font-size:18px;
+    font-weight:700;
+    margin-top:15px;
+
+    /* TRANSPARENT TEXT STYLE */
+    color: rgba(255,255,255,0.95);
+}
+
+/* DESCRIPTION TRANSPARENT LOOK */
+.why-card p{
+    font-size:14px;
+    color: rgba(255,255,255,0.75);
+    line-height:1.6;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .why-us h2{
+        font-size:26px;
+    }
+
+    .why-card img{
+        max-width:130px;
+        height:130px;
+    }
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const cards = document.querySelectorAll(".why-card");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+
+                setTimeout(() => {
+                    entry.target.classList.add("show");
+                }, index * 150); // stagger effect
+            }
+        });
+    }, { threshold: 0.2 });
+
+    cards.forEach(card => observer.observe(card));
+});
+</script>

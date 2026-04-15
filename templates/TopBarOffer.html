@@ -1,0 +1,82 @@
+{% if global_offer %}
+<div class="top-offer-bar">
+    <div class="offer-scroll">
+        <span>{{ global_offer }}</span>
+     
+    </div>
+</div>
+{% endif %}
+
+<style>
+
+/* ===== TOP OFFER BAR ===== */
+.top-offer-bar{
+    width:100%;
+    overflow:hidden;
+    position:relative;
+
+    background: linear-gradient(90deg, #3b1b66, #4a2a8a, #3b1b66);
+    padding:10px 0;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+/* ===== SCROLL TRACK ===== */
+.offer-scroll{
+    display:flex;
+    width:max-content;
+
+    animation: scrollTrack 12s linear infinite;
+}
+
+/* ===== TEXT ===== */
+.offer-scroll span{
+    white-space:nowrap;
+    font-weight:600;
+    font-size:14px;
+    color:#fff;
+
+    padding-right:150px;
+    letter-spacing:0.3px;
+}
+
+/* ===== START FROM RIGHT + MOVE LEFT ===== */
+@keyframes scrollTrack{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(-50%);
+    }
+}
+
+/* ===== PAUSE ON HOVER ===== */
+.top-offer-bar:hover .offer-scroll{
+    animation-play-state:paused;
+}
+
+/* ===== SHINE EFFECT ===== */
+.top-offer-bar::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:60%;
+    height:100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+
+    animation: shine 3s infinite;
+}
+
+@keyframes shine{
+    0%{ left:-60%; }
+    100%{ left:160%; }
+}
+
+</style>

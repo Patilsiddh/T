@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+
+/* ===== GLOBAL RESET ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#1b0c3d;
+    color:#e5e7eb;
+}
+
+/* ===== HEADER ===== */
+.header{
+    background: linear-gradient(90deg,#4c1d95,#6d28d9);
+    padding:35px 20px;
+    text-align:center;
+    color:#fff;
+}
+
+.header h2{
+    font-size:30px;
+    font-weight:800;
+}
+
+/* ===== MAIN GRID ===== */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:25px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+/* ===== GLASS CARD ===== */
+.card,
+.contact-box{
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:16px;
+
+    padding:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+
+    color:white;
+    transition:0.3s ease;
+}
+
+.card:hover,
+.contact-box:hover{
+    transform:translateY(-5px);
+}
+
+/* ===== FORM ===== */
+form{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+input, textarea{
+    padding:10px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    color:#fff;
+    outline:none;
+}
+
+/* ===== BUTTONS ===== */
+.form-actions{
+    display:flex;
+    gap:10px;
+}
+
+button, a{
+    flex:1;
+    padding:10px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:600;
+    text-decoration:none;
+    cursor:pointer;
+    border:none;
+}
+
+button{
+    background: linear-gradient(90deg,#7c3aed,#4f46e5);
+    color:#fff;
+}
+
+a{
+    background:#25d366;
+    color:#fff;
+}
+
+/* ===== CONTACT BOX TEXT ===== */
+.contact-box b{
+    display:block;
+    margin-bottom:6px;
+    font-weight:700;
+}
+
+/* ===== CARD CONTENT ===== */
+.card h3{
+    margin-bottom:10px;
+    font-size:18px;
+    font-weight:700;
+}
+
+.card p{
+    font-size:14px;
+    line-height:1.6;
+    opacity:0.9;
+}
+
+.highlight{
+    color:#ffd6ff;
+    font-weight:600;
+}
+
+/* ===== MAP ===== */
+iframe{
+    width:100%;
+    height:220px;
+    border:none;
+    border-radius:12px;
+    margin-top:10px;
+}
+
+/* ===== SERVICE AREA ===== */
+.service-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:10px;
+}
+
+.area-chip{
+    padding:5px 10px;
+    font-size:12px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+    .container{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+<!-- HEADER -->
+<div class="header">
+    <h2>Contact Us</h2>
+    <p>Tata Play Fiber • Broadband • DTH Support Pune</p>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="card">
+
+        <h3>📩 Send Message</h3>
+
+        <form method="POST">
+
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="tel" name="mobile" placeholder="Mobile Number" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <textarea name="message" rows="3" placeholder="Your Requirement"></textarea>
+
+            <div class="form-actions">
+                <button type="submit">Send</button>
+
+                <a href="https://wa.me/919922562197" target="_blank">
+                    WhatsApp
+                </a>
+            </div>
+
+        </form>
+
+        <!-- CONTACT -->
+        <div class="contact-box">
+
+            <b>📞 Contact Info</b>
+            <b>Amol Shingare</b>
+            📱 +91 9922562197<br>
+            📧 sales@tatafibers.in<br>
+            ⏰ 24x7 Support Available
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div>
+
+        <!-- EXPERIENCE -->
+        <div class="card">
+
+            <h3>👨‍💼 Experience</h3>
+
+            <p>
+                We are a <span class="highlight">10+ years experienced team</span> in broadband,
+                WiFi, and DTH installation services across Pune.<br><br>
+
+                ✔ Fast installation (24–48 hours)<br>
+                ✔ Trusted local service provider
+            </p>
+
+        </div>
+
+        <!-- MAP -->
+        <div class="card">
+
+            <h3>📍 Location</h3>
+
+            <iframe
+                src="https://www.google.com/maps?q=Charholi%20Khurd%20Pune&output=embed">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
