@@ -3,8 +3,10 @@
 
     <!-- ===== THRILL GALLERY ===== -->
 <div class="thrill-gallery">
-    <h2> Extra Experience Gallery</h2>
-
+   
+<div class="gallery-title">
+    <h2>Extra Experience Gallery</h2>
+</div>
     <div class="gallery-grid">
 
         <div class="gallery-item">
@@ -32,7 +34,59 @@
 
 
 <style>
+
+    body{
+    margin-bottom: 0;
+}
 /* ===== GALLERY SECTION ===== */
+/* ===== REDUCE BOTTOM SPACE OF GALLERY ===== */
+/* ===== THRILL GALLERY (SPACE FIX ONLY) ===== */
+.thrill-gallery{
+    background:#53109a;
+    margin-bottom: 5px !important;   /* reduced gap */
+    padding-bottom: 10px !important; /* reduced padding */
+}
+
+/* title spacing */
+.thrill-gallery h2{
+    color:white;
+    font-size:28px;
+    font-weight:800;
+    margin: 20px 0 10px;  /* tighter spacing */
+}
+
+/* ===== OTT STYLE TITLE ===== */
+.gallery-title{
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: -25px;
+}
+
+.gallery-title h2{
+    font-family:  sans-serif;  /* OTT clean premium font */
+    font-weight: 600;
+    font-size: 28px;
+    color: #ffffff;
+    letter-spacing: 0.8px;
+
+    display: inline-block;
+    padding: 6px 14px;
+
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+/* grid spacing */
+.thrill-gallery .gallery-grid{
+    max-width:1200px;
+    margin: 0 auto;
+    gap: 18px;  /* slightly reduced gap between cards */
+}
+
+/* last item spacing remove */
+.thrill-gallery .gallery-item:last-child{
+    margin-bottom: 0 !important;
+}
 .thrill-gallery h2{
     text-align:center;
     font-size:28px;
@@ -51,7 +105,7 @@
 .gallery h2{
     font-size:32px;
     font-weight:800;
-    margin-bottom:30px;
+    ;
     color:#111;
 }
 
