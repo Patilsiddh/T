@@ -23,7 +23,8 @@
     <div class="footer-right">
 
       <!-- SUPPORT -->
-      <div class="support-box">
+      <div class="support-box footer-box">
+
         <div class="footer-toggle support-toggle">
           Support Representative <span class="arrow">+</span>
         </div>
@@ -52,7 +53,7 @@
       </div>
 
       <!-- TERMS -->
-      <div class="footer-box terms-box">
+      <div class="footer-box">
 
         <div class="footer-toggle terms-toggle">
           Terms & Conditions <span class="arrow">+</span>
@@ -68,7 +69,7 @@
       </div>
 
       <!-- CHARGES -->
-      <div class="footer-box terms-box">
+      <div class="footer-box">
 
         <div class="footer-toggle charges-toggle">
           Charges & Policies <span class="arrow">+</span>
@@ -90,21 +91,13 @@
     © 2026 Tata Play Fiber Pune
   </div>
 
-</div>
-<style>*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Inter', Arial, sans-serif;
-}
-
-.footer{
+</div><style>.footer{
   background:linear-gradient(135deg,#121721,#181f28);
   color:#fff;
   padding:40px 20px 20px;
+  font-family:Inter, Arial, sans-serif;
 }
 
-/* ===== LAYOUT ===== */
 .footer-wrapper{
   display:flex;
   justify-content:space-between;
@@ -113,10 +106,7 @@
   margin:auto;
 }
 
-/* LEFT */
-.footer-left{
-  flex:1;
-}
+.footer-left{ flex:1; }
 
 .footer-left h3{
   font-size:22px;
@@ -129,26 +119,19 @@
   margin:6px 0;
 }
 
-.footer-links{
-  margin-top:15px;
-}
-
 .footer-links a{
   color:#fff;
-  text-decoration:none;
   margin-right:12px;
   font-size:14px;
   opacity:0.85;
+  text-decoration:none;
 }
 
 /* RIGHT */
-.footer-right{
-  width:340px;
-}
+.footer-right{ width:340px; }
 
-/* BOXES */
-.footer-box,
-.support-box{
+/* BOX */
+.footer-box{
   background:rgba(255,255,255,0.05);
   padding:15px;
   border-radius:10px;
@@ -156,8 +139,7 @@
 }
 
 /* TOGGLE */
-.footer-toggle,
-.support-toggle{
+.footer-toggle{
   display:flex;
   justify-content:space-between;
   cursor:pointer;
@@ -168,18 +150,35 @@
 /* DROPDOWN */
 .terms-dropdown,
 .support-dropdown{
-  height:0;
+  max-height:0;
   overflow:hidden;
   opacity:0;
-  transition:0.3s ease;
+  transition:0.35s ease;
+  margin-top:0;
 }
 
 /* ACTIVE */
 .footer-box.active .terms-dropdown,
-.support-box.active .support-dropdown{
-  height:auto;
+.footer-box.active .support-dropdown{
+  max-height:400px;
   opacity:1;
   margin-top:10px;
+}
+
+/* LIST STYLE */
+.terms-dropdown li{
+  position:relative;
+  padding-left:18px;
+  margin-bottom:8px;
+  font-size:14px;
+  color:#e5e7eb;
+}
+
+.terms-dropdown li::before{
+  content:"•";
+  position:absolute;
+  left:0;
+  color:#fff;
 }
 
 /* INFO */
@@ -192,21 +191,14 @@
   border-radius:8px;
 }
 
-.icon{ font-size:18px; }
-.title{ font-weight:600; }
-.number{ font-size:13px; }
-.time{ font-size:11px; opacity:0.7; }
-
-/* ARROW */
 .arrow{
   transition:0.3s;
 }
 
-.active .arrow{
+.footer-box.active .arrow{
   transform:rotate(45deg);
 }
 
-/* BOTTOM */
 .footer-bottom{
   text-align:center;
   margin-top:25px;
@@ -214,36 +206,29 @@
   color:#94a3b8;
 }
 
-/* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .footer-wrapper{
     flex-direction:column;
   }
-
   .footer-right{
     width:100%;
   }
-}</style><script>
+}</style>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  const allBoxes = document.querySelectorAll(".footer-box, .support-box");
+  const boxes = document.querySelectorAll(".footer-box");
 
-  allBoxes.forEach(box => {
+  boxes.forEach(box => {
+    const toggle = box.querySelector(".footer-toggle");
 
-    const toggle = box.querySelector(".footer-toggle, .support-toggle");
+    toggle.addEventListener("click", () => {
 
-    toggle.addEventListener("click", function () {
-
-      // CLOSE ALL OTHER BOXES
-      allBoxes.forEach(b => {
-        if (b !== box) {
-          b.classList.remove("active");
-        }
+      boxes.forEach(b => {
+        if (b !== box) b.classList.remove("active");
       });
 
-      // TOGGLE CURRENT BOX
       box.classList.toggle("active");
-
     });
 
   });

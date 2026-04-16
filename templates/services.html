@@ -367,10 +367,11 @@ body::after{
                 {% endfor %}
 
 {% set msg %}
-Hello, I am interested in {{ category['name'] }} plan {{ plan_item['type'] if plan_item['type'] else '' }} | 
-Name: {{ plan_item['plan']['name'] }} | 
-Duration: {{ dur['duration'] }} months | 
-Price: ₹{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else '' }}{% if dur['speeds'] and dur['speeds'][0]['speed'] %} | Speed: {{ dur['speeds'][0]['speed'] }} Mbps{% endif %} | 
+Hello, I am interested in {{ category['name'] }} plan {{ plan_item['type'] if plan_item['type'] else '' }} 
+Name: {{ plan_item['plan']['name'] }} 
+Duration: {{ dur['duration'] }} months 
+Price: ₹{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else '' }}{% if dur['speeds'] and dur['speeds'][0]['speed'] %} 
+Speed: {{ dur['speeds'][0]['speed'] }} Mbps{% endif %} 
 Please share more details.
 {% endset %}
 <a class="btn-buy"
