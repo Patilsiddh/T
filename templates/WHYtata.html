@@ -1,118 +1,206 @@
+<!-- ===== PROFESSIONAL FONT ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <!-- ===== WHY TATA PLAY FIBER ===== -->
-<div class="tata-why reveal-section">
-    <h2>Why Tata Play Fiber?</h2>
+<div class="tata-why">
+
+    <h2>Built for Speed. Designed for You, Tata Play Fiber.</h2>
 
     <div class="tata-grid">
 
-        <div class="tata-card">
-            ⚡ Blazing Fast Speed
-            <p>Enjoy up to 1 Gbps speed for streaming, gaming & office work without lag.</p>
-        </div>
+       
 
         <div class="tata-card">
-            📡 Stable Connectivity
+            Stable Connectivity
             <p>Fiber network ensures minimal downtime and consistent performance.</p>
         </div>
 
         <div class="tata-card">
-            🎬 OTT Benefits
+            OTT Benefits
             <p>Get access to Netflix, Prime Video & more with selected plans.</p>
         </div>
 
         <div class="tata-card">
-            🛠 Quick Installation
+            Quick Installation
             <p>Same-day or next-day installation available in most Pune areas.</p>
         </div>
 
         <div class="tata-card">
-            💰 Value for Money
+            Value for Money
             <p>Affordable plans with maximum benefits and high reliability.</p>
         </div>
 
+        <div class="tata-card">
+    Seamless Streaming Experience
+    <p>Enjoy buffer-free 4K streaming on all major OTT platforms without interruptions.</p>
+</div>
+
+<div class="tata-card">
+    Easy Plan Upgrade
+    <p>Switch or upgrade your plan anytime with simple and hassle-free process.</p>
+</div>
     </div>
 </div>
 
 <style>
-
-/* ===== SECTION BACKGROUND ===== */
-.tata-why{
-    padding:80px 20px;
-    text-align:center;
-    background: #53109a;
-    color:#fff;
-    overflow:hidden;
+/* ===== GLOBAL RESET + FONT ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
+
+body{
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SECTION ===== */
+.tata-why{
+     padding:0px 15px ;
+    margin:0;
+    text-align:center;
+    background:#53109a;
+    color:#fff;
+}
+
+.why-us {
+    padding: 20px 20px;
+    background: #53109a;
+    text-align: center;
+    color: #fff;
+}
 /* TITLE */
 .tata-why h2{
-    font-size:36px;
-    font-weight:800;
-    margin-bottom:50px;
+    font-size:34px;
+    font-weight:900;
+    margin-bottom:25px; /* reduced gap */
+    letter-spacing:0.3px;
 }
 
 /* GRID */
 .tata-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
-    gap:22px;
+    grid-template-columns:repeat(3, 1fr); /* desktop */
+    gap:20px;
+    max-width:1100px;
+    margin:0 auto; /* center properly */
 }
 
 /* CARD */
 .tata-card{
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.06);
     backdrop-filter: blur(10px);
-    padding:25px;
-    border-radius:14px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
 
-    opacity:0;
-    transform: translateY(40px);
-    transition: all 0.6s ease;
+    padding:22px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,0.15);
+
+    transition: all 0.4s ease;
+
+    font-weight:500;
+    font-size:16px;
+
+    /* visible by default */
+    opacity:1;
+    transform: translateY(0);
 }
 
-/* CARD HOVER */
+/* HOVER */
 .tata-card:hover{
-    transform: translateY(-8px);
-    background: rgba(255,255,255,0.15);
+    transform: translateY(-6px);
+    background: rgba(255,255,255,0.10);
 }
 
-/* TEXT INSIDE CARD */
+/* TEXT */
 .tata-card p{
-    margin-top:10px;
+    margin-top:8px;
     font-size:14px;
-    opacity:0.9;
-    line-height:1.5;
+    font-weight:400;
+    color:#cbd5e1;
+    line-height:1.6;
 }
 
-/* ===== ANIMATION ACTIVE STATE ===== */
+/* ===== ANIMATION ===== */
+.tata-card.animate{
+    opacity:0;
+    transform: translateY(30px);
+}
+
 .tata-card.show{
     opacity:1;
     transform: translateY(0);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width:768px){
+
+@media (max-width: 600px) {
+    .tata-why {
+        padding: 0px 15px;
+    }
+}
+/* ===== TABLET (2 COLUMN) ===== */
+@media (max-width:1024px){
+    .tata-grid{
+        grid-template-columns:repeat(2, 1fr);
+        gap:18px;
+    }
+
+    .tata-why{
+        padding:50px 18px;
+    }
+
     .tata-why h2{
-        font-size:26px;
+        font-size:28px;
+    }
+}
+
+/* ===== MOBILE (1 COLUMN) ===== */
+@media (max-width:600px){
+    .tata-grid{
+        grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    .tata-why{
+        padding:0px 15px;
+    }
+
+    .tata-why h2{
+        font-size:22px;
+        margin-bottom:20px;
+    }
+
+    .tata-card{
+        padding:18px;
+        font-size:15px;
+    }
+
+    .tata-card p{
+        font-size:13px;
     }
 }
 </style>
 
 <script>
-// ===== SCROLL REVEAL ANIMATION =====
-const cards = document.querySelectorAll(".tata-card");
+document.addEventListener("DOMContentLoaded", function () {
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, index) => {
-        if(entry.isIntersecting){
-            setTimeout(() => {
-                entry.target.classList.add("show");
-            }, index * 150); // stagger effect
-        }
-    });
-}, { threshold: 0.2 });
+    const cards = document.querySelectorAll(".tata-card");
 
-cards.forEach(card => {
-    observer.observe(card);
+    // enable animation only if JS runs
+    cards.forEach(card => card.classList.add("animate"));
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add("show");
+                }, index * 120);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    cards.forEach(card => observer.observe(card));
+
 });
 </script>

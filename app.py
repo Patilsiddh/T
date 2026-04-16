@@ -1,5 +1,7 @@
+from importlib.resources import files
 import os
 import sqlite3
+import uuid
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -201,7 +203,7 @@ def init_db():
             price REAL
         )
     """)
-
+    
 
 
     # DEFAULT ADMIN
@@ -501,6 +503,7 @@ def update_offer_selection():
     flash("Offer selection updated successfully!", "success")
     return redirect(url_for('admin'))
 
+
 @app.route('/update-full-plan/<int:plan_id>', methods=['POST'])
 def update_full_plan(plan_id):
 
@@ -509,6 +512,7 @@ def update_full_plan(plan_id):
 
     import os
     import json
+    import uuid
     from werkzeug.utils import secure_filename
 
     conn = get_db_connection()
@@ -556,7 +560,6 @@ def update_full_plan(plan_id):
 
             duration_id = cursor.lastrowid
 
-            # IMPORTANT FIX: loop speeds correctly
             for s in d.get('speeds', []):
                 cursor.execute("""
                     INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
@@ -568,26 +571,28 @@ def update_full_plan(plan_id):
                     s.get('discounted_price') or s.get('discount') or 0
                 ))
 
-        # ---------------- DELETE OLD IMAGES (OPTIONAL BUT RECOMMENDED) ----------------
+        # ---------------- DELETE OLD IMAGES ----------------
         cursor.execute("DELETE FROM plan_images WHERE plan_id=?", (plan_id,))
 
         # ---------------- INSERT NEW IMAGES ----------------
-        files = request.files.getlist('images[]')
+        files = request.files.getlist('images')
 
         for file in files:
             if file and file.filename:
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+                original = secure_filename(file.filename)
+                unique_name = f"{uuid.uuid4().hex}_{original}"
+
+                filepath = os.path.join(UPLOAD_FOLDER, unique_name)
                 file.save(filepath)
 
                 cursor.execute("""
                     INSERT INTO plan_images (plan_id, filename)
                     VALUES (?, ?)
-                """, (plan_id, filename))
+                """, (plan_id, unique_name))
 
         # ---------------- COMMIT ----------------
         conn.commit()
-
         return jsonify({'success': True})
 
     except Exception as e:
@@ -596,6 +601,9 @@ def update_full_plan(plan_id):
 
     finally:
         conn.close()
+
+
+
 @app.route('/delete-plan-image/<int:image_id>', methods=['POST'])
 def delete_plan_image(image_id):
     conn = get_db_connection()

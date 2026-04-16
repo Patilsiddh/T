@@ -3,86 +3,46 @@
 
     <!-- ===== THRILL GALLERY ===== -->
 <div class="thrill-gallery">
-    <h2>🔥 Extra Experience Gallery</h2>
+    <h2> Extra Experience Gallery</h2>
 
     <div class="gallery-grid">
 
         <div class="gallery-item">
             <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0032.jpg') }}">
-            <div class="overlay">🔥 Extra Thrill Gaming Setup</div>
+            <div class="overlay"> Extra Thrill Gaming Setup</div>
         </div>
 
         <div class="gallery-item">
             <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0037.jpg') }}">
-            <div class="overlay">📶 Extra Long HD Video Calls</div>
+            <div class="overlay">Extra Long HD Video Calls</div>
         </div>
 
         <div class="gallery-item">
              <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0036.jpg') }}">
-            <div class="overlay">⚡ Extra Entertainment Options</div>
+            <div class="overlay"> Extra Entertainment Options</div>
         </div>
 
         <div class="gallery-item">
            <img src="{{ url_for('static', filename='uploads/FB_IMG_1774802296243.jpg') }}">
-            <div class="overlay">🚀 Next-Gen Fiber Performance for Every Home</div>
+            <div class="overlay">Next-Gen Fiber Performance for Every Home</div>
         </div>
 
-    </div>
-</div><div class="testimonials">
-    <h2>What Customers Say</h2>
-
-    <div class="review-marquee">
-        <div class="review-track">
-
-            <!-- DUPLICATE CARDS FOR LOOP EFFECT -->
-
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Super fast internet! Installation done in 1 day.</p>
-                <strong>Rahul</strong>
-            </div>
-
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Best service in Wagholi. Very stable connection.</p>
-                <strong>Sneha</strong>
-            </div>
-
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Perfect for gaming. No lag at all.</p>
-                <strong>Amit</strong>
-            </div>
-
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Great support team. Quick installation.</p>
-                <strong>Priya</strong>
-            </div>
-
-            <!-- DUPLICATE AGAIN FOR CONTINUOUS LOOP -->
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Super fast internet! Installation done in 1 day.</p>
-                <strong>Rahul</strong>
-            </div>
-
-            <div class="testimonial-card">
-                ⭐⭐⭐⭐⭐
-                <p>Best service in Wagholi. Very stable connection.</p>
-                <strong>Sneha</strong>
-            </div>
-
-        </div>
     </div>
 </div>
 
 
-
 <style>
 /* ===== GALLERY SECTION ===== */
+.thrill-gallery h2{
+    text-align:center;
+    font-size:28px;
+    font-weight:700;
+    color:#fff;
+    margin: 20px 0 10px;
+    letter-spacing:0.5px;
+}
 .gallery{
-    padding:70px 20px;
+    padding:70px 30px;
     text-align:center;
     background:#f8f9ff;
 }
@@ -172,91 +132,6 @@
     opacity:1;
 }
 /* ===== REVIEWS SECTION ===== */
-
-
-/* ===== REVIEWS SECTION ===== */
-.testimonials{
-    padding:70px 20px;
-    background:#53109a;
-    overflow:hidden;
-    color:white;
-    text-align:center;
-}
-
-.testimonials h2{
-    font-size:32px;
-    font-weight:800;
-    margin-bottom:40px;
-    color:#fff;
-}
-
-/* OUTER VIEWPORT */
-.review-marquee{
-    overflow:hidden;
-    width:100%;
-}
-
-/* MOVING TRACK */
-.review-track{
-    display:flex;
-    gap:30px;              /* ✅ GAP BETWEEN CARDS */
-    width:max-content;
-    animation: scrollLoop 28s linear infinite;
-}
-
-/* CARD */
-.testimonial-card{
-    min-width:280px;
-    max-width:280px;
-
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,0.2);
-    border-radius:16px;
-
-    padding:20px;
-    color:#fff;
-
-    box-shadow:0 10px 25px rgba(0,0,0,0.25);
-}
-
-/* TEXT */
-.testimonial-card p{
-    font-size:14px;
-    opacity:0.9;
-    line-height:1.5;
-    margin:10px 0;
-}
-
-/* ⭐ SMOOTH LOOP (NO JUMP) */
-@keyframes scrollLoop{
-    0%{
-        transform:translateX(0);
-    }
-    100%{
-        transform:translateX(-50%);
-    }
-}
-
-/* PAUSE ON HOVER */
-.review-marquee:hover .review-track{
-    animation-play-state:paused;
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-    .testimonial-card{
-        min-width:240px;
-    }
-}
-
-
-
-
-
-
-
 
 
 

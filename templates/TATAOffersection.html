@@ -1,0 +1,230 @@
+<!-- ===== PROFESSIONAL FONT ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- ===== OFFERS SECTION ===== -->
+<div class="offers-section">
+
+    <h2 class="offers-title">Tata Play Fiber Offers</h2>
+
+    <div class="offers-grid">
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/FB_IMG_1774801925178.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>Just ₹700 Plan</h3>
+                <p>Affordable high-speed fiber connection</p>
+            </div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/FB_IMG_1774801963438.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>Same Day Installation</h3>
+                <p>Quick setup within 24 hours</p>
+            </div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/FB_IMG_1774802279375.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>OTT Bundle</h3>
+                <p>JioHotstar + 20+ OTT apps included</p>
+            </div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/FB_IMG_1774802397084.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>Seamless Home WiFi</h3>
+                <p>Strong fiber-powered connection for streaming, gaming & work</p>
+            </div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0038.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>Free Router</h3>
+                <p>No extra cost for WiFi router setup</p>
+            </div>
+        </div>
+
+        <div class="offer-card">
+            <div class="offer-img">
+                <img src="{{ url_for('static', filename='uploads/IMG-20260415-WA0028.jpg') }}">
+            </div>
+            <div class="offer-content">
+                <h3>Dhamaka Offer</h3>
+                <p>Free Set Top Box with selected plans</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<style>
+
+/* ===== RESET ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Inter', sans-serif;
+}
+
+/* ===== SECTION ===== */
+.offers-section{
+
+    padding: 80px 20px 50px 20px;
+   
+    background:#53109a;
+    text-align:center;
+    color:#fff;
+}
+
+/* TITLE */
+.offers-title{
+    font-size:32px;
+    font-weight:600;
+    margin-bottom:30px;
+}
+
+/* GRID */
+.offers-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    max-width:1100px;
+    margin:0 auto;
+}
+
+/* ===== CARD ===== */
+.offer-card{
+    display:flex;
+    flex-direction:column;
+
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+
+    overflow:hidden;
+    transition:0.3s ease;
+}
+
+/* IMAGE CONTAINER (KEY PART) */
+/* IMAGE CONTAINER */
+.offer-img{
+    height:380px;              /* INCREASE SIZE (was 200px) */
+    
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-top:12px;           /* SPACE FROM TOP */
+    padding:0 10px;            /* small side breathing space */
+
+    overflow:hidden;
+}
+
+/* IMAGE */
+.offer-img img{
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+}
+
+/* CONTENT */
+.offer-content{
+    padding:12px;
+    text-align:left;
+}
+
+/* TEXT */
+.offer-content h3{
+    font-size:16px;
+    font-weight:500;
+    margin-bottom:4px;
+}
+
+.offer-content p{
+    font-size:13px;
+    color:#e2e8f0;
+}
+
+/* HOVER */
+.offer-card:hover{
+    transform:translateY(-6px);
+    background:rgba(255,255,255,0.10);
+}
+
+/* ===== ANIMATION ===== */
+.offer-card{
+    opacity:0;
+    transform:translateY(30px);
+}
+
+.offer-card.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ===== TABLET ===== */
+@media(max-width:1024px){
+    .offers-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .offer-img{
+        height:180px;
+    }
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:600px){
+    .offers-grid{
+        grid-template-columns:1fr;
+    }
+
+    .offers-title{
+        font-size:28px;
+    }
+
+    .offer-img{
+        height:160px;
+    }
+}
+
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const cards = document.querySelectorAll(".offer-card");
+
+    const observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry,index)=>{
+            if(entry.isIntersecting){
+                setTimeout(()=>{
+                    entry.target.classList.add("show");
+                }, index * 120);
+            }
+        });
+    },{threshold:0.2});
+
+    cards.forEach(card=>observer.observe(card));
+
+});
+</script>

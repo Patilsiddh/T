@@ -1,89 +1,296 @@
+<div class="land">
+    <div class="container">
 
+        <div class="play">
+            <h1>PL<span>></span>Y</h1>
+        </div>
 
-    <div class="land">
-        <div class="container">
+        <div class="services-wrapper">
 
-            <div class="play">
-                <h1>PL<span>></span>Y</h1>
-            </div>
+            <!-- ===== DTH ===== -->
+            <div class="service-box dth-box">
 
-            <div class="services-wrapper">
+                <div class="flash-offer">
 
-                <!-- ===== DTH ===== -->
-                <div class="service-box dth-box">
-
-                    <div class="flash-offer">
-
-    <div class="offer-marquee">
-        <span>🔥 OFFER • OFFER • OFFER • OFFER • OFFER •</span>
-    </div>
-
-    {% if dth_offer %}
-
-        {% if dth_offer.image_url %}
-            <img src="{{ url_for('static', filename='uploads/' ~ dth_offer.image_url) }}"
-                 style="width:100%;border-radius:8px;">
-        {% endif %}
-
-        <div>{{ dth_offer.amount_text }}</div>
-
-    {% else %}
-        <div>No active offer</div>
-    {% endif %}
-
-</div>
-
-                    <h2>📡 DTH Connection</h2>
-                    <p>Available all over Pune – Anytime, Anywhere</p>
-
-                    <a href="https://wa.me/919922562197?text=Hello%20I%20want%20a%20New%20DTH%20Connection.">
-                        <button class="subtn">Get New DTH</button>
-                    </a>
-                </div>
-
-                <!-- ===== BROADBAND ===== -->
-                <div class="service-box broadband-box">
-
-                    <div class="flash-offer">
-                        <div class="offer-marquee">
-                            <span>🔥 OFFER • OFFER • OFFER • OFFER • OFFER •</span>
-                        </div>
-
-                        {% if broadband_offer %}
-                            {% if broadband_offer.image_url %}
-                                <img src="{{ url_for('static', filename='uploads/' ~ broadband_offer.image_url) }}"
-                                     style="width:100%;border-radius:8px;">
-                            {% endif %}
-                            {{ broadband_offer.amount_text }}
-                        {% else %}
-                            ₹3600 OFF on New Broadband Connection
-                        {% endif %}
+                    <div class="offer-marquee">
+                        <span> OFFER • OFFER • OFFER • OFFER • OFFER •</span>
                     </div>
 
-                    <h2>🌐 Broadband Services</h2>
-                    <p>Available in All Over Areas of Pune And Pimpri-Chinchwad.</p>
+                    {% if dth_offer %}
 
-<!--
-<div class="service-area">
-    <span class="area-chip">Lohegaon</span>
-    <span class="area-chip">Wagholi</span>
-    <span class="area-chip">Viman Nagar</span>
-    <span class="area-chip">Dhanori</span>
-    <span class="area-chip">Hadapsar</span>
-    <span class="area-chip">Charoli</span>
-    <span class="area-chip">Moshi</span>
-    <span class="area-chip">Hinjewadi</span>
-    <span class="area-chip">Kharadi</span>
-</div>
--->
-                    <a href="{{ url_for('services') }}">
-                        <button class="subtn">Check Plans</button>
-                    </a>
+                        {% if dth_offer.image_url %}
+                        <div class="offer-image">
+                            <img src="{{ url_for('static', filename='uploads/' ~ dth_offer.image_url) }}">
+                        </div>
+                        {% endif %}
+
+                        <div class="offer-text">
+                            <br>
+                            {{ dth_offer.amount_text }}
+                        </div>
+
+                    {% else %}
+                        <div>No active offer</div>
+                    {% endif %}
 
                 </div>
 
+                <h2>📡 DTH Connection</h2>
+                <p>Available all over Pune – Anytime, Anywhere</p>
+
+                <a href="https://wa.me/919922562197?text=Hello%20I%20want%20a%20New%20DTH%20Connection.%20Please%20share%20the%20details.">
+                    <button class="subtn">
+                        Get New DTH Connection.
+                    </button>
+                </a>
+
             </div>
+
+            <!-- ===== BROADBAND ===== -->
+            <div class="service-box broadband-box">
+
+                <div class="flash-offer">
+
+                    <div class="offer-marquee">
+                        <span>🔥 OFFER • OFFER • OFFER • OFFER • OFFER •</span>
+                    </div>
+
+                    {% if broadband_offer %}
+
+                        {% if broadband_offer.image_url %}
+                        <div class="offer-image">
+                            <img src="{{ url_for('static', filename='uploads/' ~ broadband_offer.image_url) }}">
+                        </div>
+                        {% endif %}
+
+                        <div class="offer-text">
+                            <br>
+                            {{ broadband_offer.amount_text }}
+                        </div>
+
+                    {% else %}
+                       Currently No Offers Available.
+                    {% endif %}
+
+                </div>
+
+                <h2>🌐 Broadband Services</h2>
+                <p>Available in All Over Pune And Pimpri-Chinchwad.</p>
+
+                <a href="{{ url_for('services') }}">
+                    <button class="subtn">Check Plans</button>
+                </a>
+
+            </div>
+
         </div>
     </div>
+</div>
 
-  
+<style>/* ===== WRAPPER ===== */
+.services-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:stretch;
+    gap:25px;
+    margin-top:50px;
+    flex-wrap:wrap;
+}
+
+/* ===== CARD ===== */
+.service-box{
+    flex:1;
+    min-width:320px;
+    max-width:480px;
+
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+
+    box-shadow:0 12px 30px rgba(0,0,0,0.15);
+
+    display:flex;
+    flex-direction:column;
+
+    min-height:560px;
+}
+
+/* ===== OFFER ===== */
+.flash-offer{
+    background:#53109a;
+    color:#fff;
+    padding:12px;
+    position:relative;
+    overflow:hidden;
+}
+
+/* ===== MARQUEE ===== */
+.offer-marquee{
+    white-space:nowrap;
+    overflow:hidden;
+    margin-bottom:8px;
+}
+.service-box h2{
+    color:#000;
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:0.5px;
+
+    /* glossy gradient text */
+    background: linear-gradient(90deg, #000, #444, #000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    position:relative;
+    display:inline-block;
+
+    transition:0.3s ease;
+}
+
+/* hover interaction */
+.service-box h2:hover{
+    transform:translateY(-2px) scale(1.03);
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+}
+
+/* glossy shine effect */
+.service-box h2::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.6),
+        transparent
+    );
+
+    transform:skewX(-20deg);
+}
+
+.service-box h2:hover::after{
+    animation:shineText 1.2s ease;
+}
+
+@keyframes shineText{
+    0%{ left:-120%; }
+    100%{ left:120%; }
+}
+
+.offer-marquee span{
+    display:inline-block;
+    padding-left:100%;
+    animation:scroll 8s linear infinite;
+    font-size:13px;
+    font-weight:700;
+}
+
+/* ===== IMAGE ===== */
+.offer-image{
+    width:100%;
+    height:200px;
+    aspect-ratio:16/9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:transparent;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+.offer-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* ===== TEXT ===== */
+.offer-text{
+    font-size:14px;
+    font-weight:700;
+    margin-top:8px;
+}
+
+/* ===== BUTTON ===== */
+.subtn{
+    margin-top:auto;
+    padding:10px 18px;
+    background:#E10092;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* ===== ANIMATION ===== */
+@keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+}
+
+/* =========================
+   📱 RESPONSIVE DESIGN
+   ========================= */
+
+/* TABLET */
+@media (max-width: 992px){
+    .services-wrapper{
+        gap:18px;
+    }
+
+    .service-box{
+        min-width:280px;
+        max-width:100%;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px){
+    .services-wrapper{
+        flex-direction:column;
+        align-items:center;
+        gap:20px;
+    }
+
+    .service-box{
+        width:100%;
+        max-width:95%;
+        min-height:auto;
+    }
+
+    .offer-image{
+        height:180px;
+    }
+
+    .offer-text{
+        font-size:13px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 480px){
+    .offer-image{
+        height:160px;
+    }
+
+    .offer-marquee span{
+        font-size:11px;
+    }
+
+    h2{
+        font-size:18px;
+    }
+
+    p{
+        font-size:13px;
+    }
+
+    .subtn{
+        font-size:13px;
+        padding:9px 14px;
+    }
+}</style>

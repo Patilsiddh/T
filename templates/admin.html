@@ -1,6 +1,6 @@
 
 {% extends "base.html" %}
-{% extends "login.html" %}
+
 
 {% block content %}<style>
     /* ===================== GLOBAL ===================== */
@@ -532,14 +532,18 @@ button,
             </label>
 
             <!-- Images -->
-            <div id="images-container">
-                <div class="image-block">
-                    <input type="file" name="plan_images[]" accept="image/*" onchange="previewImage(this)">
-                    <button type="button" class="btn" onclick="addImage()">Add More Images</button>
-                    <div class="image-preview"></div>
-                </div>
-            </div>
+           <!-- ================= IMAGES ================= -->
+<div id="images-container">
+    <div class="image-block">
+        <input type="file" name="plan_images[]" accept="image/*" onchange="previewImage(this)">
 
+        <button type="button" class="btn add-image" onclick="addImageBlock(this)">
+            ➕ Add Image
+        </button>
+
+        <div class="image-preview"></div>
+    </div>
+</div>
             <!-- Durations -->
             <div id="durations-container">
                 <div class="duration-block">
@@ -676,9 +680,15 @@ button,
                 ➕ Add Duration
             </button>
 
-            <!-- IMAGES UPLOAD -->
-            <input type="file" class="edit-images" multiple>
+           <div class="edit-images-container">
 
+    <input type="file" class="edit-images" multiple>
+
+    <button type="button" class="btn add-edit-image">
+        ➕ Add More Images
+    </button>
+
+</div>
             <!-- ACTIONS -->
             <div class="plan-actions">
                 <button type="button" class="btn-save">💾 Save</button>
@@ -712,7 +722,60 @@ button,
 
 
 
+<script>
+function addImageBlock(btn){
+    const container = document.getElementById("images-container");
 
+    const div = document.createElement("div");
+    div.className = "image-block";
+
+    div.innerHTML = `
+        <input type="file" name="plan_images[]" accept="image/*" onchange="previewImage(this)">
+
+        <button type="button" class="btn-danger" onclick="removeImageBlock(this)">
+            ❌ Remove
+        </button>
+
+        <div class="image-preview"></div>
+    `;
+
+    container.appendChild(div);
+}
+
+function removeImageBlock(btn){
+    btn.closest(".image-block").remove();
+}
+
+function previewImage(input){
+    const preview = input.parentElement.querySelector(".image-preview");
+
+    if(input.files && input.files[0]){
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            preview.innerHTML = `<img src="${e.target.result}" style="width:80px;height:60px;border-radius:8px;margin-top:5px;">`;
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
+
+<script>
+document.querySelectorAll(".add-edit-image").forEach(btn => {
+    btn.addEventListener("click", function () {
+
+        const wrapper = this.parentElement;
+
+        const input = document.createElement("input");
+        input.type = "file";
+        input.className = "edit-images";
+        input.multiple = true;
+
+        wrapper.insertBefore(input, this);
+    });
+});
+</script>
 
 <script>
 document.querySelectorAll(".plan-card[data-plan-id]").forEach(card => {

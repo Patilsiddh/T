@@ -1,417 +1,759 @@
+
+<!-- ================= TOP FULL SECTION ================= -->
+<div class="top-intro">
+
+<h2 class="main-title">REACH OUT TO US 24/7 & 365 DAYS</h2>
+
+<p class="sub-title">
+    Our dedicated support team is always available to assist you with installation, billing,
+    technical issues, and service requests — anytime, anywhere.
+</p>
+<style>.main-title{
+    font-size:30px;
+    font-weight:800;
+    text-align:center;
+    letter-spacing:2px;
+     
+    font-family: Arial, sans-serif;
+
+    background: linear-gradient(90deg, #ffffff, #ff4da6, #a855f7);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:10px;   /* 🔥 gap between h2 and p */
+
+    position:relative;
+    animation: popUp 0.8s ease-out;
+}
+
+/* SUB TITLE */
+.sub-title{
+    text-align:center;
+    max-width:700px;
+    margin:0 auto 10px;   /* 🔥 reduced bottom gap */
+    font-size:14px;
+    line-height:1.6;
+    color:rgba(255,255,255,0.85);
+
+    position:relative;
+
+    margin-bottom:20px;   /* 🔥 space before line */
+
+    animation: popUp 1s ease-out;
+}
+
+/* 🔥 LINE AFTER PARAGRAPH */
+.sub-title::after{
+    content:"";
+    display:block;
+    height:3px;
+    width:40%;
+     margin:8px auto 0;  /* 🔥 tighter spacing */
+
+
+    background: linear-gradient(
+        90deg,
+        rgba(255,77,166,0.2),
+        rgba(255,77,166,0.6),
+        rgba(83,16,154,1)
+    );
+
+    border-radius:10px;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    animation: lineGrow 1.2s ease-out forwards;
+}
+
+/* ANIMATION */
+@keyframes lineGrow{
+    0%{
+        transform: scaleX(0);
+        opacity:0;
+    }
+    100%{
+        transform: scaleX(1);
+        opacity:1;
+    }
+}
+
+/* POP */
+@keyframes popUp{
+    0%{
+        opacity:0;
+        transform:translateY(20px) scale(0.95);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}</style>
+
+<style>
+/* MAIN HEADING */
+.main-title{
+    font-size:30px;
+    font-weight:800;
+    text-align:center;
+    letter-spacing:2px;
+
+    background: white;
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation: popUp 0.8s ease-out;
+}
+
+/* SUB TEXT */
+.sub-title{
+    margin-bottom:18px;   /* 🔥 gap between text and line */
+    line-height:1.6;
+}
+
+.sub-title::after{
+    content:"";
+    display:block;
+    height:3px;
+    width:40%;
+    margin:18px auto 0;   /* 🔥 extra gap above line */
+
+    background: linear-gradient(
+        90deg,
+        rgba(255,77,166,0.2),
+        rgba(255,77,166,0.6),
+        rgba(83,16,154,1)
+    );
+
+    border-radius:10px;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    animation: lineGrow 1.2s ease-out forwards;
+}
+/* POP ANIMATION */
+@keyframes popUp{
+    0%{
+        opacity:0;
+        transform:translateY(20px) scale(0.95);
+    }
+    100%{
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+</style>
+
+  
+</div>
+
+<!-- ================= BOTTOM 2 COLUMN ================= -->
 <div class="contact-wrapper">
 
-    <!-- LEFT -->
-    <div class="left-stack">
+    <!-- LEFT BLOCK -->
+    <div class="card">
+ <div class="intro-image">
+          <div class="support-image-box">
 
-        <div class="card">
-            <h3>📞 Contact Info</h3>
+    <img class="main-img"
+         src="{{ url_for('static', filename='uploads/24-7-technical-support-500x500.webp') }}"
+         alt="Support">
 
-            <div class="contact-box">
-                <div class="name">Amol Shingare</div>
-
-<div class="info">📱 +91 9922562197</div>
-<div class="info">📧 sales@tatafibers.in</div>
-<div class="info">⏰ 24x7 Support Available</div>
-<div class="info">📍 Pune, Maharashtra, India</div>
-            </div>
-        </div>
-<style>.contact-box{
-    display:flex;
-    flex-direction:column;
-    gap:5px;              /* spacing between lines */
-}
-
-.contact-box .name{
-    margin-top:6px;       /* space from "Contact Info" heading */
-    margin-bottom:4px;    /* space before first number */
-    line-height:1.2;
-}
-
-.contact-box .info{
-    margin:0;
-    line-height:1.25;
-}
-
-/* space between heading and box */
-.card h3{
-    margin-bottom:10px;
-}</style>
-        <div class="card">
-            <h3>👨‍💼 Experience</h3>
-            <p>
-                We are a <span class="highlight">10+ years experienced team</span> in broadband,
-                WiFi, and DTH installation services across Pune.<br><br>
-                ✔ Fast installation (24–48 hours)<br>
-✔ Trusted  service provider<br>
-✔ Affordable pricing with quality assurance<br>
-✔ 24/7 customer support available
-            </p>
+    <!-- BRAND TEXT OVERLAY -->
+    <div class="brand-tag">
+        <div class="line1">
+            <span class="tata">TATA</span>
+            <span class="play">PLAY</span>
         </div>
 
-    </div>
-
-    <!-- MIDDLE IMAGE -->
-    <div class="card image-center">
-        <img src="{{ url_for('static', filename='uploads/IMG-20260405-WA0006.jpg') }}" alt="Support">
-    </div>
-
-    <!-- RIGHT -->
-    <div class="right-stack">
-
-        <div class="card form-card">
-            <h3>📩 Send Message</h3>
-
-            <form method="POST">
-
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="tel" name="mobile" placeholder="Mobile Number" required>
-                <input type="email" name="email" placeholder="Email Address" required>
-                <textarea name="message" rows="4" placeholder="Your Requirement"></textarea>
-
-                <div class="form-actions">
-                    <button type="submit">Send</button>
-                    <a href="https://wa.me/919922562197" target="_blank">WhatsApp</a>
-                </div>
-
-            </form>
-        </div>
-
+        <div class="fiber">Fiber</div>
     </div>
 
 </div>
-<style>/* ===== BACKGROUND ===== */
 
-
-/* ===== GLOBAL SMOOTH ANIMATION ===== */
-* {
-    transition: all 0.25s ease-in-out;
+<style>
+/* IMAGE WRAPPER (MATCH CONTACT BOX HEIGHT) */
+.support-image-box{
+    position:relative;
+    width:100%;
+    height:100%;              /* 🔥 key fix */
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* ===== CARD ENTRY ANIMATION ===== */
-.card {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.6s ease forwards;
+/* IMAGE */
+.support-image-box .main-img{
+    width:100%;
+    height:100%;              /* 🔥 force equal height */
+    max-height:420px;         /* match contact box feel */
+    object-fit:cover;         /* prevents stretching */
+    border-radius:14px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    transition:0.3s ease;
 }
 
-/* stagger effect */
-.left-stack .card:nth-child(1) { animation-delay: 0.1s; }
-.left-stack .card:nth-child(2) { animation-delay: 0.25s; }
-.image-center { animation: fadeUp 0.6s ease forwards 0.2s; }
-.form-card { animation: fadeUp 0.6s ease forwards 0.35s; }
-
-/* keyframes */
-@keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.support-image-box .main-img:hover{
+    transform:scale(1.02);
 }
 
-/* ===== HOVER LIFT EFFECT ===== */
-.card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+/* OVERLAY TEXT */
+.brand-tag{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    text-align:right;
+    font-family:Arial, sans-serif;
 }
 
-/* ===== INPUT FOCUS ANIMATION ===== */
-.form-card input:focus,
-.form-card textarea:focus {
-    transform: scale(1.02);
+/* FIRST LINE */
+.brand-tag .line1{
+    display:flex;
+    gap:6px;
+    justify-content:flex-end;
 }
 
-/* ===== BUTTON ANIMATION ===== */
-.form-actions button,
-.form-actions a {
-    position: relative;
-    overflow: hidden;
+/* COMMON TEXT STYLE */
+.brand-tag span{
+    font-weight:800;
+    font-size:16px;
+    color:#ffffff;
+    text-shadow:0 2px 6px rgba(0,0,0,0.5);
 }
 
-/* ripple hover effect */
-.form-actions button::after,
-.form-actions a::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: -100%;
-    background: rgba(255,255,255,0.2);
-    transition: 0.4s;
+/* COLORS */
+.brand-tag .tata{
+    color:#53109a;
 }
 
-.form-actions button:hover::after,
-.form-actions a:hover::after {
-    left: 0;
+.brand-tag .play{
+    color:#ff4da6;
+}
+/* 🔥 FIBER GRADIENT TEXT (PREMIUM TELECOM STYLE) */
+.brand-tag .fiber{
+    font-weight:800;
+    font-size:19px;
+    margin-top:3px;
+    margin-right: 18px;
+    letter-spacing:1px;
+
+    /* gradient using both brand colors */
+    background: linear-gradient(135deg, #53109a, #ff4da6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* fallback */
+    color: transparent;
+
+    text-shadow:none;
+    display:inline-block;
+
+    /* keeps it sharp on overlay */
+    line-height:1;
+}
+</style>
+        </div>
+        
+
+       <div class="contact-box">
+
+    <div class="name"> Support Representative</div>
+
+    <!-- SUPPORT -->
+    <div class="info support">
+        <div class="icon">📞</div>
+        <div class="content">
+            <div class="title">Support</div>
+            <div class="number">+91 99922562197</div>
+            <div class="time">24/7 (Mon-Sun)</div>
+        </div>
+    </div>
+
+    <!-- SALES -->
+    <div class="info sales">
+        <div class="icon">📞</div>
+        <div class="content">
+            <div class="title">Sales</div>
+            <div class="number">+91 9922562197</div>
+            <div class="time">9:00am - 6:00pm</div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.contact-box{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    padding:18px;
+    border-radius:14px;
+    background:#ffffff;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    border:1px solid #eee;
+    font-family:Arial, sans-serif;
 }
 
+/* TITLE */
+.contact-box .name{
+    font-size:16px;
+    font-weight:700;
+    color:#111827;
+    margin-bottom:5px;
+}
 
+/* ROW BOX */
+.contact-box .info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px;
+    border-radius:12px;
+    transition:0.25s ease;
+}
+
+/* ICON */
+.contact-box .icon{
+    font-size:20px;
+}
+
+/* TEXT BLOCK */
+.contact-box .content .title{
+    font-size:14px;
+    font-weight:700;
+    color:#111827;
+}
+
+.contact-box .content .number{
+    font-size:14px;
+    font-weight:600;
+    color:#111827;
+}
+
+.contact-box .content .time{
+    font-size:11px;
+    color:white;
+    opacity:0.7;
+}
+
+/* SUPPORT (GREEN) */
+.contact-box .support{
+    background:#ecfdf5;
+    border-left:5px solid #8547bb;
+}
+
+/* SALES (BLUE) */
+.contact-box .sales{
+    background:#eff6ff;
+    border-left:5px solid #3b82f6;
+}
+
+/* HOVER */
+.contact-box .info:hover{
+    transform:translateY(-3px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+</style>
+
+    </div>
+
+    <!-- RIGHT BLOCK -->
+    <div class="card form-card">
+
+        <h3>📩 Send Message</h3>
+
+        <form method="POST">
+
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="tel" name="phone" placeholder="Phone Number" required>
+            <input type="email" name="email" placeholder="Email" required>
+
+            <textarea name="message" placeholder="Details about your query"></textarea>
+
+            <button type="submit">Submit</button>
+
+        </form>
+        OR Email Us Your Query At:
+<div class="email">Sales@tatafiber.com</div>
+    </div>
+<style>.form-card form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:18px;   /* 🔥 space AFTER form */
+}
+
+/* BUTTON */
+.form-card button{
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#53109a;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.form-card button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.25);
+}
+
+/* EMAIL SECTION */
+.email{
+    margin-top:10px;      /* 🔥 space from form */
+    padding:12px 14px;
+
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.15);
+
+    background:#53109a;
+
+    color:#ffffff;        /* 🔥 white text */
+    font-weight:600;
+    font-size:14px;
+
+    letter-spacing:0.3px;
+}
+
+/* OPTIONAL LABEL TEXT */
+.form-card .email-label{
+    margin-top:12px;
+    color:rgba(255,255,255,0.8);
+    font-size:13px;
+}</style>
+</div>
+<style>/* ================= TOP SECTION ================= */
+/* ================= GLOBAL ================= */
 body{
     margin:0;
     font-family:Arial, sans-serif;
-    background:#53109a; /* full purple */
+    background: #53109a;;
+    color:#fff;
 }
-/* ===== WRAPPER (BALANCED GRID) ===== */
+
+/* ================= TOP SECTION ================= */
+.top-intro{
+   .top-intro{
+    padding:40px 20px 20px;  /* 🔥 reduced bottom padding */
+}
+    text-align:center;
+    background:transparent;
+}
+
+.top-intro h2{
+    font-size:28px;
+    letter-spacing:1px;
+    animation: fadeDown 0.8s ease-in-out;
+}
+
+/* ================= WRAPPER ================= */
 .contact-wrapper{
     display:grid;
-    grid-template-columns: 1fr 1.2fr 1fr; /* 👈 middle image slightly bigger */
-    gap:22px;
-
-    padding:60px 20px;
-    max-width:1200px;
-    margin:auto;
-
-    align-items:stretch;
-    background:#53109a;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    max-width:1100px;
+    .contact-wrapper{
+    margin:20px auto;   /* 🔥 was 40px → reduce */
+    padding:10px 20px;  /* 🔥 reduce vertical padding */
+    gap:20px;           /* optional: reduce from 25 */
+}
 }
 
-/* Right stack container */
-.right-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Card styling */
-.form-card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
-
-/* Heading spacing */
-.form-card h3 {
-    margin-bottom: 20px;
-    font-size: 20px;
-}
-
-/* Form layout */
-.form-card form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* 👈 THIS adds space between fields */
-}
-
-/* Inputs & textarea */
-.form-card input,
-.form-card textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    transition: 0.2s ease;
-}
-
-/* Focus effect */
-.form-card input:focus,
-.form-card textarea:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 0 3px rgba(74,144,226,0.15);
-}
-
-/* Button + WhatsApp alignment */
-.form-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 5px;
-}
-
-/* Send button */
-.form-actions button {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background: #4a90e2;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-/* WhatsApp link button */
-.form-actions a {
-    flex: 1;
-    text-align: center;
-    padding: 12px;
-    border-radius: 8px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* Hover effects */
-.form-actions button:hover {
-    background: #357bd8;
-}
-
-.form-actions a:hover {
-    background: #1ebe5d;
-}
-
-/* ===== CARD (UNIFIED HEIGHT) ===== */
-.card{
-    background: rgba(255,255,255,0.12);
-    border:1px solid rgba(255,255,255,0.18);
+/* ================= UNIFIED CARD (LEFT + RIGHT) ================= */
+.card,
+.form-card{
+    background: #6b2dae;
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius:16px;
-
-    padding:20px;
-    color:#fff;
-
-    backdrop-filter: blur(12px);
+    padding:22px;
     box-shadow:0 10px 25px rgba(0,0,0,0.25);
-
-    display:flex;
-    flex-direction:column;
-
-    height:100%;   /* 🔥 equal height fix */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color:#fff;
 }
 
-/* ===== LEFT STACK GAP FIX ===== */
-.left-stack{
+/* ================= CONTACT BOX ================= */
+.contact-box{
+    margin-top:15px;
     display:flex;
     flex-direction:column;
-    gap:18px;   /* clean spacing between cards */
+    gap:12px;
+
+    /* 🔥 FULL BACKGROUND PURPLE */
+    background:#6d2cb3;
+    padding:16px;
+    border-radius:14px;
 }
 
-/* ===== RIGHT STACK GAP FIX ===== */
-.right-stack{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+/* TITLE */
+.contact-box .name{
+    font-size:16px;
+    font-weight:700;
+    color:#ffffff;
+    margin-bottom:8px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding-bottom:6px;
 }
 
-/* ===== IMAGE (MATCH CARD HEIGHT) ===== */
-.image-center{
+/* ROW ITEM */
+.contact-box .info{
     display:flex;
     align-items:center;
-    justify-content:center;
+    gap:12px;
+    padding:12px 14px;
+
+    /* subtle glass effect on purple */
+    background: #53109a;
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px;
+
+    transition:0.25s ease;
 }
 
-.image-center img{
-    width:100%;
-    height:100%;          /* 🔥 MATCH FULL HEIGHT */
-    max-height:100%;
-    object-fit:cover;
-
-    border-radius:16px;
+/* HOVER */
+.contact-box .info:hover{
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.12);
 }
 
-/* ===== FORM BIGGER (MATCH IMAGE FEEL) ===== */
-.form-card{
-    min-height:100%;     /* 🔥 expands like image */
+/* ICON */
+.contact-box .icon{
+    font-size:20px;
+    color:#ffffff;
 }
 
-/* inputs bigger */
-input, textarea{
-    width:100%;
+/* TEXT (FIXED - WHITE ONLY, NO PURPLE TEXT BUG) */
+
+.contact-box .title,
+.contact-box .number{
+    color:#ffffff !important;
+    font-family:  Helvetica, sans-serif;
+}
+/* TIME SMALL */
+.contact-box .time{
+    font-size:11px;
+    color:rgba(255, 252, 252, 0.75);
+    margin-top:3px;
+}
+
+/* SUPPORT (GREEN LEFT BORDER ONLY) */
+
+/* ================= FORM ================= */
+.form-card form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+/* INPUTS */
+input,
+textarea{
     padding:12px;
-    margin-bottom:12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08);
+    color:#ffffff !important;
+    outline:none;
+    transition:0.3s;
+}
 
+/* PLACEHOLDER */
+input::placeholder,
+textarea::placeholder{
+    color: rgba(255,255,255,0.7);
+}
+
+/* FOCUS */
+input:focus,
+textarea:focus{
+    border-color:#a855f7;
+    box-shadow:0 0 12px rgba(168,85,247,0.4);
+}
+
+/* AUTOFILL FIX */
+input:-webkit-autofill,
+textarea:-webkit-autofill{
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(255,255,255,0.08) inset;
+}
+
+/* BUTTON */
+button{
+    padding:12px;
     border:none;
     border-radius:10px;
-    outline:none;
-
-    font-size:14px;
+    background: #53109a;
+    color:#fff;
+    font-weight:800;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-/* textarea bigger */
-textarea{
-    min-height:120px;
+button:hover{
+    transform: translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.3);
 }
 
-/* buttons stronger */
-.form-actions{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
+/* ================= ANIMATIONS ================= */
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
-.form-actions button,
-.form-actions a{
-    flex:1;
-    padding:12px;
-    border-radius:10px;
-    font-weight:600;
+@keyframes fadeDown{
+    from{opacity:0; transform:translateY(-20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
-/* ================= CLEAN RESPONSIVE FIX ================= */
-
-/* Tablet */
-@media (max-width: 1024px) {
-    .contact-wrapper {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .image-center {
-        width: 100%;
-        height: 300px;
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .contact-wrapper{
+        grid-template-columns:1fr;
     }
 }
 
-/* Mobile */
-@media (max-width: 768px) {
 
-    .contact-wrapper {
-        grid-template-columns: 1fr;   /* 🔥 FORCE SINGLE COLUMN */
-        padding: 25px 12px;
+/* ================= GLOBAL FONT FIX ================= */
+body{
+    font-family:'Poppins', 'Segoe UI', Arial, sans-serif;
+}
+
+/* ================= SMOOTH GLOBAL BOX MODEL ================= */
+*{
+    box-sizing:border-box;
+}
+
+/* ================= RESPONSIVE WRAPPER ================= */
+.contact-wrapper{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    max-width:1100px;
+    margin:40px auto;
+    padding:20px;
+    align-items:stretch;
+}
+
+/* ================= TABLET ================= */
+@media(max-width:1024px){
+    .contact-wrapper{
+        grid-template-columns:1fr;
+        gap:20px;
     }
 
-    /* ensure all sections stack properly */
-    .left-stack,
-    .image-center,
-    .right-stack {
-        width: 100%;
+    .top-intro h2{
+        font-size:24px;
     }
 
-    .card {
-        width: 100%;
-        height: auto;   /* remove forced equal height */
-    }
-
-    /* image full width */
-    .image-center {
-        height: 240px;
-    }
-
-    .image-center img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-    }
-
-    /* form buttons stack */
-    .form-actions {
-        flex-direction: column;
-    }
-
-    .form-actions button,
-    .form-actions a {
-        width: 100%;
+    .main-title{
+        font-size:26px;
     }
 }
 
-/* Small mobile */
-@media (max-width: 480px) {
-
-    .contact-wrapper {
-        padding: 18px 10px;
-        gap: 15px;
+/* ================= MOBILE ================= */
+@media(max-width:768px){
+    body{
+        padding:0;
     }
 
-    .card {
-        padding: 15px;
+    .contact-wrapper{
+        grid-template-columns:1fr;
+        padding:15px;
+        margin:20px auto;
     }
 
-    .image-center {
-        height: 200px;
+    .card,
+    .form-card{
+        padding:18px;
+        border-radius:14px;
     }
 
-    input, textarea {
-        font-size: 13px;
+    .top-intro h2{
+        font-size:20px;
+        line-height:1.4;
+    }
+
+    .main-title{
+        font-size:22px;
+        letter-spacing:1px;
+    }
+
+    .contact-box .info{
+        flex-direction:row;
+        gap:10px;
+        padding:10px;
+    }
+
+    .support-image-box .main-img{
+        max-height:300px;
+    }
+
+    button{
+        font-size:14px;
+        padding:10px;
+    }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media(max-width:480px){
+    .top-intro{
+        padding:30px 10px;
+    }
+
+    .top-intro h2{
+        font-size:18px;
+    }
+
+    .main-title{
+        font-size:20px;
+    }
+
+    .contact-wrapper{
+        padding:10px;
+        gap:15px;
+    }
+
+    .card,
+    .form-card{
+        padding:15px;
+    }
+
+    input,
+    textarea{
+        font-size:13px;
+        padding:10px;
+    }
+
+    .contact-box .name{
+        font-size:14px;
+    }
+
+    .contact-box .content .title,
+    .contact-box .content .number{
+        font-size:13px;
+    }
+
+    .contact-box .icon{
+        font-size:18px;
+    }
+}
+
+/* ================= LARGE SCREEN OPTIMIZATION ================= */
+@media(min-width:1400px){
+    .contact-wrapper{
+        max-width:1200px;
+    }
+
+    .main-title{
+        font-size:34px;
+    }
+
+    .top-intro h2{
+        font-size:32px;
     }
 }</style>

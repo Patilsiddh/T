@@ -58,6 +58,7 @@ body{
     color:#e5e7eb;
     background:#2f1664;
     overflow-x:hidden;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -287,7 +288,7 @@ body::after{
 
 <!-- ================= STATIC INFO ================= -->
 <div id="static-info" class="static-info">
-    <h2>🚀 Welcome to Tata Play Fiber Plans</h2>
+    <h2> Welcome to Tata Play Fiber Plans</h2>
     <p>Select a category above to explore plans.</p>
 </div>
 
@@ -367,15 +368,12 @@ body::after{
 
 {% set msg %}
 Hello, I am interested in {{ category['name'] }} plan {{ plan_item['type'] if plan_item['type'] else '' }}
-
 Name: {{ plan_item['plan']['name'] }}
 Duration: {{ dur['duration'] }} months
 Price: ₹{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else '' }}
-
 {% if dur['speeds'] and dur['speeds'][0]['speed'] %}
 Speed: {{ dur['speeds'][0]['speed'] }} Mbps
 {% endif %}
-
 Please share more details.
 {% endset %}
 
@@ -653,5 +651,5 @@ window.onload = () => {
 }
 
 </style>
-
+{% include "footer.html" %}
 {% endblock %}

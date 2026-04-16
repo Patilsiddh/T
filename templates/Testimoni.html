@@ -1,0 +1,130 @@
+<!-- ===== TESTIMONIALS ===== -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<div class="testimonials">
+
+    <h2>What Customers Say</h2>
+
+    <div class="review-marquee">
+        <div class="review-track">
+
+            <!-- CARD -->
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Got connected within a day. Speed is consistent even during peak hours.</p>
+                <strong>Rahul P. • Pune</strong>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Using it for work-from-home and video calls — no drops, no lag.</p>
+                <strong>Sneha K. • Wagholi</strong>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Perfect for gaming and streaming. Very smooth performance.</p>
+                <strong>Amit S. • Hadapsar</strong>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Installation was quick and support is very responsive.</p>
+                <strong>Priya M. • Kharadi</strong>
+            </div>
+
+            <!-- DUPLICATE (IMPORTANT FOR LOOP) -->
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Got connected within a day. Speed is consistent even during peak hours.</p>
+                <strong>Rahul P. • Pune</strong>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="stars">⭐⭐⭐⭐⭐</div>
+                <p>Using it for work-from-home and video calls — no drops, no lag.</p>
+                <strong>Sneha K. • Wagholi</strong>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<style>*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: "Inter", -apple-system, BlinkMacSystemFont,
+                 "Segoe UI", Roboto, Arial, sans-serif;
+    margin:0;
+    padding:0;
+    -webkit-font-smoothing:antialiased;
+}
+/* SECTION */
+.testimonials{
+    padding:10px 20px 60px 20px;
+    background:#53109a;
+    color:#fff;
+    text-align:center;
+}
+
+/* TITLE */
+.testimonials h2{
+    margin-bottom:30px;
+    font-size:30px;
+}
+
+/* VIEWPORT */
+.review-marquee{
+    overflow:hidden;
+}
+
+/* TRACK */
+.review-track{
+    display:flex;
+    gap:20px;
+    width:max-content;
+    animation: scroll 25s linear infinite;
+}
+
+/* CARD */
+.testimonial-card{
+    width:280px;
+    flex:0 0 auto;
+
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:14px;
+
+    padding:18px;
+    text-align:left;
+}
+
+/* STARS */
+.stars{
+    text-align:center;
+    color:#facc15;
+    margin-bottom:8px;
+}
+
+/* TEXT */
+.testimonial-card p{
+    margin:0 0 10px 0;
+    font-size:14px;
+    color:#e2e8f0;
+}
+
+/* NAME */
+.testimonial-card strong{
+    font-size:13px;
+    opacity:0.8;
+}
+
+/* ANIMATION */
+@keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}</style>

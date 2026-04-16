@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 
-/* ===== GLOBAL RESET ===== */
+/* ===== GLOBAL RESET IMPROVED ===== */
 *{
     margin:0;
     padding:0;
@@ -15,30 +15,36 @@
 body{
     background:#1b0c3d;
     color:#e5e7eb;
+    line-height:1.6;
 }
 
 /* ===== HEADER ===== */
 .header{
     background: linear-gradient(90deg,#4c1d95,#6d28d9);
-    padding:35px 20px;
+    padding:45px 20px;
     text-align:center;
     color:#fff;
 }
 
 .header h2{
-    font-size:30px;
+    font-size:32px;
     font-weight:800;
+}
+
+.header p{
+    margin-top:8px;
+    opacity:0.9;
 }
 
 /* ===== MAIN GRID ===== */
 .container{
     max-width:1100px;
     margin:auto;
-    padding:25px;
+    padding:40px 20px;
 
     display:grid;
     grid-template-columns:1fr 1fr;
-    gap:20px;
+    gap:30px;
 }
 
 /* ===== GLASS CARD ===== */
@@ -49,10 +55,10 @@ body{
     -webkit-backdrop-filter: blur(14px);
 
     border:1px solid rgba(255,255,255,0.15);
-    border-radius:16px;
+    border-radius:18px;
 
-    padding:18px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.25);
+    padding:25px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
 
     color:white;
     transition:0.3s ease;
@@ -60,72 +66,103 @@ body{
 
 .card:hover,
 .contact-box:hover{
-    transform:translateY(-5px);
+    transform:translateY(-6px);
+}
+
+/* ===== SECTION SPACING ===== */
+.card + .card{
+    margin-top:20px;
+}
+
+/* ===== HEADINGS ===== */
+.card h3{
+    margin-bottom:15px;
+    font-size:20px;
+    font-weight:700;
 }
 
 /* ===== FORM ===== */
 form{
     display:flex;
     flex-direction:column;
-    gap:10px;
+    gap:14px;
+    margin-top:10px;
 }
 
+/* INPUTS */
 input, textarea{
-    padding:10px;
-    border-radius:8px;
+    padding:12px 14px;
+    border-radius:10px;
     border:1px solid rgba(255,255,255,0.12);
     background: rgba(255,255,255,0.05);
     color:#fff;
     outline:none;
+    transition:0.2s ease;
 }
 
-/* ===== BUTTONS ===== */
+input:focus, textarea:focus{
+    border-color:#a78bfa;
+    background: rgba(255,255,255,0.08);
+}
+
+/* TEXTAREA */
+textarea{
+    resize:none;
+}
+
+/* ===== BUTTON AREA ===== */
 .form-actions{
     display:flex;
-    gap:10px;
+    gap:12px;
+    margin-top:5px;
 }
 
-button, a{
+/* BUTTONS */
+button, .form-actions a{
     flex:1;
-    padding:10px;
-    border-radius:8px;
+    padding:12px;
+    border-radius:10px;
     text-align:center;
     font-weight:600;
     text-decoration:none;
     cursor:pointer;
     border:none;
+    transition:0.3s ease;
 }
 
+/* SEND BUTTON */
 button{
     background: linear-gradient(90deg,#7c3aed,#4f46e5);
     color:#fff;
 }
 
-a{
+button:hover{
+    filter:brightness(1.1);
+}
+
+/* WHATSAPP */
+.form-actions a{
     background:#25d366;
     color:#fff;
 }
 
-/* ===== CONTACT BOX TEXT ===== */
+.form-actions a:hover{
+    filter:brightness(1.1);
+}
+
+/* ===== CONTACT BOX ===== */
+.contact-box{
+    margin-top:22px;
+    line-height:2;
+}
+
 .contact-box b{
     display:block;
     margin-bottom:6px;
     font-weight:700;
 }
 
-/* ===== CARD CONTENT ===== */
-.card h3{
-    margin-bottom:10px;
-    font-size:18px;
-    font-weight:700;
-}
-
-.card p{
-    font-size:14px;
-    line-height:1.6;
-    opacity:0.9;
-}
-
+/* ===== HIGHLIGHT TEXT ===== */
 .highlight{
     color:#ffd6ff;
     font-weight:600;
@@ -134,35 +171,26 @@ a{
 /* ===== MAP ===== */
 iframe{
     width:100%;
-    height:220px;
+    height:240px;
     border:none;
-    border-radius:12px;
+    border-radius:14px;
     margin-top:10px;
-}
-
-/* ===== SERVICE AREA ===== */
-.service-area{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-top:10px;
-}
-
-.area-chip{
-    padding:5px 10px;
-    font-size:12px;
-    border-radius:999px;
-    background: rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.12);
 }
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
     .container{
         grid-template-columns:1fr;
+        gap:20px;
+    }
+
+    .header h2{
+        font-size:26px;
     }
 }
-
+.icon{
+    margin-right:8px;
+}
 </style>
 
 <!-- HEADER -->
@@ -200,10 +228,12 @@ iframe{
         <div class="contact-box">
 
             <b>📞 Contact Info</b>
-            <b>Amol Shingare</b>
+          <div class="contact-name">
+     <i class="fa-solid fa-user-tie icon"></i> Amol Shingare
+    </div>
             📱 +91 9922562197<br>
             📧 sales@tatafibers.in<br>
-            ⏰ 24x7 Support Available
+          
 
         </div>
 
@@ -222,7 +252,8 @@ iframe{
                 WiFi, and DTH installation services across Pune.<br><br>
 
                 ✔ Fast installation (24–48 hours)<br>
-                ✔ Trusted local service provider
+                ✔ Trusted local service provider<br>
+                ✔ 24x7 Support Available
             </p>
 
         </div>
@@ -242,4 +273,5 @@ iframe{
 
 </div>
 
+{% include "footer.html" %}
 {% endblock %}

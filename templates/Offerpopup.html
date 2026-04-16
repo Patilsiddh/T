@@ -1,14 +1,8 @@
-
 <div class="page-wrapper">
 
-
-
+{% if popup_offer %}
 
 <!-- ===== OFFER POPUP ===== -->
-{% if popup_offer %}
-
-{% if popup_offer %}
-
 <div id="offerPopup" class="offer-popup">
 
     <div class="popup-box">
@@ -19,9 +13,9 @@
             🎉 {{ popup_offer.title }} 🎉
         </div>
 
-
-
-<img src="{{ url_for('static', filename='uploads/OIP_2.jpg') }}">
+        {% if popup_offer.image_url %}
+        <img src="{{ url_for('static', filename='uploads/' ~ popup_offer.image_url) }}">
+        {% endif %}
 
         <div class="popup-text">
             {{ popup_offer.amount_text }}
@@ -39,9 +33,118 @@
 
 {% endif %}
 
-    </div>
-
 </div>
+<style>/* ===== FULL SCREEN BACKDROP ===== */
+.offer-popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.65);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
 
-{% endif %}
+    animation:fadeIn 0.3s ease-in-out;
+}
 
+/* ===== POPUP BOX ===== */
+.popup-box{
+    width:90%;
+    max-width:420px;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius:18px;
+    padding:20px;
+    text-align:center;
+    position:relative;
+
+    box-shadow:0 20px 50px rgba(0,0,0,0.3);
+
+    animation:popUp 0.3s ease-in-out;
+}
+
+/* ===== CLOSE BUTTON ===== */
+.close-btn{
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:26px;
+    cursor:pointer;
+    font-weight:bold;
+    color:#333;
+}
+
+/* ===== HEADER ===== */
+.popup-header{
+    font-size:20px;
+    font-weight:800;
+    color:#111;
+    margin-bottom:10px;
+}
+
+/* ===== IMAGE ===== */
+.popup-img{
+    width:100%;
+    max-height:200px;
+    object-fit:contain;
+    border-radius:12px;
+    margin:10px 0;
+}
+
+/* ===== TEXT ===== */
+.popup-text{
+    font-size:15px;
+    font-weight:600;
+    color:#444;
+    margin:10px 0;
+}
+
+/* ===== BUTTON ===== */
+.popup-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:12px 18px;
+    background:#25D366;
+    color:#fff;
+    font-weight:700;
+    text-decoration:none;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.popup-btn:hover{
+    background:#1ebe5d;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+@keyframes popUp{
+    from{transform:scale(0.8); opacity:0;}
+    to{transform:scale(1); opacity:1;}
+}</style><script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const popup = document.getElementById("offerPopup");
+    const closeBtn = document.getElementById("closePopupBtn");
+
+    if (popup && closeBtn) {
+        closeBtn.addEventListener("click", function () {
+            popup.style.display = "none";
+        });
+
+        // optional: click outside to close
+        popup.addEventListener("click", function (e) {
+            if (e.target === popup) {
+                popup.style.display = "none";
+            }
+        });
+    }
+});
+</script>
