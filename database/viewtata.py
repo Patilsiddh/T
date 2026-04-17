@@ -1,43 +1,20 @@
 import sqlite3
-import os
-import pprint
 
-DB_PATH = os.path.join("database", "Tataplay.db")
+conn = sqlite3.connect("database/Tataplay.db")
+c = conn.cursor()
 
-conn = sqlite3.connect(DB_PATH)
-conn.row_factory = sqlite3.Row
-cursor = conn.cursor()
+# Show all tables
+c.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = c.fetchall()
 
-print("\n=== 🔍 ALL POPUP OFFERS ===\n")
+print("Tables:")
+for table in tables:
+    print(table[0])
 
-cursor.execute("""
-    SELECT id, title, offer_type, image_url, is_active 
-    FROM offers 
-    WHERE offer_type='popup'
-""")
-
-rows = cursor.fetchall()
-
-if rows:
-    for row in rows:
-        pprint.pprint(dict(row))
-else:
-    print("❌ No popup offers found")
-
-# ✅ Check ACTIVE popup
-print("\n=== ✅ ACTIVE POPUP OFFER ===\n")
-
-cursor.execute("""
-    SELECT * FROM offers 
-    WHERE offer_type='popup' AND is_active=1
-    LIMIT 1
-""")
-
-active = cursor.fetchone()
-
-if active:
-    pprint.pprint(dict(active))
-else:
-    print("❌ No active popup offer set")
+# Example: check users
+print("\nUsers:")
+c.execute("SELECT * FROM users")
+for row in c.fetchall():
+    print(row)
 
 conn.close()

@@ -1,5 +1,7 @@
+from importlib.resources import files
 import os
 import sqlite3
+import uuid
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
@@ -122,7 +124,7 @@ def init_db():
         )
     """)
 
-    # ADD updated_at COLUMN SAFELY
+    # ✅ ADD updated_at COLUMN SAFELY
     c.execute("PRAGMA table_info(global_offer)")
     columns = [col[1] for col in c.fetchall()]
 
@@ -142,22 +144,24 @@ def init_db():
         )
     """)
 
-    # OFFERS TABLE
-    c.execute("""
-        CREATE TABLE IF NOT EXISTS offers (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT,
-            subtitle TEXT,
-            amount_text TEXT,
-            image_url TEXT,
-            offer_type TEXT,
-            is_popup INTEGER DEFAULT 0,
-            is_active INTEGER DEFAULT 1,
-            start_date TEXT,
-            end_date TEXT
-        )
-    """)
 
+    # =========================
+# 🎁 OFFERS TABLE (ADMIN CONTROLLED)
+# =========================
+    c.execute("""
+    CREATE TABLE IF NOT EXISTS offers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    subtitle TEXT,
+    amount_text TEXT,
+    image_url TEXT,
+    offer_type TEXT,   -- broadband / dth / popup
+    is_popup INTEGER DEFAULT 0,
+    is_active INTEGER DEFAULT 1,
+    start_date TEXT,
+    end_date TEXT
+    )
+    """)
     # PLAN IMAGES
     c.execute("""
         CREATE TABLE IF NOT EXISTS plan_images (
@@ -199,126 +203,8 @@ def init_db():
             price REAL
         )
     """)
+    
 
-    # =========================
-    # DEFAULT CATEGORIES
-    # =========================
-    c.execute("INSERT OR IGNORE INTO categories (name) VALUES ('Broadband')")
-    c.execute("INSERT OR IGNORE INTO categories (name) VALUES ('DTH')")
-
-    # Get category IDs
-    c.execute("SELECT id FROM categories WHERE name='Broadband'")
-    broadband_id = c.fetchone()[0]
-
-    c.execute("SELECT id FROM categories WHERE name='DTH'")
-    dth_id = c.fetchone()[0]
-
-    # =========================
-    # BROADBAND PLANS
-    # =========================
-    broadband_plans = [
-        ("Basic Fiber", "Perfect for browsing & YouTube HD streaming"),
-        ("Smart Fiber", "Ideal for families & OTT streaming"),
-        ("Ultra Fiber", "4K streaming + gaming + heavy usage")
-    ]
-
-    durations = [1, 2, 3, 6, 12]
-
-    for name, desc in broadband_plans:
-        c.execute("""
-            INSERT INTO plans (name, description, category_id, is_best_seller)
-            VALUES (?, ?, ?, ?)
-        """, (name, desc, broadband_id, 1))
-
-        plan_id = c.lastrowid
-
-        for d in durations:
-            c.execute("""
-                INSERT INTO plan_durations (plan_id, duration)
-                VALUES (?, ?)
-            """, (plan_id, d))
-
-            dur_id = c.lastrowid
-
-            speeds = [
-                (50, 399 + d * 10, 299 + d * 10),
-                (100, 599 + d * 15, 499 + d * 15),
-                (200, 899 + d * 20, 749 + d * 20),
-            ]
-
-            for speed, price, discount in speeds:
-                c.execute("""
-                    INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
-                    VALUES (?, ?, ?, ?)
-                """, (dur_id, speed, price, discount))
-
-    # =========================
-    # DTH PLANS
-    # =========================
-    dth_plans = [
-        ("Basic DTH Pack", "Regional + Free channels + HD support"),
-        ("Family DTH Pack", "Entertainment + Sports + Movies"),
-        ("Premium DTH Pack", "All HD channels + OTT + sports premium")
-    ]
-
-    for name, desc in dth_plans:
-        c.execute("""
-            INSERT INTO plans (name, description, category_id, is_best_seller)
-            VALUES (?, ?, ?, ?)
-        """, (name, desc, dth_id, 1))
-
-        plan_id = c.lastrowid
-
-        for d in durations:
-            c.execute("""
-                INSERT INTO plan_durations (plan_id, duration)
-                VALUES (?, ?)
-            """, (plan_id, d))
-
-            dur_id = c.lastrowid
-
-            packs = [
-                ("SD Pack", 199 + d * 5),
-                ("HD Pack", 299 + d * 10),
-                ("Premium HD Pack", 499 + d * 15),
-            ]
-
-            for pack, price in packs:
-                c.execute("""
-                    INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
-                    VALUES (?, ?, ?, ?)
-                """, (dur_id, 0, price, price - 50))
-
-    # =========================
-    # OFFERS
-    # =========================
-
-    c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('🔥 Broadband Offer', 'Unlimited High Speed Fiber', '₹799/month', 'broadband', 0, 1)
-    """)
-
-    c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('📺 DTH Special Offer', 'HD Channels + Free Installation', '₹499/month', 'dth', 0, 1)
-    """)
-
-    c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('⚡ Limited Time Offer', 'Get 50% OFF on first 3 months', '₹299 only', 'popup', 1, 1)
-    """)
-
-    # GLOBAL OFFER
-    c.execute("""
-        INSERT OR IGNORE INTO global_offer (text, active)
-        VALUES ('🔥 Tata Play Fiber: Best Broadband + DTH Combo Offers Available Now!', 1)
-    """)
 
     # DEFAULT ADMIN
     from werkzeug.security import generate_password_hash
@@ -338,6 +224,7 @@ def init_db():
 
 
 init_db()
+
 # ---------------- Routes ---------------- #
 @app.route('/')
 def home():
@@ -524,6 +411,14 @@ def edit_service(id):
     conn.close()
     flash("Service updated!", "success")
     return redirect(url_for('admin'))
+@app.route('/delete_plan/<int:id>')
+def delete_plan(id):
+    conn = get_db_connection()
+    conn.execute("DELETE FROM plans WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+    flash("Plan deleted!", "success")
+    return redirect(url_for('admin'))
 
 
 @app.route('/delete_service/<int:id>')
@@ -608,6 +503,7 @@ def update_offer_selection():
     flash("Offer selection updated successfully!", "success")
     return redirect(url_for('admin'))
 
+
 @app.route('/update-full-plan/<int:plan_id>', methods=['POST'])
 def update_full_plan(plan_id):
 
@@ -616,6 +512,7 @@ def update_full_plan(plan_id):
 
     import os
     import json
+    import uuid
     from werkzeug.utils import secure_filename
 
     conn = get_db_connection()
@@ -663,7 +560,6 @@ def update_full_plan(plan_id):
 
             duration_id = cursor.lastrowid
 
-            # IMPORTANT FIX: loop speeds correctly
             for s in d.get('speeds', []):
                 cursor.execute("""
                     INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
@@ -675,26 +571,28 @@ def update_full_plan(plan_id):
                     s.get('discounted_price') or s.get('discount') or 0
                 ))
 
-        # ---------------- DELETE OLD IMAGES (OPTIONAL BUT RECOMMENDED) ----------------
+        # ---------------- DELETE OLD IMAGES ----------------
         cursor.execute("DELETE FROM plan_images WHERE plan_id=?", (plan_id,))
 
         # ---------------- INSERT NEW IMAGES ----------------
-        files = request.files.getlist('images[]')
+        files = request.files.getlist('images')
 
         for file in files:
             if file and file.filename:
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(UPLOAD_FOLDER, filename)
+
+                original = secure_filename(file.filename)
+                unique_name = f"{uuid.uuid4().hex}_{original}"
+
+                filepath = os.path.join(UPLOAD_FOLDER, unique_name)
                 file.save(filepath)
 
                 cursor.execute("""
                     INSERT INTO plan_images (plan_id, filename)
                     VALUES (?, ?)
-                """, (plan_id, filename))
+                """, (plan_id, unique_name))
 
         # ---------------- COMMIT ----------------
         conn.commit()
-
         return jsonify({'success': True})
 
     except Exception as e:
@@ -703,6 +601,9 @@ def update_full_plan(plan_id):
 
     finally:
         conn.close()
+
+
+
 @app.route('/delete-plan-image/<int:image_id>', methods=['POST'])
 def delete_plan_image(image_id):
     conn = get_db_connection()
@@ -714,6 +615,14 @@ def delete_plan_image(image_id):
     conn.close()
 
     return jsonify({"success": True})
+@app.route('/delete_category/<int:id>')
+def delete_category(id):
+    conn = get_db_connection()
+    conn.execute("DELETE FROM categories WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+    flash('Category deleted!', "success")
+    return redirect(url_for('admin'))
 @app.route('/add_offer', methods=['POST'])
 def add_offer():
     if not session.get('is_admin'):
@@ -744,6 +653,129 @@ def add_offer():
 
     flash("Offer added successfully!", "success")
     return redirect(url_for('admin'))
+
+
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+
+    if not session.get('is_admin'):
+        flash("You must be admin to access this page!", "error")
+        return redirect(url_for('login'))
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # ================= HANDLE POST =================
+    if request.method == 'POST':
+
+        if 'new_category' in request.form:
+            name = request.form.get('new_category', '').strip()
+            if name:
+                cursor.execute("INSERT INTO categories (name) VALUES (?)", (name,))
+                conn.commit()
+                flash("Category added!", "success")
+
+        elif 'plan_name' in request.form:
+            plan_name = request.form.get('plan_name')
+            description = request.form.get('description')
+            category_id = request.form.get('category_id')
+            is_best = 1 if request.form.get('best_seller') else 0
+
+            cursor.execute("""
+                INSERT INTO plans (name, description, is_best_seller, category_id)
+                VALUES (?,?,?,?)
+            """, (plan_name, description, is_best, category_id))
+
+            conn.commit()
+            flash("Plan added!", "success")
+
+        conn.close()
+        return redirect(url_for('admin'))
+
+    # ================= FETCH CATEGORIES =================
+    cursor.execute("SELECT * FROM categories")
+    categories = cursor.fetchall()
+
+    cat_list = []
+
+    for cat in categories:
+
+        # ---------------- PLANS ----------------
+        cursor.execute("""
+            SELECT * FROM plans WHERE category_id=?
+        """, (cat['id'],))
+        plans = cursor.fetchall()
+
+        plan_list = []
+
+        for plan in plans:
+
+            # ---------------- IMAGES ----------------
+            cursor.execute("""
+                SELECT * FROM plan_images WHERE plan_id=?
+            """, (plan['id'],))
+            images = cursor.fetchall()
+
+            # ---------------- DURATIONS ----------------
+            cursor.execute("""
+                SELECT * FROM plan_durations WHERE plan_id=?
+            """, (plan['id'],))
+            durations = cursor.fetchall()
+
+            duration_list = []
+
+            for dur in durations:
+
+                # ---------------- SPEEDS ----------------
+                cursor.execute("""
+                    SELECT * FROM plan_speeds WHERE duration_id=?
+                """, (dur['id'],))
+                speeds = cursor.fetchall()
+
+                speed_list = []
+
+                for spd in speeds:
+                    speed_list.append({
+                        "id": spd["id"],
+                        "speed": spd["speed"],
+                        "price": spd["price"],
+                        "discounted_price": spd["discounted_price"]
+                    })
+
+                duration_list.append({
+                    "id": dur["id"],
+                    "duration": dur["duration"],
+                    "speeds": speed_list
+                })
+
+            plan_list.append({
+                "plan": plan,
+                "images": images,
+                "durations": duration_list
+            })
+
+        cat_list.append({
+            "id": cat["id"],
+            "name": cat["name"],
+            "plans": plan_list
+        })
+
+    # ================= FETCH OFFERS =================
+    # ✅ FETCH NORMAL OFFERS (popup / broadband / dth)
+    cursor.execute("SELECT * FROM offers ORDER BY id DESC")
+    offers = cursor.fetchall()
+
+# ✅ FETCH GLOBAL SCROLLING OFFERS
+    cursor.execute("SELECT * FROM global_offer ORDER BY id DESC")
+    global_offers = cursor.fetchall()
+    conn.close()
+
+    return render_template(
+        'admin.html',
+        categories=cat_list,
+        offers=offers
+    )
+
 
 @app.route('/delete_offer/<int:id>')
 def delete_offer(id):
@@ -801,7 +833,7 @@ def contact():
             )
 
             msg.body = f"""
-📩 New Enquiry - Tata Play Fiber (Broadband / DTH):
+New Contact Form Submission:
 
 Name: {name}
 Mobile: {mobile}
@@ -943,398 +975,6 @@ def services():
     conn.close()
 
     return render_template("services.html", categories=category_data)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/delete_category/<int:id>')
-def delete_category(id):
-    conn = get_db_connection()
-    conn.execute("DELETE FROM categories WHERE id=?", (id,))
-    conn.commit()
-    conn.close()
-    flash('Category deleted!', "success")
-    return redirect(url_for('admin'))
-# ---------------- Admin Panel ---------------- #
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
-    if not session.get('is_admin'):
-        flash("You must be admin to access this page!", "error")
-        return redirect(url_for('login'))
-
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    offers = cursor.execute("SELECT * FROM offers").fetchall()
-
-    # ---------------- ADD CATEGORY ---------------- #
-    if request.method == 'POST' and 'new_category' in request.form:
-        name = request.form['new_category'].strip()
-        if name:
-            try:
-                cursor.execute("INSERT INTO categories (name) VALUES (?)", (name,))
-                conn.commit()
-                flash(f'Category "{name}" added!', "success")
-            except sqlite3.IntegrityError:
-                flash(f'Category "{name}" already exists!', "error")
-        return redirect(url_for('admin'))
-
-    # ---------------- ADD PLAN ---------------- #
-    if request.method == 'POST' and 'plan_name' in request.form:
-        plan_name = request.form['plan_name'].strip()
-        description = request.form.get('description', '')
-        category_id = request.form['category_id']
-        is_best_seller = 1 if request.form.get('best_seller') else 0
-
-        cursor.execute(
-            "INSERT INTO plans (name, description, is_best_seller, category_id) VALUES (?,?,?,?)",
-            (plan_name, description, is_best_seller, category_id)
-        )
-        plan_id = cursor.lastrowid
-
-        # Upload Images
-        files = request.files.getlist('plan_images[]')
-        for file in files:
-            if file.filename:
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(UPLOAD_FOLDER, filename))
-                cursor.execute("INSERT INTO plan_images (plan_id, filename) VALUES (?,?)", (plan_id, filename))
-
-        # Durations & Speeds
-        durations = request.form.getlist('duration[]')
-        speeds = request.form.getlist('speed[]')
-        prices = request.form.getlist('price[]')
-        discounted_prices = request.form.getlist('discounted_price[]')
-
-        speed_idx = 0
-        for dur in durations:
-            cursor.execute("INSERT INTO plan_durations (plan_id, duration) VALUES (?,?)", (plan_id, dur))
-            dur_id = cursor.lastrowid
-
-            s = speeds[speed_idx]
-            p = prices[speed_idx]
-            d = discounted_prices[speed_idx] or 0
-
-            cursor.execute(
-                "INSERT INTO plan_speeds (duration_id, speed, price, discounted_price) VALUES (?,?,?,?)",
-                (dur_id, s, p, d)
-            )
-            speed_idx += 1
-
-        conn.commit()
-        flash(f'Plan "{plan_name}" added successfully!', "success")
-        categories = cursor.execute("SELECT * FROM categories").fetchall()
-        global_offers = cursor.execute("SELECT * FROM global_offers").fetchall()
-
-        conn.close()
-
-       
-
-    # ---------------- SHOW CATEGORIES & PLANS ---------------- #
-    cursor.execute("SELECT * FROM categories")
-    categories = cursor.fetchall()
-
-    cat_list = []
-
-    for cat in categories:
-        cat_id = cat['id']
-
-        cursor.execute("""
-            SELECT p.*, 
-                   GROUP_CONCAT(pi.filename) AS images
-            FROM plans p
-            LEFT JOIN plan_images pi ON p.id = pi.plan_id
-            WHERE p.category_id=?
-            GROUP BY p.id
-        """, (cat_id,))
-        plans = cursor.fetchall()
-
-        plan_list = []
-
-        for plan in plans:
-            plan_id = plan['id']
-
-            # Durations
-            cursor.execute("SELECT * FROM plan_durations WHERE plan_id=?", (plan_id,))
-            durations = cursor.fetchall()
-
-            dur_list = []   # ✅ INIT HERE
-
-            for dur in durations:
-                dur_id = dur['id']
-
-                cursor.execute("SELECT * FROM plan_speeds WHERE duration_id=?", (dur_id,))
-                spds = cursor.fetchall()
-
-                speeds_list = []
-                for spd in spds:
-                    speeds_list.append({
-                        "id": spd["id"],
-                        "speed": spd["speed"],
-                        "price": spd["price"],
-                        "discounted_price": spd["discounted_price"]
-                    })
-
-                # ✅ FIXED (inside loop)
-                dur_list.append({
-                    "id": dur["id"],
-                    "duration": dur["duration"],
-                    "speeds": speeds_list
-                })
-
-            # Images
-            imgs = []
-            if plan['images']:
-                imgs = [{'filename': f} for f in plan['images'].split(',')]
-
-            plan_list.append({
-                'plan': plan,
-                'images': imgs,
-                'durations': dur_list
-            })
-
-        # ✅ KEEP THIS OUTSIDE plan loop
-        cat_list.append({
-            'id': cat_id,
-            'name': cat['name'],
-            'plans': plan_list
-        })
-
-    conn.close()
-    return render_template(
-    'admin.html',
-    categories=cat_list,
-    offers=offers,
-    
-)
-@app.route('/plans')
-def plans():
-    conn = get_db_connection()
-    cur = conn.cursor()
-
-    categories = cur.execute("SELECT * FROM categories").fetchall()
-
-    category_data = []
-
-    for cat in categories:
-        plans = cur.execute(
-            "SELECT * FROM plans WHERE category_id = ?",
-            (cat["id"],)
-        ).fetchall()
-
-        plans_data = []
-
-        for plan in plans:
-
-            # IMAGES
-            images = cur.execute(
-                "SELECT * FROM plan_images WHERE plan_id = ?",
-                (plan["id"],)
-            ).fetchall()
-
-            # DURATIONS (IMPORTANT: table name = plan_durations)
-            durations = cur.execute(
-                "SELECT * FROM plan_durations WHERE plan_id = ?",
-                (plan["id"],)
-            ).fetchall()
-
-            duration_data = []
-
-            for dur in durations:
-
-                # SPEEDS (IMPORTANT: table name = plan_speeds)
-                speeds = cur.execute(
-                    "SELECT * FROM plan_speeds WHERE duration_id = ?",
-                    (dur["id"],)
-                ).fetchall()
-
-                duration_data.append({
-                    "id": dur["id"],
-                    "duration": dur["duration"],
-                    "speeds": speeds
-                })
-
-            plans_data.append({
-                "plan": plan,
-                "images": images,
-                "durations": duration_data
-            })
-
-        category_data.append({
-            "id": cat["id"],
-            "name": cat["name"],
-            "plans": plans_data
-        })
-
-    conn.close()
-
-    return render_template("plans.html", categories=category_data)
-@app.route('/admin/update_plan/<int:plan_id>', methods=['POST'])
-def update_plan(plan_id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    try:
-        import json
-
-        data = request.form.get('json_data')
-        if data:
-            data = json.loads(data)
-        else:
-            data = {}
-
-        # -------- UPDATE PLAN -------- #
-        best = data.get('is_best_seller')
-
-        is_best = 1 if str(best).lower() in ['true', '1', 'yes', 'on'] else 0
-
-        cursor.execute("""
-            UPDATE plans SET name=?, description=?, is_best_seller=? WHERE id=?
-        """, (data.get('name'), data.get('description'), is_best, plan_id))
-      
-
-        # -------- UPDATE EXISTING DURATIONS -------- #
-        for dur_id, val in data.get('duration', {}).items():
-            cursor.execute(
-                "UPDATE plan_durations SET duration=? WHERE id=?",
-                (val, dur_id)
-            )
-
-        # -------- UPDATE EXISTING SPEEDS -------- #
-        for spd_id, val in data.get('speed', {}).items():
-            cursor.execute(
-                "UPDATE plan_speeds SET speed=? WHERE id=?",
-                (val, spd_id)
-            )
-
-        for spd_id, val in data.get('price', {}).items():
-            cursor.execute(
-                "UPDATE plan_speeds SET price=? WHERE id=?",
-                (val, spd_id)
-            )
-
-        for spd_id, val in data.get('discounted_price', {}).items():
-            cursor.execute(
-                "UPDATE plan_speeds SET discounted_price=? WHERE id=?",
-                (val, spd_id)
-            )
-
-        # -------- ADD NEW DURATIONS -------- #
-        new_duration_map = {}
-
-        for dur in data.get('new_durations', []):
-            cursor.execute(
-                "INSERT INTO plan_durations (plan_id, duration) VALUES (?, ?)",
-                (plan_id, dur)
-            )
-            new_duration_map[dur] = cursor.lastrowid
-
-        # -------- ADD NEW SPEEDS -------- #
-        for sp in data.get('new_speeds', []):
-            dur_val = sp.get('duration')
-
-            # find duration id
-            dur_id = new_duration_map.get(dur_val)
-
-            if not dur_id:
-                cursor.execute(
-                    "SELECT id FROM plan_durations WHERE plan_id=? AND duration=?",
-                    (plan_id, dur_val)
-                )
-                row = cursor.fetchone()
-                if row:
-                    dur_id = row["id"]
-
-            if dur_id:
-                cursor.execute("""
-                    INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
-                    VALUES (?, ?, ?, ?)
-                """, (
-                    dur_id,
-                    sp.get('speed'),
-                    sp.get('price'),
-                    sp.get('discounted_price', 0)
-                ))
-
-        # -------- IMAGE UPLOAD -------- #
-        files = request.files.getlist('images')
-
-        for file in files:
-            if file.filename:
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-                cursor.execute(
-                    "INSERT INTO plan_images (plan_id, filename) VALUES (?, ?)",
-                    (plan_id, filename)
-                )
-
-        # -------- DELETE IMAGES -------- #
-        for img_id in data.get('delete_images', []):
-            cursor.execute(
-                "DELETE FROM plan_images WHERE id=?",
-                (img_id,)
-            )
-
-        conn.commit()
-        return jsonify({"success": True})
-
-    except Exception as e:
-        print("ERROR:", e)
-        return jsonify({"success": False})
-
-    finally:
-        conn.close()
-        
-@app.route('/delete-plan/<int:id>')
-def delete_plan(id):
-    conn = get_db_connection()
-    cursor = conn.cursor()
-
-    # delete plan
-    cursor.execute("DELETE FROM plans WHERE id = ?", (id,))
-
-    conn.commit()
-    conn.close()
-
-    flash("Plan deleted successfully", "success")
-    return redirect(url_for('admin'))
-
-
-
-
-
 
 init_excel()
 # ---------------- Run App ---------------- #

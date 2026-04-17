@@ -491,13 +491,42 @@ priceFilter.addEventListener("change", applyFilters);
 
 // ================= CLEAR =================
 clearBtn.addEventListener("click", () => {
+    // reset filters
     durationFilter.value = "all";
     priceFilter.value = "all";
 
-    document.querySelectorAll(".plan-card").forEach(p => p.style.display = "block");
-    document.querySelectorAll(".duration-item").forEach(d => d.style.display = "block");
-});
+    // reset category filter
+    activeCategory = null;
 
+    // show static info again if needed
+    staticInfo.style.display = "block";
+
+    // remove all filters instantly
+    document.querySelectorAll(".plan-card").forEach(plan => {
+        plan.classList.remove("hide", "show");
+        plan.style.display = "block";
+    });
+
+    document.querySelectorAll(".duration-item").forEach(d => {
+        d.classList.remove("hide");
+        d.style.display = "block";
+    });
+
+    // remove active category highlight
+    buttons.forEach(b => b.classList.remove("active"));
+    panels.forEach(p => p.classList.remove("active"));
+
+    // show first category again (optional UX fix)
+    const firstBtn = document.querySelector(".cat-btn");
+    const firstPanel = document.querySelector(".category-panel");
+
+    if (firstBtn && firstPanel) {
+        firstBtn.classList.add("active");
+        firstPanel.classList.add("active");
+
+        activeCategory = firstPanel.querySelector("h2").innerText.toLowerCase();
+    }
+});
 
 // ================= INIT FIRST CATEGORY =================
 window.onload = () => {

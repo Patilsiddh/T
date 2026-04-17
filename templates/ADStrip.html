@@ -1,31 +1,833 @@
-<!-- ===== AD STRIP ===== -->
-<div class="ad-strip">
-    <div class="ad-track">
-        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner1.jpg">
-        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner2.jpg">
-        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner3.jpg">
-        <img src="https://www.tataplayfiber.com/static-assets/images/home/banner1.jpg">
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+/* =================== General =================== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h2, h3, h4, h5 {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    color: #111;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+
+.best-seller-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.badge {
+    background: gold;
+    color: black;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+/* =================== Flash Messages =================== */
+.alert {
+    padding: 12px 20px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.alert.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* =================== Form Cards =================== */
+.form-card {
+    background-color: #fff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+}
+
+.form-card:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+}
+
+.form-card input[type="text"],
+.form-card input[type="number"],
+.form-card input[type="file"],
+.form-card textarea,
+.form-card select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-card button {
+    background-color: #e50914;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.form-card button:hover {
+    background-color: #b0060f;
+}
+
+/* =================== Categories & Plans =================== */
+.category-block {
+    background-color: #fdfdfd;
+    border-left: 4px solid #e50914;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+.category-block h4 {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.delete-btn {
+    background-color: #ff4d4d;
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 10px;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+
+/* =================== Plan Cards =================== */
+.plan-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+.plan-card h5 {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.plan-card .badge {
+    background-color: #e50914;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.plan-card p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.plan-actions {
+    margin-top: 10px;
+}
+
+.plan-actions .edit-btn,
+.plan-actions .delete-btn {
+    font-size: 13px;
+    padding: 5px 12px;
+}
+
+.plan-actions .edit-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.plan-actions .edit-btn:hover {
+    background-color: #0056b3;
+}
+
+/* =================== Plan Images =================== */
+.plan-images {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.plan-images img {
+    width: 80px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* =================== Durations & Speeds =================== */
+.duration-block, .speed-block {
+    margin-bottom: 10px;
+}
+
+.duration-block input, .speed-block input {
+    width: calc(33% - 10px);
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.duration-block button, .speed-block button {
+    margin-top: 5px;
+    font-size: 12px;
+    background-color: #ff9900;
+}
+
+.duration-block button:hover, .speed-block button:hover {
+    background-color: #cc7a00;
+}
+
+.durations-list ul {
+    margin: 5px 0 0 15px;
+    padding: 0;
+    list-style-type: circle;
+}
+
+/* =================== Image Preview =================== */
+.image-preview img {
+    width: 100px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+/* =================== Buttons =================== */
+button, input[type="submit"] {
+    cursor: pointer;
+}
+
+/* =================== Responsive =================== */
+@media (max-width: 768px) {
+    .duration-block input, .speed-block input {
+        width: 100%;
+        margin-bottom: 6px;
+    }
+}
+</style>
+
+<div class="dashboard-header">
+
+
+
+<form method="POST" action="/admin/set-offer" style="margin-top:20px;">
+
+    <input 
+        type="text" 
+        name="offer_text" 
+        placeholder="Enter rolling offer..."
+        style="width:350px;padding:10px;border-radius:6px;border:1px solid #ccc;"
+    >
+
+    <button type="submit" 
+        style="padding:10px 15px;background:#6c63ff;color:#fff;border:none;border-radius:6px;">
+        Save / Clear Offer
+    </button>
+
+</form>
+
+<!-- ===== SAVED OFFERS LIST ===== -->
+<div style="margin-top:30px;">
+    <h3>Saved Offers</h3>
+
+    {% for offer in global_offers %}
+    <div style="
+        background:#111827;
+        padding:15px;
+        margin-top:10px;
+        border-radius:10px;
+        color:#fff;
+    ">
+
+        <!-- TEXT -->
+        <div style="margin-bottom:10px;">
+            {{ offer['text'] }}
+        </div>
+
+        <!-- DATE -->
+        <small style="opacity:0.6;">
+            {{ offer['updated_at'] }}
+        </small>
+
+        <!-- EDIT FORM -->
+        <form method="POST" action="/admin/set-offer" style="margin-top:10px;display:flex;gap:10px;">
+
+            <input type="hidden" name="offer_id" value="{{ offer['id'] }}">
+
+            <input 
+                type="text" 
+                name="offer_text" 
+                value="{{ offer['text'] }}"
+                style="flex:1;padding:8px;border-radius:6px;border:none;"
+            >
+
+            <button type="submit" style="
+                background:#22c55e;
+                color:#fff;
+                border:none;
+                padding:8px 12px;
+                border-radius:6px;
+            ">
+                Update
+            </button>
+
+        </form>
+
+    </div>
+    {% endfor %}
+</div>
+    <div class="form-card">
+    <h3>🎁 Manage Offers</h3>
+
+    <!-- ADD OFFER -->
+    <form method="POST" action="/add_offer" enctype="multipart/form-data">
+
+        <!-- AUTO DEFAULT TITLE -->
+        <input type="text"
+               name="title"
+               value="🔥 OFFER • OFFER • OFFER • OFFER • OFFER •"
+               placeholder="Offer Title"
+               required>
+
+        <input type="text"
+               name="amount_text"
+               placeholder="Offer Text (₹300 OFF / Cashback etc)"
+               required>
+
+        <select name="offer_type" required>
+            <option value="">Select Type</option>
+            <option value="broadband">Broadband</option>
+            <option value="dth">DTH</option>
+            <option value="popup">Popup</option>
+        </select>
+
+        <label>
+            <input type="checkbox" name="is_popup">
+            Show as Popup
+        </label>
+
+        <input type="file" name="image" accept="image/*">
+
+        <button class="btn">➕ Add Offer</button>
+    </form>
+</div>
+
+
+<div class="form-card">
+    <h3>📋 Existing Offers (Select Active Offer per Type)</h3>
+
+    {% if offers and offers|length > 0 %}
+
+    <form method="POST" action="/update_offer_selection">
+
+        {% set types = ['broadband', 'dth', 'popup'] %}
+
+        {% for t in types %}
+
+        <h4 style="margin:15px 0 10px; color:#6b00dd;">
+            {{ t|upper }} OFFERS
+        </h4>
+
+        {% for offer in offers if offer.offer_type == t %}
+
+        <div class="plan-card" style="display:flex;gap:15px;align-items:center;flex-wrap:wrap;">
+
+            <!-- IMAGE -->
+            {% if offer.image_url %}
+            <img src="{{ url_for('static', filename='uploads/' ~ offer.image_url) }}"
+                 style="width:110px;height:75px;border-radius:10px;object-fit:cover;">
+            {% endif %}
+
+            <!-- INFO -->
+            <div style="flex:1;">
+                <h4 style="margin:0;">{{ offer.title }}</h4>
+                <p style="margin:3px 0;">{{ offer.subtitle }}</p>
+                <p style="margin:3px 0;"><b>{{ offer.amount_text }}</b></p>
+                <small>Type: {{ offer.offer_type }}</small>
+
+                {% if offer.is_popup %}
+                    <span class="badge">Popup</span>
+                {% endif %}
+            </div>
+
+            <!-- SELECT ACTIVE -->
+            <label style="display:flex;align-items:center;gap:8px;font-weight:600;">
+                <input type="radio"
+                       name="active_{{ t }}"
+                       value="{{ offer.id }}"
+                       {% if offer.is_active == 1 %}checked{% endif %}>
+                Active
+            </label>
+
+            <!-- DELETE -->
+            <a href="/delete_offer/{{ offer.id }}"
+               class="btn-danger"
+               onclick="return confirm('Delete this offer?')">
+               ❌
+            </a>
+
+        </div>
+
+        {% endfor %}
+        {% endfor %}
+
+        <button class="btn" style="margin-top:20px;">
+            💾 Save Active Selection
+        </button>
+
+    </form>
+
+    {% else %}
+        <p style="color:#6b7280;">No offers added yet.</p>
+    {% endif %}
+
+</div>
+
+<div class="admin-container">
+    <h2>📊 Admin Panel - Manage Categories & Plans</h2>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- ADD CATEGORY -->
+    <div class="form-card">
+        <h3>Add Category</h3>
+        <form method="POST">
+            <input type="text" name="new_category" placeholder="Category Name" required>
+            <button type="submit">Add Category</button>
+        </form>
     </div>
 
-    <style>.ad-strip{
-    overflow:hidden;
-    background:#000;
-    padding:10px 0;
-}
+    <!-- ADD PLAN -->
+    <div class="form-card">
+        <h3>Add Plan</h3>
+        <form method="POST" id="planForm" enctype="multipart/form-data">
+            <input type="text" name="plan_name" placeholder="Plan Name" required>
+            <textarea name="description" placeholder="Description (optional)"></textarea>
 
-.ad-track{
-    display:flex;
-    gap:20px;
-    animation:scrollAds 15s linear infinite;
-}
+            <label>Category:</label>
+            <select name="category_id" required>
+                <option value="">Select Category</option>
+                {% for cat in categories %}
+                    <option value="{{ cat.id }}">{{ cat.name }}</option>
+                {% endfor %}
+            </select>
 
-.ad-track img{
-    height:120px;
-    border-radius:10px;
-}
+            <input type="hidden" name="best_seller" value="0">
+<input type="checkbox" name="best_seller" value="1">
 
-@keyframes scrollAds{
-    0%{transform:translateX(0);}
-    100%{transform:translateX(-50%);}
-}</style>
+            <!-- Plan Images -->
+            <div id="images-container">
+                <label>Plan Images:</label>
+                <div class="image-block">
+                    <input type="file" name="plan_images[]" accept="image/*" onchange="previewImage(this)">
+                    <button type="button" onclick="addImage()">Add More Images</button>
+                    <div class="image-preview"></div>
+                </div>
+            </div>
+
+            <!-- Durations & Speeds -->
+            <div id="durations-container">
+                <h4>Durations & Speeds</h4>
+                <div class="duration-block">
+                    <input type="number" name="duration[]" placeholder="Duration in months" min="1" required>
+                    <div class="speeds-container">
+                        <div class="speed-block">
+                            <input type="number" name="speed[]" placeholder="Speed in Mbps" >
+                            <input type="number" name="price[]" placeholder="Original Price" required>
+                            <input type="number" name="discounted_price[]" placeholder="Discounted Price">
+                            <button type="button" onclick="removeSpeed(this)">Remove Speed</button>
+                        </div>
+                        <button type="button" onclick="addSpeed(this)">Add More Speed</button>
+                    </div>
+                    <button type="button" onclick="removeDuration(this)">Remove Duration</button>
+                </div>
+            </div>
+
+            <button type="button" onclick="addDuration()">Add Duration</button>
+            <button type="submit">Add Plan</button>
+        </form>
+    </div>
+
+<div class="form-card">
+    <h3>Plans by Category</h3>
+
+    {% for cat in categories %}
+    <div class="category-block">
+
+        <h4>{{ cat.name }}</h4>
+        <a href="{{ url_for('delete_category', id=cat.id) }}"
+           class="delete-btn"
+           onclick="return confirm('Delete this category?');">
+           Delete Category
+        </a>
+
+        {% if cat.plans %}
+        <div class="plans-container">
+
+            {% for plan_item in cat.plans %}
+            <div class="plan-card">
+
+               <h5>
+    <input type="text"
+           id="name-{{plan_item.plan.id}}"
+           value="{{plan_item.plan.name}}">
+    
+           {% if plan_item.plan.is_best_seller == 1 %}
+    <span class="badge">🔥 Best Seller</span>
+{% endif %}
+</h5>
+                
+<label class="best-seller-toggle">
+    <input type="checkbox"
+           id="best-{{plan_item.plan.id}}"
+           {% if plan_item.plan.is_best_seller == 1 %}checked{% endif %}>
+    Mark as Best Seller
+</label>
+<!-- DESCRIPTION -->
+                <textarea id="desc-{{plan_item.plan.id}}">
+                    {{plan_item.plan.description}}
+                </textarea>
+
+                <!-- IMAGES -->
+                <div class="plan-images">
+                    {% for img in plan_item.images %}
+                    <div>
+                        <img src="/static/uploads/{{img.filename}}" width="80">
+                        <button onclick="deleteImage({{img.id}}, this)">Delete</button>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <input type="file" multiple id="images-{{plan_item.plan.id}}">
+
+                <!-- DURATIONS -->
+                <div id="durations-{{plan_item.plan.id}}">
+
+                    {% for dur in plan_item.durations %}
+                    <div class="duration-block">
+
+                        <input type="text"
+                               value="{{dur.duration}}"
+                               data-id="{{dur.id}}"
+                               class="duration">
+
+                        <!-- SPEEDS -->
+                        {% for sp in dur.speeds %}
+                        <div class="speed-block">
+                            <input type="text" value="{{sp.speed}}" data-id="{{sp.id}}" class="speed">
+                            <input type="text" value="{{sp.price}}" data-id="{{sp.id}}" class="price">
+                            <input type="text" value="{{sp.discounted_price}}" data-id="{{sp.id}}" class="discount">
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- ADD BUTTONS -->
+              <button onclick="addDurationEdit({{plan_item.plan.id}})">+ Add Duration</button>
+<button onclick="addSpeedEdit({{plan_item.plan.id}})">+ Add Speed</button>
+
+                <!-- SAVE -->
+                <button onclick="savePlan({{plan_item.plan.id}})">Save</button>
+
+                <!-- DELETE -->
+                <a href="{{ url_for('delete_plan', id=plan_item.plan.id) }}"
+                   class="delete-btn"
+                   onclick="return confirm('Delete this plan?');">
+                   Delete Plan
+                </a>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% else %}
+        <p>No plans in this category.</p>
+        {% endif %}
+
+    </div>
+    {% endfor %}
 </div>
+
+<!-- ===================== JS FOR FORM ===================== -->
+<script>
+// ===================== ADD PLAN FORM =====================
+document.querySelectorAll('[id^="best-"]').forEach(cb => {
+    cb.addEventListener('change', function () {
+        const planCard = this.closest('.plan-card');
+
+        let badge = planCard.querySelector('.badge');
+
+        if (this.checked) {
+            if (!badge) {
+                badge = document.createElement('span');
+                badge.className = 'badge';
+                badge.innerHTML = '🔥 Best Seller';
+                planCard.querySelector('h5').appendChild(badge);
+            }
+        } else {
+            if (badge) badge.remove();
+        }
+    });
+});
+
+
+function addDuration() {
+    const container = document.getElementById('durations-container');
+
+    const div = document.createElement('div');
+    div.classList.add('duration-block');
+
+    div.innerHTML = `
+        <input type="number" name="duration[]" placeholder="Duration in months" min="1" required>
+
+        <div class="speeds-container">
+            <div class="speed-block">
+                <input type="number" name="speed[]" placeholder="Speed in Mbps">
+                <input type="number" name="price[]" placeholder="Original Price" required>
+                <input type="number" name="discounted_price[]" placeholder="Discounted Price">
+                <button type="button" onclick="removeSpeed(this)">Remove Speed</button>
+            </div>
+
+            <button type="button" onclick="addSpeed(this)">Add More Speed</button>
+        </div>
+
+        <button type="button" onclick="removeDuration(this)">Remove Duration</button>
+    `;
+
+    container.appendChild(div);
+}
+
+function removeDuration(btn){
+    btn.closest('.duration-block').remove();
+}
+
+function addSpeed(btn){
+    const container = btn.closest('.speeds-container');
+
+    const div = document.createElement('div');
+    div.classList.add('speed-block');
+
+    div.innerHTML = `
+        <input type="number" name="speed[]" placeholder="Speed in Mbps" required>
+        <input type="number" name="price[]" placeholder="Original Price" required>
+        <input type="number" name="discounted_price[]" placeholder="Discounted Price">
+        <button type="button" onclick="removeSpeed(this)">Remove Speed</button>
+    `;
+
+    container.insertBefore(div, btn);
+}
+
+function removeSpeed(btn){
+    btn.closest('.speed-block').remove();
+}
+
+// ===================== IMAGE =====================
+
+function addImage(){
+    const container = document.getElementById('images-container');
+
+    const div = document.createElement('div');
+    div.classList.add('image-block');
+
+    div.innerHTML = `
+        <input type="file" name="plan_images[]" accept="image/*" onchange="previewImage(this)">
+        <button type="button" onclick="addImage()">Add More Images</button>
+        <div class="image-preview"></div>
+    `;
+
+    container.appendChild(div);
+}
+
+function previewImage(input){
+    const previewDiv = input.parentElement.querySelector('.image-preview');
+    previewDiv.innerHTML = '';
+
+    Array.from(input.files).forEach(file=>{
+        const reader = new FileReader();
+
+        reader.onload = e=>{
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.width = '100px';
+            img.style.marginRight = '10px';
+            img.style.marginTop = '10px';
+            img.style.borderRadius = '8px';
+            previewDiv.appendChild(img);
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+// ===================== EDIT SECTION =====================
+
+let deletedImages = {};
+
+function addDurationEdit(planId) {
+    const container = document.getElementById(`durations-${planId}`);
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <input type="text" placeholder="New Duration" class="new-duration">
+    `;
+    container.appendChild(div);
+}
+
+function addSpeedEdit(planId) {
+    const container = document.getElementById(`durations-${planId}`);
+
+    const div = document.createElement("div");
+    div.innerHTML = `
+        <input type="text" placeholder="Duration (e.g. 30)" class="new-speed-duration">
+        <input type="text" placeholder="Speed" class="new-speed">
+        <input type="text" placeholder="Price" class="new-price">
+        <input type="text" placeholder="Discount" class="new-discount">
+    `;
+    container.appendChild(div);
+}
+
+function deleteImage(imgId, btn) {
+    if (!deletedImages.current) deletedImages.current = [];
+    deletedImages.current.push(imgId);
+
+    btn.parentElement.remove();
+}
+
+function savePlan(planId) {
+
+    let data = {
+        name: document.getElementById(`name-${planId}`).value,
+        description: document.getElementById(`desc-${planId}`).value,
+        duration: {},
+        speed: {},
+        price: {},
+        discounted_price: {},
+        new_durations: [],
+        new_speeds: [],
+        delete_images: deletedImages.current || [],
+
+        // ✅ FIXED
+        is_best_seller: document.getElementById(`best-${planId}`).checked
+    };
+    // EXISTING
+    document.querySelectorAll(`#durations-${planId} .duration`).forEach(el => {
+        data.duration[el.dataset.id] = el.value;
+    });
+
+    document.querySelectorAll(`#durations-${planId} .speed`).forEach(el => {
+        data.speed[el.dataset.id] = el.value;
+    });
+
+    document.querySelectorAll(`#durations-${planId} .price`).forEach(el => {
+        data.price[el.dataset.id] = el.value;
+    });
+
+    document.querySelectorAll(`#durations-${planId} .discount`).forEach(el => {
+        data.discounted_price[el.dataset.id] = el.value;
+    });
+
+    // NEW DURATIONS
+    document.querySelectorAll(`#durations-${planId} .new-duration`).forEach(el => {
+        data.new_durations.push(el.value);
+    });
+
+    // NEW SPEEDS
+    document.querySelectorAll(`#durations-${planId} .new-speed`).forEach((el, i) => {
+        let duration = document.querySelectorAll(`#durations-${planId} .new-speed-duration`)[i].value;
+
+        data.new_speeds.push({
+            duration: duration,
+            speed: el.value,
+            price: document.querySelectorAll(`#durations-${planId} .new-price`)[i].value,
+            discounted_price: document.querySelectorAll(`#durations-${planId} .new-discount`)[i].value
+        });
+    });
+
+    let formData = new FormData();
+    formData.append("json_data", JSON.stringify(data));
+
+    // IMAGES
+    let files = document.getElementById(`images-${planId}`).files;
+    for (let file of files) {
+        formData.append("images", file);
+    }
+
+    fetch(`/admin/update_plan/${planId}`, {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert("Saved!");
+            location.reload();
+        } else {
+            alert("Error");
+        }
+    });
+}let data = {
+    name: document.getElementById(`name-${planId}`).value,
+    description: document.getElementById(`desc-${planId}`).value,
+    duration: {},
+    speed: {},
+    price: {},
+    discounted_price: {},
+    new_durations: [],
+    new_speeds: [],
+    delete_images: deletedImages.current || [],
+    best_seller: document.getElementById(`best-${planId}`).checked  // ✅ FIX
+};
+</script>
+{% endblock %}
+
