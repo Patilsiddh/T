@@ -10,11 +10,22 @@ from datetime import datetime
 from flask_mail import Mail, Message
 
 
+
+
+# ✅ Detect environment (Vercel vs Local)
+if os.getenv("VERCEL"):
+    BASE_DIR = "/tmp"
+else:
+    BASE_DIR = "."
+
 # ---------------- Paths ---------------- #
-DB_FOLDER = "database"
+DB_FOLDER = os.path.join(BASE_DIR, "database")
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static/uploads")
+
 DB_PATH = os.path.join(DB_FOLDER, "Tataplay.db")
 EXCEL_PATH = os.path.join(DB_FOLDER, "user_logs.xlsx")
-UPLOAD_FOLDER = "static/uploads"
+
+# ✅ Create folders (works in /tmp)
 os.makedirs(DB_FOLDER, exist_ok=True)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
