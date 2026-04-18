@@ -19,14 +19,16 @@ else:
     BASE_DIR = "."
 
 # ---------------- Paths ---------------- #
-DB_FOLDER = os.path.join(BASE_DIR, "database")
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "static/uploads")
+if os.getenv("VERCEL"):
+    DB_PATH = "/tmp/Tataplay.db"
+    UPLOAD_FOLDER = "/tmp/uploads"
+    EXCEL_PATH = "/tmp/user_logs.xlsx"
+else:
+    DB_PATH = "database/Tataplay.db"
+    UPLOAD_FOLDER = "static/uploads"
+    EXCEL_PATH = "database/user_logs.xlsx"
 
-DB_PATH = os.path.join(DB_FOLDER, "Tataplay.db")
-EXCEL_PATH = os.path.join(DB_FOLDER, "user_logs.xlsx")
-
-# ✅ Create folders (works in /tmp)
-os.makedirs(DB_FOLDER, exist_ok=True)
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # ---------------- Excel Logging ---------------- #
