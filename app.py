@@ -80,7 +80,7 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'patilsiddh2026@gmail.com'
-app.config['MAIL_PASSWORD'] = 'egpzzvflxvkpibyj'  # NOT normal password
+app.config['MAIL_PASSWORD'] = 'sexilzmhkpvdbymw'  # NOT normal password
 
 mail = Mail(app)
 mail.init_app(app)
