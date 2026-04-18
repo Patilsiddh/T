@@ -361,9 +361,7 @@ body::after{
 Hello, I am interested in {{ category['name'] }} plan  
 Name: {{ plan_item['plan']['name'] }}  
 Duration: {{ dur['duration'] }} months  
-{% if spd and spd.get('speed') %}
 Speed: {{ spd['speed'] }} Mbps  
-{% endif %}
 Price: ₹{{ spd['discounted_price'] if spd['discounted_price'] else spd['price'] }}  
 Please share more details.
             {% endset %}
@@ -507,32 +505,27 @@ priceFilter.addEventListener("change", applyFilters);
 
 // ================= CLEAR =================
 clearBtn.addEventListener("click", () => {
-    // reset filters
+
     durationFilter.value = "all";
     priceFilter.value = "all";
 
-    // reset category filter
     activeCategory = null;
 
-    // show static info again if needed
     staticInfo.style.display = "block";
 
-    // remove all filters instantly
+    // ✅ REMOVE ALL FILTER CLASSES ONLY
     document.querySelectorAll(".plan-card").forEach(plan => {
         plan.classList.remove("hide", "show");
-        plan.style.display = "block";
     });
 
     document.querySelectorAll(".duration-item").forEach(d => {
         d.classList.remove("hide");
-        d.style.display = "block";
     });
 
-    // remove active category highlight
+    // reset category UI
     buttons.forEach(b => b.classList.remove("active"));
     panels.forEach(p => p.classList.remove("active"));
 
-    // show first category again (optional UX fix)
     const firstBtn = document.querySelector(".cat-btn");
     const firstPanel = document.querySelector(".category-panel");
 
@@ -660,6 +653,7 @@ window.onload = () => {
     transform:translateY(6px);
     pointer-events:none;
     position:absolute; /* prevents layout jump */
+    display:none; /* hides from screen readers and removes from flow */
 }
 
 /* visible */
