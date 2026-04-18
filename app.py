@@ -12,25 +12,12 @@ from flask_mail import Mail, Message
 
 
 
-# ✅ Detect environment (Vercel vs Local)
-if os.getenv("VERCEL"):
-    BASE_DIR = "/tmp"
-else:
-    BASE_DIR = "."
-
-# ---------------- Paths ---------------- #
-if os.getenv("VERCEL"):
-    DB_PATH = "/tmp/Tataplay.db"
-    UPLOAD_FOLDER = "/tmp/uploads"
-    EXCEL_PATH = "/tmp/user_logs.xlsx"
-else:
-    DB_PATH = "database/Tataplay.db"
-    UPLOAD_FOLDER = "static/uploads"
-    EXCEL_PATH = "database/user_logs.xlsx"
-
-os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+DB_FOLDER = "database"
+DB_PATH = os.path.join(DB_FOLDER, "Tataplay.db")
+EXCEL_PATH = os.path.join(DB_FOLDER, "user_logs.xlsx")
+UPLOAD_FOLDER = "static/uploads"
+os.makedirs(DB_FOLDER, exist_ok=True)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 # ---------------- Excel Logging ---------------- #
 
 EXCEL_FILE = "contacts.xlsx"
