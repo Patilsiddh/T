@@ -361,7 +361,9 @@ body::after{
 Hello, I am interested in {{ category['name'] }} plan  
 Name: {{ plan_item['plan']['name'] }}  
 Duration: {{ dur['duration'] }} months  
+{% if spd and spd.get('speed') %}
 Speed: {{ spd['speed'] }} Mbps  
+{% endif %}
 Price: ₹{{ spd['discounted_price'] if spd['discounted_price'] else spd['price'] }}  
 Please share more details.
             {% endset %}
