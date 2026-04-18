@@ -1,39 +1,32 @@
-
 {% extends "base.html" %}
-{% include 'fonts.html' %}
+
 {% block title %}Tata Play Fiber | Pune{% endblock %}
+
+{% block navbar %}
+<nav class="navbar">
+    <div class="logo">
+        <img class="navbar-logo"
+             src="{{ url_for('static', filename='uploads/TATAPLAYLOGO.png') }}">
+    </div>
+
+    <div class="navbtns">
+        <a href="{{ url_for('home') }}" class="btn">Home</a>
+        <a href="{{ url_for('services') }}" class="btn">Services</a>
+        <a href="{{ url_for('contact') }}" class="btn">Contact</a>
+    </div>
+</nav>
+{% endblock %}
 
 {% block content %}
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <script>
-      alert("{{ messages[0] }}");
-    </script>
-  {% endif %}
-{% endwith %}
-
 {% include "FULLSCRNLoader.html" %}
-
 {% include "TopBarOffer.html" %}
 {% include "Offerpopup.html" %}
-  {% include 'Carosal.html' %}
+{% include "Carosal.html" %}
 {% include "Offers.html" %}
-
 {% include "Sections.html" %}
-
-
-
-<!-- ===== OTHER SECTIONS ===== -->
-
-
-
-  
-
 {% include "WHYUS.html" %}
-
 {% include "Gallary&Testimi.html" %}
-
 {% include "TATAOffersection.html" %}
 {% include "WHYtata.html" %}
 {% include "FAQ.html" %}

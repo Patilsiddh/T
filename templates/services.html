@@ -324,63 +324,77 @@ body::after{
             {% endif %}
 
             {% for dur in plan_item['durations'] %}
-            <div class="duration-item"
-                 data-duration="{{ dur['duration'] }}"
-                 data-price="{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else 0 }}">
+           <div class="duration-item"
+     data-duration="{{ dur['duration'] }}"
+     data-price="{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else 0 }}">
 
-                <div>{{ dur['duration'] }} Month Plan</div>
+    <div>
+        <strong>{{ dur['duration'] }} Month Plan</strong>
+    </div>
 
-                {% for spd in dur['speeds'] %}
-                <div class="speed-item">
+    {% set has_speed = false %}
 
-                    {% if spd['speed'] and spd['speed'] != 'None' %}
-                        <span>{{ spd['speed'] }} Mbps</span>
-                    {% else %}
-                        <span></span>
-                    {% endif %}
+    {% for spd in dur['speeds'] %}
 
-                    {% if spd['price'] or spd['discounted_price'] %}
-                    <div class="price-box">
+        {% set has_speed = true %}
 
-                        {% if spd['price'] %}
-                            <span class="original-price">₹{{ spd['price'] }}</span>
-                        {% endif %}
+        <div class="speed-item">
 
-                        {% if spd['discounted_price'] %}
-                            <span class="discount-price">₹{{ spd['discounted_price'] }}</span>
-                        {% endif %}
+            {% if spd['speed'] and spd['speed'] != 'None' %}
+                <span>{{ spd['speed'] }} Mbps</span>
+            {% else %}
+                <span>Plan Included</span>
+            {% endif %}
 
-                    </div>
-                    {% endif %}
+            <div class="price-box">
+                {% if spd['price'] %}
+                    <span class="original-price">₹{{ spd['price'] }}</span>
+                {% endif %}
 
-                </div>
-
-<!-- ✅ SAVE BADGE -->
-{% if spd['price'] and spd['discounted_price'] %}
-    {% set saving = spd['price'] - spd['discounted_price'] %}
-    {% if saving > 0 %}
-        <div class="save-badge">
-            You Save ₹{{ saving }}
-        </div>
-    {% endif %}
-{% endif %}
-                {% endfor %}
-
-{% set msg %}
-Hello, I am interested in {{ category['name'] }} plan {{ plan_item['type'] if plan_item['type'] else '' }} 
-Name: {{ plan_item['plan']['name'] }} 
-Duration: {{ dur['duration'] }} months 
-Price: ₹{{ dur['speeds'][0]['discounted_price'] if dur['speeds'] else '' }}{% if dur['speeds'] and dur['speeds'][0]['speed'] %} 
-Speed: {{ dur['speeds'][0]['speed'] }} Mbps{% endif %} 
-Please share more details.
-{% endset %}
-<a class="btn-buy"
-   target="_blank"
-   href="https://api.whatsapp.com/send?phone=919922562197&text={{ msg | urlencode }}">
-   Buy Now
-</a>
-
+                {% if spd['discounted_price'] %}
+                    <span class="discount-price">₹{{ spd['discounted_price'] }}</span>
+                {% endif %}
             </div>
+
+            <!-- ✅ SPEED LEVEL BUY NOW -->
+            {% set msg_speed %}
+Hello, I am interested in {{ category['name'] }} plan  
+Name: {{ plan_item['plan']['name'] }}  
+Duration: {{ dur['duration'] }} months  
+Speed: {{ spd['speed'] }} Mbps  
+Price: ₹{{ spd['discounted_price'] if spd['discounted_price'] else spd['price'] }}  
+Please share more details.
+            {% endset %}
+
+            <a class="btn-buy"
+               target="_blank"
+               href="https://api.whatsapp.com/send?phone=919922562197&text={{ msg_speed | urlencode }}">
+               Buy Now
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+    <!-- ✅ IF NO SPEED → MONTH LEVEL BUY NOW -->
+    {% if not dur['speeds'] or dur['speeds']|length == 0 %}
+
+        {% set msg_month %}
+Hello, I am interested in {{ category['name'] }} plan  
+Name: {{ plan_item['plan']['name'] }}  
+Duration: {{ dur['duration'] }} months  
+Please share pricing and details.
+        {% endset %}
+
+        <a class="btn-buy"
+           target="_blank"
+           href="https://api.whatsapp.com/send?phone=919922562197&text={{ msg_month | urlencode }}">
+           Buy Now
+        </a>
+
+    {% endif %}
+
+</div>
             {% endfor %}
 
         </div>

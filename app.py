@@ -84,6 +84,9 @@ app.config['MAIL_PASSWORD'] = 'egpzzvflxvkpibyj'  # NOT normal password
 
 mail = Mail(app)
 mail.init_app(app)
+import os
+import sqlite3
+from werkzeug.security import generate_password_hash
 
 # ---------------- Database ---------------- #
 def get_db_connection():
@@ -93,6 +96,14 @@ def get_db_connection():
 
 
 def init_db():
+
+    # =========================
+    # DROP OLD DB AUTOMATICALLY
+    # =========================
+    if os.path.exists(DB_PATH):
+        os.remove(DB_PATH)
+        print("Old database deleted and recreated")
+
     conn = get_db_connection()
     c = conn.cursor()
 
@@ -114,6 +125,7 @@ def init_db():
         )
     """)
 
+    # GLOBAL OFFER
     c.execute("""
         CREATE TABLE IF NOT EXISTS global_offer (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -121,13 +133,6 @@ def init_db():
             active INTEGER DEFAULT 1
         )
     """)
-
-    # ADD updated_at COLUMN SAFELY
-    c.execute("PRAGMA table_info(global_offer)")
-    columns = [col[1] for col in c.fetchall()]
-
-    if "updated_at" not in columns:
-        c.execute("ALTER TABLE global_offer ADD COLUMN updated_at TEXT")
 
     # PLANS
     c.execute("""
@@ -142,7 +147,7 @@ def init_db():
         )
     """)
 
-    # OFFERS TABLE
+    # OFFERS
     c.execute("""
         CREATE TABLE IF NOT EXISTS offers (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -201,17 +206,19 @@ def init_db():
     """)
 
     # =========================
-    # DEFAULT CATEGORIES
+    # DEFAULT DATA
     # =========================
+
     c.execute("INSERT OR IGNORE INTO categories (name) VALUES ('Broadband')")
     c.execute("INSERT OR IGNORE INTO categories (name) VALUES ('DTH')")
 
-    # Get category IDs
     c.execute("SELECT id FROM categories WHERE name='Broadband'")
     broadband_id = c.fetchone()[0]
 
     c.execute("SELECT id FROM categories WHERE name='DTH'")
     dth_id = c.fetchone()[0]
+
+    durations = [1, 2, 3, 6, 12]
 
     # =========================
     # BROADBAND PLANS
@@ -222,7 +229,13 @@ def init_db():
         ("Ultra Fiber", "4K streaming + gaming + heavy usage")
     ]
 
-    durations = [1, 2, 3, 6, 12]
+    duration_prices = {
+        1: 100,
+        2: 500,
+        3: 300,
+        6: 600,
+        12: 1000
+    }
 
     for name, desc in broadband_plans:
         c.execute("""
@@ -233,6 +246,8 @@ def init_db():
         plan_id = c.lastrowid
 
         for d in durations:
+            price = duration_prices[d]
+
             c.execute("""
                 INSERT INTO plan_durations (plan_id, duration)
                 VALUES (?, ?)
@@ -240,28 +255,21 @@ def init_db():
 
             dur_id = c.lastrowid
 
-            speeds = [
-                (50, 399 + d * 10, 299 + d * 10),
-                (100, 599 + d * 15, 499 + d * 15),
-                (200, 899 + d * 20, 749 + d * 20),
-            ]
-
-            for speed, price, discount in speeds:
-                c.execute("""
-                    INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
-                    VALUES (?, ?, ?, ?)
-                """, (dur_id, speed, price, discount))
+            c.execute("""
+                INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
+                VALUES (?, ?, ?, ?)
+            """, (dur_id, 0, price, price))
 
     # =========================
     # DTH PLANS
     # =========================
     dth_plans = [
-        ("Basic DTH Pack", "Regional + Free channels + HD support"),
-        ("Family DTH Pack", "Entertainment + Sports + Movies"),
-        ("Premium DTH Pack", "All HD channels + OTT + sports premium")
+        ("Basic DTH Pack", "Regional channels + HD support", 199),
+        ("Family DTH Pack", "Entertainment + Movies + Sports", 299),
+        ("Premium DTH Pack", "All HD channels + OTT included", 499)
     ]
 
-    for name, desc in dth_plans:
+    for name, desc, price in dth_plans:
         c.execute("""
             INSERT INTO plans (name, description, category_id, is_best_seller)
             VALUES (?, ?, ?, ?)
@@ -277,41 +285,27 @@ def init_db():
 
             dur_id = c.lastrowid
 
-            packs = [
-                ("SD Pack", 199 + d * 5),
-                ("HD Pack", 299 + d * 10),
-                ("Premium HD Pack", 499 + d * 15),
-            ]
-
-            for pack, price in packs:
-                c.execute("""
-                    INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
-                    VALUES (?, ?, ?, ?)
-                """, (dur_id, 0, price, price - 50))
+            c.execute("""
+                INSERT INTO plan_speeds (duration_id, speed, price, discounted_price)
+                VALUES (?, ?, ?, ?)
+            """, (dur_id, 0, price * d, price * d))
 
     # =========================
     # OFFERS
     # =========================
-
     c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('🔥 Broadband Offer', 'Unlimited High Speed Fiber', '₹799/month', 'broadband', 0, 1)
+        INSERT OR IGNORE INTO offers (title, subtitle, amount_text, offer_type, is_popup, is_active)
+        VALUES ('🔥 Broadband Offer', 'Unlimited High Speed Fiber', '₹799/month', 'broadband', 0, 1)
     """)
 
     c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('📺 DTH Special Offer', 'HD Channels + Free Installation', '₹499/month', 'dth', 0, 1)
+        INSERT OR IGNORE INTO offers (title, subtitle, amount_text, offer_type, is_popup, is_active)
+        VALUES ('📺 DTH Special Offer', 'HD Channels + Free Installation', '₹499/month', 'dth', 0, 1)
     """)
 
     c.execute("""
-        INSERT OR IGNORE INTO offers
-        (title, subtitle, amount_text, offer_type, is_popup, is_active)
-        VALUES
-        ('⚡ Limited Time Offer', 'Get 50% OFF on first 3 months', '₹299 only', 'popup', 1, 1)
+        INSERT OR IGNORE INTO offers (title, subtitle, amount_text, offer_type, is_popup, is_active)
+        VALUES ('⚡ Limited Time Offer', 'Get 50% OFF on first 3 months', '₹299 only', 'popup', 1, 1)
     """)
 
     # GLOBAL OFFER
@@ -320,9 +314,7 @@ def init_db():
         VALUES ('🔥 Tata Play Fiber: Best Broadband + DTH Combo Offers Available Now!', 1)
     """)
 
-    # DEFAULT ADMIN
-    from werkzeug.security import generate_password_hash
-
+    # ADMIN
     admin_username = "admin"
     admin_password = generate_password_hash("admin123")
 

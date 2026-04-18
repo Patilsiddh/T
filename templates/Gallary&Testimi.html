@@ -35,35 +35,36 @@
 
 <style>
 
-    body{
+body{
     margin-bottom: 0;
 }
-/* ===== GALLERY SECTION ===== */
-/* ===== REDUCE BOTTOM SPACE OF GALLERY ===== */
-/* ===== THRILL GALLERY (SPACE FIX ONLY) ===== */
+
+/* ===== THRILL GALLERY (BASE) ===== */
 .thrill-gallery{
     background:#53109a;
-    margin-bottom: 5px !important;   /* reduced gap */
-    padding-bottom: 10px !important; /* reduced padding */
+    margin-bottom: 5px !important;
+    padding-bottom: 10px !important;
 }
 
-/* title spacing */
+/* ===== TITLES ===== */
 .thrill-gallery h2{
     color:white;
     font-size:28px;
     font-weight:800;
-    margin: 20px 0 10px;  /* tighter spacing */
+    margin: 20px 0 10px;
+    text-align:center;
+    letter-spacing:0.5px;
 }
 
 /* ===== OTT STYLE TITLE ===== */
 .gallery-title{
     text-align: center;
     margin-top: 0px;
-    margin-bottom: -25px;
+    margin-bottom: -8px;
 }
 
 .gallery-title h2{
-    font-family:  sans-serif;  /* OTT clean premium font */
+    font-family: sans-serif;
     font-weight: 600;
     font-size: 28px;
     color: #ffffff;
@@ -76,40 +77,21 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-/* grid spacing */
-.thrill-gallery .gallery-grid{
-    max-width:1200px;
-    margin: 0 auto;
-    gap: 18px;  /* slightly reduced gap between cards */
-}
 
-/* last item spacing remove */
-.thrill-gallery .gallery-item:last-child{
-    margin-bottom: 0 !important;
-}
-.thrill-gallery h2{
-    text-align:center;
-    font-size:28px;
-    font-weight:700;
-    color:#fff;
-    margin: 20px 0 10px;
-    letter-spacing:0.5px;
-}
+/* ===== GALLERY WRAPPER ===== */
 .gallery{
     padding:70px 30px;
     text-align:center;
     background:#f8f9ff;
 }
 
-
 .gallery h2{
     font-size:32px;
     font-weight:800;
-    ;
     color:#111;
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .gallery-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
@@ -118,53 +100,44 @@
     margin:auto;
 }
 
-/* CARD */
+/* override inside thrill section */
+.thrill-gallery .gallery-grid{
+    max-width:1200px;
+    margin: 0 auto;
+    gap:18px;
+}
+
+/* ===== CARD ===== */
 .gallery-item{
     position:relative;
     border-radius:18px;
     overflow:hidden;
 
+    width:100%;
+    display:inline-block;
+
     box-shadow:0 15px 35px rgba(0,0,0,0.12);
 
-    display:inline-block;   /* ✅ key fix */
-    width:100%;
+    border:1px solid rgba(255,255,255,0.15);
 }
 
-/* SHOW ANIMATION */
-/* ===== IMAGE FIX (SMALL + CLEAN FIT) ===== */
-/* ===== FIXED GALLERY IMAGE (NO CROP, CLEAN FIT) ===== */
-
+/* ===== IMAGE ===== */
 .gallery-item img{
     width:100%;
     height:100%;
-    object-fit:contain;   /* ✅ shows full image */
+    object-fit:contain;
     object-position:center;
     display:block;
-}
-/* SMALLER NICE LOOK */
 
-/* SOFT POP ANIMATION */
-.gallery-item.show{
-    animation: popSoft 0.6s ease forwards;
+    filter:contrast(1.05) saturate(1.1);
 }
 
-@keyframes popSoft{
-    0%{
-        transform: translateY(40px) scale(0.92);
-        opacity:0;
-    }
-    100%{
-        transform: translateY(0) scale(1);
-        opacity:1;
-    }
-}
-
-/* ZOOM EFFECT */
+/* zoom effect */
 .gallery-item:hover img{
     transform:scale(1.08);
 }
 
-/* OVERLAY TEXT */
+/* ===== OVERLAY ===== */
 .gallery-item .overlay{
     position:absolute;
     bottom:0;
@@ -185,49 +158,19 @@
 .gallery-item:hover .overlay{
     opacity:1;
 }
-/* ===== REVIEWS SECTION ===== */
 
-
-
-
-
-
-/* ===== THRILL GALLERY SECTION FIX ===== */
-.thrill-gallery{
-    background:#53109a;
-  
-   
+/* ===== ANIMATION (SOFT) ===== */
+.gallery-item{
+    opacity:0;
+    transform: translateY(40px) scale(0.92);
+    transition: all 0.6s ease;
 }
 
-/* TITLE INSIDE THRILL */
-.thrill-gallery h2{
-    color:white;
-    font-size:28px;
-    font-weight:800;
-    margin-bottom:30px;
-}
-
-/* KEEP SAME GRID BUT IMPROVED */
-.thrill-gallery .gallery-grid{
-    max-width:1200px;
-}
-
-/* CARD IMPROVEMENT */
-.thrill-gallery .gallery-item{
-    border:1px solid rgba(255,255,255,0.15);
-    box-shadow:0 20px 40px rgba(0,0,0,0.25);
-}
-
-/* IMAGE SMOOTHER LOOK */
-.thrill-gallery .gallery-item img{
-    filter:contrast(1.05) saturate(1.1);
-}
-
-/* POP ANIMATION STRONGER */
 .gallery-item.show{
     animation: popIn 0.6s ease forwards;
 }
 
+/* POP ANIMATION */
 @keyframes popIn{
     0%{
         transform: translateY(60px) scale(0.85);
@@ -236,6 +179,18 @@
     60%{
         transform: translateY(-10px) scale(1.03);
         opacity:1;
+    }
+    100%{
+        transform: translateY(0) scale(1);
+        opacity:1;
+    }
+}
+
+/* fallback animation */
+@keyframes popSoft{
+    0%{
+        transform: translateY(40px) scale(0.92);
+        opacity:0;
     }
     100%{
         transform: translateY(0) scale(1);

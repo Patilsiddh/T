@@ -33,9 +33,9 @@
 
 <style>/* ===== WHY CHOOSE US - IMAGE BOX FIX ===== */
 /* ===== WHY CHOOSE US SECTION ===== */
-body{
-    font-family: Arial, Helvetica, sans-serif;
-}
+/* ===== GLOBAL SAFE FIX ===== */
+
+/* ===== WHY CHOOSE US SECTION ===== */
 .why-us{
     padding:80px 20px;
     background:#53109a;
@@ -47,7 +47,7 @@ body{
 .why-us h2{
     font-size:34px;
     font-weight:800;
-    margin-bottom:30px;
+    margin-bottom:16px;
 }
 
 /* GRID */
@@ -59,12 +59,9 @@ body{
     margin:auto;
 }
 
-/* CARD (GLASS + POPUP BASE) */
+/* CARD */
 .why-card{
     background: rgba(255,255,255,0.10);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-
     border:1px solid rgba(255,255,255,0.18);
     border-radius:18px;
 
@@ -73,66 +70,54 @@ body{
 
     box-shadow:0 10px 25px rgba(0,0,0,0.25);
 
-    /* POPUP INITIAL STATE */
-    opacity:0;
-    transform: translateY(60px) scale(0.95);
-    transition: all 0.7s ease;
-
     overflow:hidden;
+
+    /* animation safe default */
+    opacity:0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
 }
 
-/* SHOW ANIMATION */
+/* SHOW STATE */
 .why-card.show{
     opacity:1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
 }
 
-/* IMAGE BIGGER + FLOAT LOOK */
+/* IMAGE */
 .why-card img{
-    display:block;
-    margin:0 auto;              /* CENTER IMAGE */
-
-    width:100%;
-    max-width:160px;
-    height:160px;
-
+    width:120px;
+    height:120px;
     object-fit:cover;
-
     border-radius:12px;
-
-    /* REMOVE BOX LOOK */
-    background:none;
-    padding:0;
-    box-shadow:none;
-
+    margin-bottom:12px;
     transition:0.4s ease;
 }
-/* IMAGE POPUP HOVER */
+
+/* hover effect */
 .why-card:hover img{
-    transform: scale(1.12) translateY(-5px);
+    transform: scale(1.08);
 }
 
-/* CARD HOVER GLOW */
+/* hover card */
 .why-card:hover{
-    transform: translateY(-10px) scale(1.03);
-    background: rgba(255,255,255,0.16);
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.15);
 }
 
 /* TITLE */
 .why-card h3{
     font-size:18px;
     font-weight:700;
-    margin-top:15px;
-
-    /* TRANSPARENT TEXT STYLE */
-    color: rgba(255,255,255,0.95);
+    margin-top:10px;
+    color:#fff;
 }
 
-/* DESCRIPTION TRANSPARENT LOOK */
+/* TEXT */
 .why-card p{
     font-size:14px;
-    color: rgba(255,255,255,0.75);
-    line-height:1.6;
+    color: rgba(255,255,255,0.8);
+    line-height:1.5;
 }
 
 /* RESPONSIVE */
@@ -142,23 +127,19 @@ body{
     }
 
     .why-card img{
-        max-width:130px;
-        height:130px;
+        width:100px;
+        height:100px;
     }
 }
 </style>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+<script>document.addEventListener("DOMContentLoaded", function () {
 
     const cards = document.querySelectorAll(".why-card");
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-
-                setTimeout(() => {
-                    entry.target.classList.add("show");
-                }, index * 150); // stagger effect
+                entry.target.classList.add("show");
             }
         });
     }, { threshold: 0.2 });
