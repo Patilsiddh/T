@@ -80,10 +80,9 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = 'patilsiddh2026@gmail.com'
-app.config['MAIL_PASSWORD'] = 'sexilzmhkpvdbymw'  # NOT normal password
+app.config['MAIL_PASSWORD'] = 'egpzzvflxvkpibyj'  # NOT normal password
 
 mail = Mail(app)
-mail.init_app(app)
 import os
 import sqlite3
 from werkzeug.security import generate_password_hash
@@ -1047,10 +1046,10 @@ def admin():
         conn.commit()
         flash(f'Plan "{plan_name}" added successfully!', "success")
         categories = cursor.execute("SELECT * FROM categories").fetchall()
-        global_offers = cursor.execute("SELECT * FROM global_offers").fetchall()
+        global_offer = cursor.execute("SELECT * FROM global_offer").fetchall()
 
         conn.close()
-
+        return redirect(url_for('admin'))
        
 
     # ---------------- SHOW CATEGORIES & PLANS ---------------- #
